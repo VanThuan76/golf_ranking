@@ -7,7 +7,7 @@ import { IAuth } from 'src/schemas/user.table.type';
 import { Button } from '@/components/ui/button';
 import { Form } from '@/components/ui/form';
 import { Loader2 } from 'lucide-react';
-import InputText from '@/components/custom/form/inputText';
+import InputText from '@/components/customization/form/inputText';
 
 type Props = {
   formSchema: z.Schema<IAuth>;

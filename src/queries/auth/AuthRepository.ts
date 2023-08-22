@@ -1,6 +1,5 @@
 import { useRouter } from 'next/router';
 import { useAppDispatch } from "@/hooks/useRedux";
-
 import { IAuth } from 'src/schemas/user.table.type';
 import { authQuery } from './AuthQuery';
 
@@ -8,10 +7,11 @@ export interface IAuthRepository {
   authenticated: (body: IAuth) => void;
 }
 
-export class AuthRepository implements IAuthRepository {
-  authenticated(body: IAuth): void {
-    const router = useRouter();
-    const dispatch = useAppDispatch()
+export const useAuthRepository = (): IAuthRepository => {
+  const router = useRouter();
+  const dispatch = useAppDispatch();
+
+  const authenticated = (body: IAuth): void => {
     const auth = authQuery((data) => {
       if (data) {
         // notification.success({ message: 'Login success' })
@@ -23,7 +23,9 @@ export class AuthRepository implements IAuthRepository {
       }
     });
     auth.mutate(body);
-  }
-}
+  };
 
-
+  return {
+    authenticated,
+  };
+};
