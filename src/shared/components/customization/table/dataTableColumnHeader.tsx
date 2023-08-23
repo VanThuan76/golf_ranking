@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Column } from '@tanstack/react-table';
-import { ArrowDownIcon, ArrowUpIcon, EyeIcon, SearchIcon, Settings2Icon } from 'lucide-react';
+import { ArrowDownIcon, ArrowUpIcon, SearchIcon } from 'lucide-react';
 import classNames from 'classnames';
 
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
@@ -33,12 +33,11 @@ const DataTableColumnHeader = <TData, TValue>({
           <Button
             variant='ghost'
             size='sm'
-            className={classNames('-ml-3 h-8 data-[state=open]:bg-accent', {
+            className={classNames('w-full h-8 data-[state=open]:bg-accent', {
               'bg-accent': !!defaultFilter,
             })}
           >
             <span>{title}</span>
-            <Settings2Icon className='ml-2 h-4 w-4' />
           </Button>
         </PopoverTrigger>
         <PopoverContent align='start' className='px-1 py-0'>
@@ -50,12 +49,6 @@ const DataTableColumnHeader = <TData, TValue>({
             <ArrowDownIcon className='mr-2 h-3.5 w-3.5 text-muted-foreground/70' />
             Desc
           </div>
-          {column.getCanHide() && (
-            <div onClick={() => column.toggleVisibility(false)} className={itemClassName}>
-              <EyeIcon className='mr-2 h-3.5 w-3.5 text-muted-foreground/70' />
-              Hide
-            </div>
-          )}
           <div className={itemClassName}>
             <Input
               value={searchValue}

@@ -32,7 +32,6 @@ export interface DataTableProps<TData, TValue> {
   pageSize: number;
   pageIndex: number;
   pageCount: number;
-  collapseStates: CollapseStates,
   setCollapseStates: Dispatch<SetStateAction<CollapseStates>>,
   handChangePagination: (value: number, type: 'Page_change' | 'Size_change') => void;
 }
@@ -46,7 +45,6 @@ function DataTable<TData, TValue>({
   pageSize,
   pageIndex,
   isLoading,
-  collapseStates,
   setCollapseStates,
   handChangePagination,
 }: DataTableProps<TData, TValue>) {
@@ -129,24 +127,12 @@ function DataTable<TData, TValue>({
                       key={row.id}
                       data-state={row.getIsSelected() && 'selected'}
                       onClick={() => handleRowClick(row.id)}
+                      className="h-[80px] shadow-lg cursor-pointer"
                     >
                       {row.getVisibleCells().map(cell => (
                         <TableCell key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</TableCell>
                       ))}
                     </TableRow>
-                    {collapseStates && collapseStates[row.id] && (
-                      <TableRow
-                        key={row.id}
-                        data-state={row.getIsSelected() && 'selected'}
-                        onClick={() => handleRowClick(row.id)}
-                      >
-                        {row.getVisibleCells().map(cell => (
-                          <TableCell key={cell.id}>
-                            {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                          </TableCell>
-                        ))}
-                      </TableRow>
-                    )}
                   </>
                 ))
               ) : (

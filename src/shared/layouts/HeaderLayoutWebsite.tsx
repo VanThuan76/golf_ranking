@@ -4,14 +4,16 @@ import { useEffect, useState } from 'react';
 import { Menu } from 'lucide-react';
 
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
-import ThemeModeToggle from '@/components/customization/toggleThemeMode';
 import IconLogo from '@/components/icons/IconLogo';
 import { menu } from '../mocks/header';
 import IconCrown from '@/components/icons/menu/IconCrown';
 import IconTrophy from '@/components/icons/menu/IconTrophy';
 import { Button } from '@/components/ui/button';
+import { useRouter } from 'next/router';
+import ThemeModeToggle from '@/components/customization/toggleThemeMode';
 
 const HeaderLayoutWebsite = () => {
+  const router = useRouter();
   const [isScrolled, setIsScrolled] = useState(false);
   useEffect(() => {
     const handleScroll = () => {
@@ -45,16 +47,26 @@ const HeaderLayoutWebsite = () => {
         <ul className='ml-10 hidden lg:flex justify-center items-center gap-10 dark:text-white'>
           {menu.map((item, idx) => (
             <Link href={`/${item.path}`} key={idx}>
-              <div className='flex-row-between-center gap-2'>
-                {item.path === 'rank' ? <IconCrown /> : <IconTrophy />}
-                <li>{item.title}</li>
+              <div className='relative w-full'>
+                <motion.div
+                  className='w-full flex-row-between-center gap-2'
+                >
+                  {item.path === 'rank' ? <IconCrown /> : <IconTrophy />}
+                  <li>{item.title}</li>
+                </motion.div>
+                {router.asPath.split('/')[1] === item.path ? (
+                  <motion.div
+                    className='absolute bottom-[-20px] left-0 right-0 h-[4px] bg-[#262D3A] rounded-[8px] z-0'
+                    layoutId='underline'
+                  />
+                ) : null}
               </div>
             </Link>
           ))}
         </ul>
       </div>
-      <div className='w-full flex-row-center gap-5'>
-        <IconLogo />
+      <div className='w-full flex-row-center gap-5 cursor-pointer'>
+        <IconLogo onClick={() => router.push('/')} />
       </div>
       <div className='absolute right-5 flex-row-center gap-2'>
         <div

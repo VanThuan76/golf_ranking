@@ -1,17 +1,24 @@
+import IconLogo from '@/components/icons/IconLogo';
 import * as z from 'zod';
-import { FormLogin } from "./form";
+import { FormLogin } from './form';
 
 const formSchema = z.object({
-  username: z.string().min(2, {
-    message: 'Username must be at least 2 characters.',
-  }),
-  password: z.string().min(2, {
-    message: 'Username must be at least 2 characters.',
-  }),
+  username: z
+    .string({ required_error: 'Vui lòng điền tên đăng nhập' })
+    .min(1, { message: 'Vui lòng điền tên đăng nhập' }),
+  password: z.string({ required_error: 'Vui lòng điền mật khẩu' }).min(1, { message: 'Vui lòng điền mật khẩu' }),
 });
-const Login = () => {
+
+const LoginModule = () => {
   return (
-    <div className='relative h-full flex-col items-center justify-center md:grid lg:max-w-none lg:grid-cols-2 lg:px-0'>
+    <div className='relative h-full flex-col items-center justify-center md:grid lg:max-w-none lg:grid-cols-2 lg:px-0 overflow-hidden'>
+      <div className='w-full h-full lg:px-8'>
+        <IconLogo className='my-2 md:my-4 lg:my-8' />
+        <div className='mx-auto w-full h-full flex-col-start space-y-6 sm:w-[450px]'>
+          <div className='font-bold text-3xl w-full text-black'>Đăng nhập</div>
+          <FormLogin formSchema={formSchema} onSubmit={() => {}} />
+        </div>
+      </div>
       <div className='relative md:h-full flex-col bg-muted p-10 text-white dark:border-r lg:flex'>
         <div
           className='absolute inset-0 login-background'
@@ -44,14 +51,8 @@ const Login = () => {
           <p className='text-lg'>Copyright &copy; Coffee Information&Service 2023</p>
         </div>
       </div>
-      <div className='lg:p-8'>
-        <div className='mx-auto flex w-full flex-col justify-center space-y-6 sm:w-[450px]'>
-          <div className='font-bold text-3xl text-center w-full text-black'>Đăng nhập</div>
-          <FormLogin formSchema={formSchema} onSubmit={() => {}} />
-        </div>
-      </div>
     </div>
   );
 };
 
-export default Login;
+export default LoginModule;

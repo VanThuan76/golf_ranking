@@ -7,11 +7,17 @@
 .container-layer{
     @apply max-w-[1440px] w-full mx-auto my-auto;
 }
+.flex-row-start{
+    @apply flex justify-start items-start;
+}
+.flex-row-end {
+    @apply flex justify-end items-end;
+}
 .flex-row-center {
     @apply flex justify-center items-center;
 }
 .flex-row-between-start{
-    @apply flex justify-start items-start;
+    @apply flex justify-between items-start;
 }
 .flex-row-between-center{
     @apply flex justify-between items-center;
@@ -22,6 +28,12 @@
 }
 .flex-col-end {
     @apply flex flex-col justify-end items-end;
+}
+.flex-col-center {
+    @apply flex flex-col justify-center items-center;
+}
+.flex-col-center-start{
+    @apply flex flex-col justify-center items-start;
 }
 .flex-col-between-start{
     @apply flex flex-col justify-between items-start;

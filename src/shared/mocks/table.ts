@@ -6,7 +6,11 @@ export const dataTable = [
         age: 18,
         down: 0,
         up: 1,
-        point: 567
+        point: 567,
+        entry: 10,
+        win: 5,
+        gender: 1,
+        country: "VN"
     },
     {
         rank: 2,
@@ -15,6 +19,10 @@ export const dataTable = [
         age: 15,
         down: 10,
         up: 1,
-        point: 117
+        point: 117,
+        entry: 9,
+        win: 1,
+        gender: 0,
+        country: "US"
     }
 ]

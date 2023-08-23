@@ -10,4 +10,8 @@ export interface IRankUser {
   down: number;
   up: number;
   point: number;
+  entry:number;
+  win:number;
+  gender: number;
+  country: string
 }

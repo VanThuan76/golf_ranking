@@ -1,4 +1,4 @@
-import { PreImage } from '@/components/customization/preImage';
+import { PreImage } from "@/components/customization/preImage";
 
 interface Props {
   image: string;

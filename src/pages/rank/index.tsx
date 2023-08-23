@@ -8,13 +8,13 @@ import HomeTabs from '@/components/business/rank/Tabs';
 
 const ScrollRevealWrapper = dynamic(() => import('@/components/customization/ScrollRevealWrapper'), { ssr: false });
 
-export function Home() {
+export function Rank() {
   return (
     <>
       <Head>
-        <title>Trang chủ Golf Ranking</title>
-        <meta name='description' content='Trang chủ Golf Ranking' />
-        <meta name='keywords' content='Công nghệ thông tin, Giải pháp số' />
+        <title>Bảng xếp hạng Golf Ranking</title>
+        <meta name='description' content='Bảng xếp hạng Golf Ranking' />
+        <meta name='keywords' content='Golf Ranking Công nghệ thông tin, Giải pháp số' />
       </Head>
       <ScrollRevealWrapper>
         <HomeBanner image={'/default.png'} />
@@ -28,5 +28,5 @@ export function Home() {
     </>
   );
 }
-Home.getLayout = (children: React.ReactNode) => <LayoutWebsite>{children}</LayoutWebsite>;
-export default Home;
+Rank.getLayout = (children: React.ReactNode) => <LayoutWebsite>{children}</LayoutWebsite>;
+export default Rank;
