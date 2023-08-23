@@ -20,7 +20,6 @@ const DataTableColumnHeader = <TData, TValue>({
   title,
   className,
   defaultFilter,
-  defaultSort,
 }: DataTableColumnHeaderProps<TData, TValue>) => {
   const [searchValue, setSearchValue] = useState<string>(defaultFilter);
   if (!column.getCanSort()) {

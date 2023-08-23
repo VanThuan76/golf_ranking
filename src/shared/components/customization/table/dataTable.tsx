@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { Dispatch, SetStateAction, useEffect } from 'react';
 import { useLocalStorage } from 'usehooks-ts';
 import {
   ColumnDef,
@@ -12,15 +12,16 @@ import {
   useReactTable,
 } from '@tanstack/react-table';
 
-import DataTablePagination from './DataTablePagination';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Skeleton } from '@/components/ui/skeleton';
+import DataTablePagination from './dataTablePagination';
 
 export const COLUMNDATA_TYPE = {
   STRING: 'string',
   DATE: 'date',
   BOOLEAN: 'boolean',
 };
+type CollapseStates = Record<string, boolean>;
 
 export interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -31,6 +32,8 @@ export interface DataTableProps<TData, TValue> {
   pageSize: number;
   pageIndex: number;
   pageCount: number;
+  collapseStates: CollapseStates,
+  setCollapseStates: Dispatch<SetStateAction<CollapseStates>>,
   handChangePagination: (value: number, type: 'Page_change' | 'Size_change') => void;
 }
 
@@ -43,6 +46,8 @@ function DataTable<TData, TValue>({
   pageSize,
   pageIndex,
   isLoading,
+  collapseStates,
+  setCollapseStates,
   handChangePagination,
 }: DataTableProps<TData, TValue>) {
   const [columnVisibility, setColumnVisibility] = useLocalStorage(
@@ -79,6 +84,14 @@ function DataTable<TData, TValue>({
     }
   }, [pageIndex, pageSize, isClientPagination, table]);
 
+
+  const handleRowClick = (rowId: string) => {
+    setCollapseStates(prevState => ({
+      ...prevState,
+      [rowId]: !prevState[rowId],
+    }));
+  };
+
   return (
     <div className=''>
       {/* <DataTableHeader table={table} /> */}
@@ -111,11 +124,30 @@ function DataTable<TData, TValue>({
             <TableBody>
               {table.getRowModel().rows?.length ? (
                 table.getRowModel().rows.map(row => (
-                  <TableRow key={row.id} data-state={row.getIsSelected() && 'selected'}>
-                    {row.getVisibleCells().map(cell => (
-                      <TableCell key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</TableCell>
-                    ))}
-                  </TableRow>
+                  <>
+                    <TableRow
+                      key={row.id}
+                      data-state={row.getIsSelected() && 'selected'}
+                      onClick={() => handleRowClick(row.id)}
+                    >
+                      {row.getVisibleCells().map(cell => (
+                        <TableCell key={cell.id}>{flexRender(cell.column.columnDef.cell, cell.getContext())}</TableCell>
+                      ))}
+                    </TableRow>
+                    {collapseStates && collapseStates[row.id] && (
+                      <TableRow
+                        key={row.id}
+                        data-state={row.getIsSelected() && 'selected'}
+                        onClick={() => handleRowClick(row.id)}
+                      >
+                        {row.getVisibleCells().map(cell => (
+                          <TableCell key={cell.id}>
+                            {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                          </TableCell>
+                        ))}
+                      </TableRow>
+                    )}
+                  </>
                 ))
               ) : (
                 <TableRow>

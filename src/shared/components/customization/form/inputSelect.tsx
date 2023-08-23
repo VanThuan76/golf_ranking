@@ -23,7 +23,7 @@ export default function InputSelect({ form, label, placeHolder, fieldName, optio
             control={form.control}
             name={fieldName}
             render={({ field }) => (
-                <FormItem>
+                <FormItem className='w-full'>
                     {label && <FormLabel>{label}</FormLabel>}
                     <Popover>
                         <PopoverTrigger asChild>
@@ -44,7 +44,7 @@ export default function InputSelect({ form, label, placeHolder, fieldName, optio
                             </FormControl>
                         </PopoverTrigger>
                         <PopoverContent className="w-full p-0" >
-                            <Command >
+                            <Command>
                                 <CommandInput placeholder={placeHolder}
                                 />
                                 <CommandEmpty >

@@ -10,6 +10,9 @@
 .flex-row-center {
     @apply flex justify-center items-center;
 }
+.flex-row-between-start{
+    @apply flex justify-start items-start;
+}
 .flex-row-between-center{
     @apply flex justify-between items-center;
 }
