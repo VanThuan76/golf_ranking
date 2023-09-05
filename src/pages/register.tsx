@@ -1,5 +1,5 @@
+import RegisterModule from "@/modules/auth/Register";
 import BlankLayout from "src/shared/layouts/BlankLayout";
-import RegisterModule from "src/shared/modules/auth/Register";
 
 const Register = () => {
     return ( <RegisterModule />);
