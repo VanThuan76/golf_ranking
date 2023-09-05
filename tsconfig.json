@@ -24,6 +24,6 @@
 
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/shared/components/common/editor/EditorTools.js", "src/shared/components/common/editor/index.tsx", "src/shared/components/common/editor/customTools/Media.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules"]
 }
