@@ -1,4 +1,4 @@
-import ForgotPasswordModule from "@/modules/auth/ForgotPassword";
+import ForgotPasswordModule from "@/modules/auth/ForgotPasswordModule";
 import BlankLayout from "src/shared/layouts/BlankLayout";
 
 const ForgotPassword = () => {
