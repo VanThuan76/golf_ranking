@@ -16,10 +16,12 @@
     "incremental": true,
     "baseUrl": ".",
     "paths": {
+      "@/modules/*": ["./src/shared/modules/*"],
       "@/components/*": ["./src/shared/components/*"],
       "@/hooks/*": ["./src/shared/hooks/*"],
       "@/utils/*": ["./src/shared/utils/*"],
       "@/mocks/*": ["./src/shared/mock/*"]
+
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/shared/components/common/editor/EditorTools.js", "src/shared/components/common/editor/index.tsx", "src/shared/components/common/editor/customTools/Media.js"],
