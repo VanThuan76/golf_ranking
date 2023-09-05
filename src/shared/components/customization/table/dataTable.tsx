@@ -14,7 +14,7 @@ import {
 
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { Skeleton } from '@/components/ui/skeleton';
-import DataTablePagination from './dataTablePagination';
+import DataTablePagination from './DataTablePagination';
 
 export const COLUMNDATA_TYPE = {
   STRING: 'string',

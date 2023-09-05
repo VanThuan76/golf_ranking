@@ -1,5 +1,5 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import HomeTable from './Table';
+import TableRank from './TableRank';
 
 const TabsListGender = () => {
   return (
@@ -11,9 +11,9 @@ const TabsListGender = () => {
     </Tabs>
   );
 };
-const HomeTabs = () => {
+const TabsRank = () => {
   return (
-    <section id='HomeTabs' className='w-full'>
+    <section id='TabsRank' className='w-full'>
       <Tabs defaultValue='mix' className='w-full'>
         <TabsList>
           <TabsTrigger value='mix'>Bảng tổng hợp</TabsTrigger>
@@ -23,7 +23,7 @@ const HomeTabs = () => {
           <TabsTrigger value='under-9'>Bảng U9</TabsTrigger>
         </TabsList>
         <TabsContent value='mix'>
-          <HomeTable />
+          <TableRank />
         </TabsContent>
         <TabsContent value='under-18'>
           <TabsListGender />
@@ -42,4 +42,4 @@ const HomeTabs = () => {
   );
 };
 
-export default HomeTabs;
+export default TabsRank;

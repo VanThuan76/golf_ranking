@@ -2,9 +2,10 @@ import Head from 'next/head';
 import dynamic from 'next/dynamic';
 
 import LayoutWebsite from 'src/shared/layouts/LayoutWebsite';
-import HomeBanner from '@/components/business/rank/Banner';
-import HomeSearch from '@/components/business/rank/Search';
-import HomeTabs from '@/components/business/rank/Tabs';
+import BannerRank from '@/components/business/rank/BannerRank';
+import SearchRank from '@/components/business/rank/SearchRank';
+import TabsRank from '@/components/business/rank/TabsRank';
+import { sectionBanner } from 'src/shared/mocks/home';
 
 const ScrollRevealWrapper = dynamic(() => import('@/components/customization/ScrollRevealWrapper'), { ssr: false });
 
@@ -12,18 +13,18 @@ export function Rank() {
   return (
     <>
       <Head>
-        <title>Bảng xếp hạng Golf Ranking</title>
-        <meta name='description' content='Bảng xếp hạng Golf Ranking' />
-        <meta name='keywords' content='Golf Ranking Công nghệ thông tin, Giải pháp số' />
+        <title>Trang chủ Golf Ranking</title>
+        <meta name='description' content='Trang chủ Golf Ranking' />
+        <meta name='keywords' content='Công nghệ thông tin, Giải pháp số' />
       </Head>
       <ScrollRevealWrapper>
-        <HomeBanner image={'/default.png'} />
+        <BannerRank data={sectionBanner} />
       </ScrollRevealWrapper>
       <ScrollRevealWrapper>
-        <HomeSearch />
+        <SearchRank />
       </ScrollRevealWrapper>
       <ScrollRevealWrapper>
-        <HomeTabs />
+        <TabsRank />
       </ScrollRevealWrapper>
     </>
   );

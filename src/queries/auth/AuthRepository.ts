@@ -22,7 +22,7 @@ export const useAuthRepository = (): IAuthRepository => {
         router.push('/success-route');
       }
     });
-    auth.mutate(body);
+    // auth.mutate(body);
   };
 
   return {

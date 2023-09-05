@@ -1,6 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+:root {
+    --main-color: #1B3864
+}
 .padding-section{
     @apply px-4 md:px-24 lg:px-32 xl:px-16
 }
@@ -19,10 +22,15 @@
 .flex-row-between-start{
     @apply flex justify-between items-start;
 }
+.flex-row-between-end{
+    @apply flex justify-between items-end;
+}
 .flex-row-between-center{
     @apply flex justify-between items-center;
 }
-
+.flex-row-around-center{
+    @apply flex justify-around items-center;
+}
 .flex-col-start {
     @apply flex flex-col justify-start items-start;
 }
@@ -37,6 +45,9 @@
 }
 .flex-col-between-start{
     @apply flex flex-col justify-between items-start;
+}
+.flex-col-around-start{
+    @apply flex flex-col justify-around items-start;
 }
 .flex-col-between-center {
     @apply flex flex-col justify-between items-center;

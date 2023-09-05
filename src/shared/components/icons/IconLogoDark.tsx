@@ -1,6 +1,6 @@
 import React, { SVGProps } from 'react';
 
-export default function IconLogo({ ...rest }: SVGProps<SVGSVGElement>) {
+export default function IconLogoDark({ ...rest }: SVGProps<SVGSVGElement>) {
   return (
     <svg
       width='201'

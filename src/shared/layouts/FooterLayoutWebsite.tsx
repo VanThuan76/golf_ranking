@@ -1,5 +1,5 @@
 import { footerContactData } from '../mocks/footer';
-import IconLogo from '@/components/icons/IconLogo';
+import IconLogo from '@/components/icons/IconLogoDark';
 import IconLocation from '@/components/icons/footer/IconLocation';
 import IconPhone from '@/components/icons/footer/IconPhone';
 import IconMail from '@/components/icons/footer/IconMail';
@@ -7,7 +7,7 @@ import IconFacebook from '@/components/icons/footer/IconFacebook';
 
 const FooterLayoutWebsite = () => {
   return (
-    <section className='bg-[#7D89A0] text-white font-thin padding-section'>
+    <section className='bg-[var(--main-color)] text-white font-thin padding-section'>
       <div className='container-layer flex-col-between-center gap-10 p-4 md:p-6 lg:p-12'>
         <div className='w-full mb-4 flex-col-between-start md:flex-row'>
           <div className='flex-col-start gap-5'>

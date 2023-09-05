@@ -5,10 +5,11 @@ import { useRouter } from 'next/router';
 import { ArrowRight, ArrowUp, ChevronDown, ChevronUp } from 'lucide-react';
 
 import DataTableColumnHeader from '@/components/customization/table/dataTableColumnHeader';
-import DataTable from '@/components/customization/table/dataTable';
+import DataTable from '@/components/customization/table/DataTable';
 import CountryFlag from '@/components/customization/CountryFlag';
 import { IRankUser } from 'src/schemas/user.table.type';
 import { dataTable } from 'src/shared/mocks/table';
+import { URL_SYSTEMS } from 'src/shared/constants';
 
 const CustomizeCell = ({
   id,
@@ -31,7 +32,7 @@ const CustomizeCell = ({
   return (
     <motion.div
       key={id}
-      className='w-[200px] mt-4 flex-col-start p-4 rounded-lg border-slate-200 border-2'
+      className='w-[200px] mt-4 flex-col-start p-4 rounded-lg border-[var(--main-color)] border-2'
       initial='hidden'
       animate={'visible'}
       variants={collapseStates[id] ? containerVariants : {}}
@@ -49,7 +50,7 @@ const CustomizeCell = ({
   );
 };
 
-export function HomeTable() {
+export function TableRank() {
   const router = useRouter();
   const [collapseStates, setCollapseStates] = useState<Record<string, boolean>>({});
   const TABLE_NAME = 'Ranking';
@@ -177,11 +178,11 @@ export function HomeTable() {
         return (
           <React.Fragment>
             <div className='flex-row-center'>
-              <ArrowUp className='text-center' />
+              <ArrowUp color="#35B155" className='text-center' />
             </div>
             {collapseStates[props.cell.row.id] && (
-              <div className='relative w-[100px] h-full'>
-                <p className='absolute top-5 flex-row-center gap-1 px-2 rounded-lg hover:bg-slate-400 cursor-pointer'>
+              <div className='relative w-[100px] h-full' onClick={() => router.push(`${URL_SYSTEMS.RANK}/${props.cell.row.id}`)}>
+                <p className='absolute top-5 flex-row-center gap-1 rounded-lg opacity-70 hover:opacity-100 cursor-pointer'>
                   Xem thêm
                   <ArrowRight size={12} />
                 </p>
@@ -225,4 +226,4 @@ export function HomeTable() {
     </section>
   );
 }
-export default HomeTable;
+export default TableRank;

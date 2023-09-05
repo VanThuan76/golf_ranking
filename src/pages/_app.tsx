@@ -4,14 +4,17 @@ import Head from "next/head";
 import type { AppProps } from "next/app";
 import { NextPage } from "next";
 import { ReactElement } from "react";
-import { Bai_Jamjuree } from 'next/font/google'
+import { Montserrat } from 'next/font/google'
 import { Provider } from 'react-redux';
 import { ThemeProvider as NextThemesProvider } from 'next-themes';
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { useAppSelector } from "@/hooks/useRedux";
+import useRouterChange from "@/hooks/useRouterChange";
 
 import { store } from 'src/shared/stores';
+import { Jelly } from "@uiball/loaders";
 
-const interText = Bai_Jamjuree({
+const interText = Montserrat({
   subsets: ['vietnamese'],
   display: 'swap',
   weight: ['200', '300', '400', '500', '600', '700'],
@@ -35,15 +38,15 @@ const ConfigLayout = ({
   children: React.ReactElement;
   getLayout: (page: ReactElement) => React.ReactNode;
 }) => {
-  // const isRouteLoading = useAppSelector(state => state.appSlice.isRouteLoading);
-  // useRouterChange();
+  const isRouteLoading = useAppSelector(state => state.appSlice.isRouteLoading);
+  useRouterChange();
   return (
     <main className={interText.className}>
-      {/* {isRouteLoading && (
+      {isRouteLoading && (
         <div className='bg-foreground/20 bg-opacity-70 absolute z-[9999] w-screen h-screen flex justify-center flex-col gap-2 items-center'>
-          <JellyTriangle color='#016390' />
+          <Jelly color='#016390' />
         </div>
-      )} */}
+      )}
       <NextThemesProvider attribute='class' defaultTheme='system' enableSystem>
         {getLayout(children)}
       </NextThemesProvider>

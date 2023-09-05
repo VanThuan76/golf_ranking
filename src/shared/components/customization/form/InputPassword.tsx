@@ -18,8 +18,8 @@ export default function InputPassword({ fieldName, form, label, placeHolder, inp
             control={form.control}
             name={fieldName}
             render={({ field }) => (
-                <FormItem >
-                    {label && <FormLabel className='capitalize text-base'>{label}</FormLabel>}
+                <FormItem className='text-start w-full'>
+                    {label && <FormLabel>{label}</FormLabel>}
                     <FormControl>
                         <div className='relative'>
                             <Input placeholder={placeHolder} {...field} {...inputProps} type={isShowPW ? 'text' : 'password'} />

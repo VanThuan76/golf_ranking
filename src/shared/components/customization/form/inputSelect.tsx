@@ -10,6 +10,7 @@ import { cn } from '@/utils/tailwindPlugin'
 
 /* TODO : filter theo label hoac value */
 type Props = {
+    className?: string
     form: UseFormReturn<any>
     fieldName: string
     label?: string
@@ -17,13 +18,13 @@ type Props = {
     options?: { value: any, label: string }[]
 }
 
-export default function InputSelect({ form, label, placeHolder, fieldName, options = [] }: Props) {
+export default function InputSelect({ className, form, label, placeHolder, fieldName, options = [] }: Props) {
     return (
         <FormField
             control={form.control}
             name={fieldName}
             render={({ field }) => (
-                <FormItem className='w-full'>
+                <FormItem className={`w-full ${className}`}>
                     {label && <FormLabel>{label}</FormLabel>}
                     <Popover>
                         <PopoverTrigger asChild>

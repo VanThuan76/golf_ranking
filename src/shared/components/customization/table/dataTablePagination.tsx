@@ -31,7 +31,7 @@ export default function DataTablePagination<TData>({
     <div className=' flex items-center justify-between px-2 ml-auto'>
       <div className='flex items-center space-x-6 lg:space-x-8'>
         <div className='flex items-center space-x-2'>
-          <p className='text-sm font-medium'>Rows per page</p>
+          <p className='text-sm font-medium'>Số lượng mỗi trang</p>
           <Select
             value={`${table.getState().pagination.pageSize}`}
             onValueChange={value => {
@@ -53,8 +53,8 @@ export default function DataTablePagination<TData>({
             </SelectContent>
           </Select>
         </div>
-        <div className='flex w-[100px] items-center justify-center text-sm font-medium'>
-          Page {table.getState().pagination.pageIndex + 1} of {table.getPageCount()}
+        <div className='flex w-[150px] items-center justify-center text-sm font-medium'>
+          Trang {table.getState().pagination.pageIndex + 1} của {table.getPageCount()} trang
         </div>
         <div className='flex items-center space-x-2'>
           <Button

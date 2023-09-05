@@ -1,5 +1,5 @@
 import BlankLayout from "src/shared/layouts/BlankLayout";
-import LoginModule from "src/shared/modules/auth/login"
+import LoginModule from "src/shared/modules/auth/Login"
 
 const Login = () => {
     return ( <LoginModule />);
