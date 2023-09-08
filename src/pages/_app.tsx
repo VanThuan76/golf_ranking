@@ -4,7 +4,7 @@ import Head from "next/head";
 import type { AppProps } from "next/app";
 import { NextPage } from "next";
 import { ReactElement } from "react";
-import { Montserrat } from 'next/font/google'
+import { Montserrat} from 'next/font/google'
 import { Provider } from 'react-redux';
 import { ThemeProvider as NextThemesProvider } from 'next-themes';
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -13,6 +13,7 @@ import useRouterChange from "@/hooks/useRouterChange";
 
 import { store } from 'src/shared/stores';
 import { Jelly } from "@uiball/loaders";
+import { Toaster } from "@/components/ui/toaster";
 
 const interText = Montserrat({
   subsets: ['vietnamese'],
@@ -49,6 +50,7 @@ const ConfigLayout = ({
       )}
       <NextThemesProvider attribute='class' defaultTheme='system' enableSystem>
         {getLayout(children)}
+        <Toaster />
       </NextThemesProvider>
     </main>
   );

@@ -4,13 +4,18 @@ import { ColumnDef } from '@tanstack/react-table';
 import { useRouter } from 'next/router';
 import { ArrowRight, ArrowUp, ChevronDown, ChevronUp } from 'lucide-react';
 
-import DataTableColumnHeader from '@/components/customization/table/dataTableColumnHeader';
+import DataTableColumnHeader from '@/components/customization/table/DataTableColumnHeader';
 import DataTable from '@/components/customization/table/DataTable';
 import CountryFlag from '@/components/customization/CountryFlag';
-import { IRankUser } from 'src/schemas/user.table.type';
-import { dataTable } from 'src/shared/mocks/table';
 import { URL_SYSTEMS } from 'src/shared/constants';
+import { IMember } from 'src/schemas/member.table.type';
+import { calculateAge } from '@/utils/business/calculateAge';
 
+type Props = {
+  members: IMember[];
+  tableConfig: any;
+  getFieldValueOnSearchParam: any;
+};
 const CustomizeCell = ({
   id,
   collapseStates,
@@ -18,10 +23,10 @@ const CustomizeCell = ({
   value,
   desc,
 }: {
-  id: number | string,
+  id: number | string;
   collapseStates: Record<string, boolean>;
   title: string;
-  value: string | number;
+  value: string | number | null;
   desc: string;
 }) => {
   const containerVariants = {
@@ -50,21 +55,22 @@ const CustomizeCell = ({
   );
 };
 
-export function TableRank() {
+export function TableRank({ members, tableConfig, getFieldValueOnSearchParam }: Props) {
   const router = useRouter();
   const [collapseStates, setCollapseStates] = useState<Record<string, boolean>>({});
   const TABLE_NAME = 'Ranking';
-  // const { data, tableConfig, getFieldValueOnSearchParam } = useGetListNews();
-  const columnNews: ColumnDef<IRankUser>[] = [
+  const columnNews: ColumnDef<IMember>[] = [
     {
-      id: 'rank',
-      accessorKey: 'rank',
+      id: 'best_rank',
+      accessorKey: 'best_rank',
       cell(props) {
         return (
           <React.Fragment>
             <div className='min-w-[50px] h-[20px] flex-row-between-center gap-2'>
               {collapseStates[props.cell.row.id] ? <ChevronDown /> : <ChevronUp />}
-              <p className='text-center'>{props.cell.row.original.rank}</p>
+              <p className='text-center'>
+                {props.cell.row.original.best_rank ? props.cell.row.original.best_rank : 'Không'}
+              </p>
             </div>
 
             {collapseStates[props.cell.row.id] && (
@@ -72,7 +78,7 @@ export function TableRank() {
                 id={props.cell.row.id}
                 collapseStates={collapseStates}
                 title='Xếp hạng cao nhất'
-                value={props.cell.row.original.rank}
+                value={props.cell.row.original.best_rank ? props.cell.row.original.best_rank : 0}
                 desc=''
               />
             )}
@@ -83,23 +89,23 @@ export function TableRank() {
         <DataTableColumnHeader
           column={column}
           title='Xếp hạng'
-          // defaultFilter={getFieldValueOnSearchParam('rank')}
+          defaultFilter={getFieldValueOnSearchParam('best_rank')}
         />
       ),
     },
     {
-      id: 'code_vjgr',
-      accessorKey: 'code_vjgr',
+      id: 'vjgr_code',
+      accessorKey: 'vjgr_code',
       cell(props) {
         return (
           <React.Fragment>
-            <p className='text-center'>{props.cell.row.original.code_vjgr}</p>
+            <p className='text-center'>{props.cell.row.original.vjgr_code}</p>
             {collapseStates[props.cell.row.id] && (
               <CustomizeCell
                 id={props.cell.row.id}
                 collapseStates={collapseStates}
                 title='Tham gia'
-                value={props.cell.row.original.entry}
+                value={props.cell.row.original.counting_tournament}
                 desc='giải đấu'
               />
             )}
@@ -110,26 +116,25 @@ export function TableRank() {
         <DataTableColumnHeader
           column={column}
           title='Mã VJGR'
-          // defaultFilter={getFieldValueOnSearchParam('code_vjgr')}
+          defaultFilter={getFieldValueOnSearchParam('vjgr_code')}
         />
       ),
     },
     {
-      id: 'name_member',
-      accessorKey: 'name_member',
+      id: 'name',
       cell(props) {
         return (
           <React.Fragment>
             <div className='min-w-[150px] h-[20px] flex-row-center gap-2'>
-              <CountryFlag countryCode={props.cell.row.original.country} />
-              <p className='text-center'>{props.cell.row.original.name_member}</p>
+              <CountryFlag countryCode={props.cell.row.original.nationality} />
+              <p className='text-center'>{props.cell.row.original.name}</p>
             </div>
             {collapseStates[props.cell.row.id] && (
               <CustomizeCell
                 id={props.cell.row.id}
                 collapseStates={collapseStates}
                 title='Vô địch'
-                value={props.cell.row.original.win}
+                value={props.cell.row.original.number_of_wins}
                 desc='lần'
               />
             )}
@@ -140,23 +145,23 @@ export function TableRank() {
         <DataTableColumnHeader
           column={column}
           title={'Thành viên'}
-          // defaultFilter={getFieldValueOnSearchParam('name_member')}
+          defaultFilter={getFieldValueOnSearchParam('vjgr_code')}
         />
       ),
     },
     {
-      id: 'age',
-      accessorKey: 'age',
+      id: 'date_of_birth',
+      accessorKey: 'date_of_birth',
       cell(props) {
         return (
           <React.Fragment>
-            <p className='text-center'>{props.cell.row.original.age}</p>
+            <p className='text-center'>{calculateAge(props.cell.row.original.date_of_birth)}</p>
             {collapseStates[props.cell.row.id] && (
               <CustomizeCell
                 id={props.cell.row.id}
                 collapseStates={collapseStates}
                 title='Giới tính'
-                value={props.cell.row.original.gender === 0 ? 'Nữ' : 'Nam'}
+                value={props.cell.row.original.gender}
                 desc=''
               />
             )}
@@ -167,21 +172,23 @@ export function TableRank() {
         <DataTableColumnHeader
           column={column}
           title='Độ tuổi'
-          // defaultFilter={getFieldValueOnSearchParam('age')}
+          defaultFilter={getFieldValueOnSearchParam('date_of_birth')}
         />
       ),
     },
     {
-      id: 'up' || 'down',
-      accessorKey: 'up' || 'down',
+      id: 'up-down',
       cell(props) {
         return (
           <React.Fragment>
             <div className='flex-row-center'>
-              <ArrowUp color="#35B155" className='text-center' />
+              <ArrowUp color='#35B155' className='text-center' />
             </div>
             {collapseStates[props.cell.row.id] && (
-              <div className='relative w-[100px] h-full' onClick={() => router.push(`${URL_SYSTEMS.RANK}/${props.cell.row.id}`)}>
+              <div
+                className='relative w-[100px] h-full'
+                onClick={() => router.push(`${URL_SYSTEMS.RANK}/${props.cell.row.original.id}`)}
+              >
                 <p className='absolute top-5 flex-row-center gap-1 rounded-lg opacity-70 hover:opacity-100 cursor-pointer'>
                   Xem thêm
                   <ArrowRight size={12} />
@@ -194,35 +201,31 @@ export function TableRank() {
       header: ({ column }) => <DataTableColumnHeader column={column} title='Tăng/giảm' />,
     },
     {
-      id: 'point',
-      accessorKey: 'point',
+      id: 'points',
+      accessorKey: 'points',
       cell(props) {
-        return <p className='text-center'>{props.cell.row.original.point}</p>;
+        return <p className='text-center'>{props.cell.row.original.points}</p>;
       },
       header: ({ column }) => (
         <DataTableColumnHeader
           column={column}
           title='Điểm thưởng'
-          // defaultFilter={getFieldValueOnSearchParam('point')}
+          defaultFilter={getFieldValueOnSearchParam('points')}
         />
       ),
     },
   ];
   return (
     <section className='w-full space-y-4'>
-      <DataTable
-        data={dataTable || []}
-        columns={columnNews}
-        tableName={TABLE_NAME}
-        isLoading={false}
-        pageSize={0}
-        pageIndex={0}
-        pageCount={0}
-        setCollapseStates={setCollapseStates}
-        handChangePagination={function (value: number, type: 'Page_change' | 'Size_change'): void {
-          throw new Error('Function not implemented.');
-        }}
-      />
+      {members && (
+        <DataTable
+          setCollapseStates={setCollapseStates}
+          data={members}
+          columns={columnNews}
+          tableName={TABLE_NAME}
+          {...tableConfig}
+        />
+      )}
     </section>
   );
 }

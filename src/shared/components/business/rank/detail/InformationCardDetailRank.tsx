@@ -1,10 +1,12 @@
 import CountryFlag from '@/components/customization/CountryFlag';
-import BackgroundInforCardDetailRank from '@/components/icons/rank/BackgroundInforCardDetailRank';
-import { Tag } from 'lucide-react';
-import { IRankUser } from 'src/schemas/user.table.type';
+import { PreImage } from '@/components/customization/PreImage';
+import { calculateAge } from '@/utils/business/calculateAge';
+import { Dot, Tag } from 'lucide-react';
+import { IMember } from 'src/schemas/member.table.type';
+import { imageRankDetail } from 'src/shared/mocks/rank';
 
 interface Props {
-  data: IRankUser;
+  data: IMember;
 }
 const CustomizeCard = ({ title, value, desc }: { title: string; value: string | number; desc: string }) => {
   return (
@@ -19,33 +21,48 @@ const CustomizeCard = ({ title, value, desc }: { title: string; value: string | 
 };
 export function InformationCardDetailRank({ data }: Props) {
   return (
-    <section id='InformationCardDetailRank' className='relative w-full mt-4 flex-col-between-start rounded-lg overflow-hidden'>
+    <section
+      id='InformationCardDetailRank'
+      className='relative w-full mt-4 p-4 flex-col-between-start rounded-lg overflow-hidden'
+    >
       <div className='w-full flex-col-between-center md:flex-row gap-5 z-30'>
         <div className='flex-col-center md:flex-row gap-2'>
           <div className='flex-row-center gap-2'>
-            <CountryFlag countryCode={data.country} />
-            <h1 className='text-2xl text-center'>{data.name_member}</h1>
+            <CountryFlag countryCode={data.nationality} />
+            <h1 className='text-2xl text-center'>{data.name}</h1>
           </div>
           <div className='flex-row-center gap-2'>
-            <p className='py-1 px-2 rounded-md border-[var(--main-color)] border-2'>{data.code_vjgr}</p>
+            <p className='py-1 px-2 rounded-md border-[var(--main-color)] border-2'>{data.vjgr_code}</p>
+            <p className='py-1 px-2 rounded-md border-[var(--main-color)] border-2'>{data.handicap_vga}</p>
             <div className='flex-row-center gap-1'>
-              <p>{data.age}</p>
               <Tag size={16} />
+              <p>{data.gender}</p>
+              <Dot size={24} />
+              <p>U{calculateAge(data.date_of_birth)}</p>
             </div>
           </div>
         </div>
         <div className='flex-col-center gap-2'>
           <p>Điểm thưởng</p>
-          <p className='font-bold text-2xl text-center'>{data.point}</p>
+          <p className='font-bold text-2xl text-center'>{data.points}</p>
         </div>
       </div>
       <div className='w-full md:w-[90%] grid grid-cols-2 md:grid-cols-4 z-30 gap-1 md:gap-5'>
-        <CustomizeCard title='Xếp hạng hiện tại' value={data.rank} desc='' />
-        <CustomizeCard title='Xếp hạng cao nhất' value={data.rank} desc='' />
-        <CustomizeCard title='Tham gia' value={data.entry} desc='giải đấu' />
-        <CustomizeCard title='Vô địch' value={data.win} desc='' />
+        <CustomizeCard title='Xếp hạng hiện tại' value={data.best_rank || 0} desc='' />
+        <CustomizeCard title='Xếp hạng cao nhất' value={data.best_rank || 0} desc='' />
+        <CustomizeCard title='Tham gia' value={data.counting_tournament} desc='giải đấu' />
+        <CustomizeCard title='Vô địch' value={data.number_of_wins} desc='' />
       </div>
-      {/* <BackgroundInforCardDetailRank className='hidden md:block absolute top-0 left-0 w-full object-center rounded-lg' /> */}
+      <div className='absolute top-0 left-0 w-full object-center rounded-lg'>
+        <PreImage
+          src={imageRankDetail}
+          height={400}
+          width={1980}
+          layer={true}
+          alt={'Banner'}
+          className='relative w-full object-center rounded-b-lg'
+        />
+      </div>
     </section>
   );
 }

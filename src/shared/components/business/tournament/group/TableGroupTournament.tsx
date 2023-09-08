@@ -4,12 +4,22 @@ import { ColumnDef } from '@tanstack/react-table';
 import { useRouter } from 'next/router';
 import { ArrowRight, ChevronDown, ChevronUp } from 'lucide-react';
 
-import DataTableColumnHeader from '@/components/customization/table/dataTableColumnHeader';
+import DataTableColumnHeader from '@/components/customization/table/DataTableColumnHeader';
 import DataTable from '@/components/customization/table/DataTable';
-import { IRankDetailUser } from 'src/schemas/user.table.type';
-import { detailDataTable } from 'src/shared/mocks/table';
 import CountryFlag from '@/components/customization/CountryFlag';
 import { URL_SYSTEMS } from 'src/shared/constants';
+import { SearchGroupTournament } from './SearchGroupTournament';
+import { IGroupTournamentSearch, ITournament } from 'src/schemas/tournament.table.type';
+import { IBaseResponseWithCount } from 'src/schemas/baseResponse.type';
+
+type Props = {
+  searchDefault: IGroupTournamentSearch
+  onChangeSearchArrayParams: any
+  titleGroupTournament: string;
+  bannerGroupTournament: string;
+  tournaments: IBaseResponseWithCount<ITournament[]>;
+  tableConfig: any;
+};
 
 const CustomizeCell = ({
   id,
@@ -28,7 +38,7 @@ const CustomizeCell = ({
   return (
     <motion.div
       key={id}
-      className='w-full mt-4 p-4 flex-row-around-center '
+      className='w-full mt-4 p-4 flex-row-around-center'
       initial='hidden'
       animate='visible'
       variants={collapseStates[id] ? containerVariants : {}}
@@ -43,12 +53,11 @@ const CustomizeCell = ({
   );
 };
 
-export function TableGroupTournament() {
+export function TableGroupTournament({ searchDefault, onChangeSearchArrayParams, titleGroupTournament, bannerGroupTournament, tournaments, tableConfig }: Props) {
   const router = useRouter();
   const [collapseStates, setCollapseStates] = useState<Record<string, boolean>>({});
-  const TABLE_NAME = 'Group Tournament';
-  // const { data, tableConfig, getFieldValueOnSearchParam } = useGetListNews();
-  const columnNews: ColumnDef<IRankDetailUser>[] = [
+  const TABLE_NAME = 'GroupTournament';
+  const columnNews: ColumnDef<ITournament>[] = [
     {
       id: 'time',
       accessorKey: 'time',
@@ -56,92 +65,19 @@ export function TableGroupTournament() {
         const dataCustomizeCell = [
           {
             title: 'Khu vực',
-            value: props.cell.row.original.area,
+            value: props.cell.row.original.region,
           },
           {
             title: 'Tỉnh/TP',
-            value: props.cell.row.original.location,
+            value: props.cell.row.original.city,
           },
         ];
         return (
           <React.Fragment>
             <div className='min-w-[50px] h-[20px] flex-row-around-center'>
               {collapseStates[props.cell.row.id] ? <ChevronDown /> : <ChevronUp />}
-              <p className='text-center'>{props.cell.row.original.time}</p>
-            </div>
-            {collapseStates[props.cell.row.id] && (
-              <CustomizeCell id={props.cell.row.id} collapseStates={collapseStates} data={dataCustomizeCell} />
-            )}
-          </React.Fragment>
-        );
-      },
-      header: ({ column }) => (
-        <DataTableColumnHeader
-          column={column}
-          title='Thời gian'
-          // defaultFilter={getFieldValueOnSearchParam('rank')}
-        />
-      ),
-    },
-    {
-      id: 'tournament_name',
-      accessorKey: 'tournament_name',
-      cell(props) {
-        const dataCustomizeCell = [
-          {
-            title: 'Loại giải đấu',
-            value: props.cell.row.original.tournament_category,
-          },
-          {
-            title: 'Số vòng đấu',
-            value: `${props.cell.row.original.award} vòng`,
-          },
-        ];
-        return (
-          <React.Fragment>
-            <div className='min-w-[150px] h-[20px] flex-row-center gap-2'>
-              <CountryFlag countryCode={props.cell.row.original.country} />
-              <p className='text-center'>{props.cell.row.original.tournament_name}</p>
-            </div>
-            {collapseStates[props.cell.row.id] && (
-              <CustomizeCell id={props.cell.row.id} collapseStates={collapseStates} data={dataCustomizeCell} />
-            )}
-          </React.Fragment>
-        );
-      },
-      header: ({ column }) => (
-        <DataTableColumnHeader
-          column={column}
-          title='Giải đấu'
-          // defaultFilter={getFieldValueOnSearchParam('code_vjgr')}
-        />
-      ),
-    },
-    {
-      id: 'rank',
-      accessorKey: 'rank',
-      cell(props) {
-        const dataCustomizeCell = [
-          {
-            title: 'Thể thức',
-            value: props.cell.row.original.tournament_type,
-          },
-          {
-            title: 'Nhà tổ chức',
-            value: props.cell.row.original.location,
-          },
-        ];
-        return (
-          <React.Fragment>
-            <div className='relative min-w-[150px] h-[20px] flex-row-center gap-2'>
-              <CountryFlag countryCode={props.cell.row.original.country} />
-              <p className='text-center'>{props.cell.row.original.tournament_name}</p>
-              <p
-                className='absolute left-18 mt-10 text-[12px] flex-row-center gap-1 rounded-lg opacity-70 hover:opacity-100 cursor-pointer'
-                onClick={() => router.push(`${URL_SYSTEMS.RANK}/${props.cell.row.id}`)}
-              >
-                Xem thêm
-                <ArrowRight size={12} />
+              <p className='text-center'>
+                {props.cell.row.original.from_date} - {props.cell.row.original.to_date}
               </p>
             </div>
             {collapseStates[props.cell.row.id] && (
@@ -150,13 +86,74 @@ export function TableGroupTournament() {
           </React.Fragment>
         );
       },
-      header: ({ column }) => (
-        <DataTableColumnHeader
-          column={column}
-          title='Vận động viên vô địch'
-          // defaultFilter={getFieldValueOnSearchParam('name_member')}
-        />
-      ),
+      header: ({ column }) => <DataTableColumnHeader column={column} title='Thời gian' />,
+    },
+    {
+      id: 'tournament_name',
+      accessorKey: 'tournament_name',
+      cell(props) {
+        const dataCustomizeCell = [
+          {
+            title: 'Loại giải đấu',
+            value: props.cell.row.original.tournament_type.name,
+          },
+          {
+            title: 'Số vòng đấu',
+            value: `${props.cell.row.original.number_round} vòng`,
+          },
+        ];
+        return (
+          <React.Fragment>
+            <div className='min-w-[150px] h-[20px] flex-row-center gap-2'>
+              <CountryFlag countryCode={props.cell.row.original.country} />
+              <p className='text-center'>{props.cell.row.original.name}</p>
+            </div>
+            {collapseStates[props.cell.row.id] && (
+              <CustomizeCell id={props.cell.row.id} collapseStates={collapseStates} data={dataCustomizeCell} />
+            )}
+          </React.Fragment>
+        );
+      },
+      header: ({ column }) => <DataTableColumnHeader column={column} title='Giải đấu' />,
+    },
+    {
+      id: 'member_best_rank',
+      accessorKey: 'member_best_rank',
+      cell(props) {
+        const dataCustomizeCell = [
+          {
+            title: 'Thể thức',
+            value: props.cell.row.original.format,
+          },
+          {
+            title: 'Nhà tổ chức',
+            value: props.cell.row.original.organiser.name,
+          },
+        ];
+        return (
+          <React.Fragment>
+            <div className='relative min-w-[150px] h-[20px] flex-row-center gap-2'>
+              {props.cell.row.original.member && (
+                <CountryFlag countryCode={props.cell.row.original.member.nationality} />
+              )}
+              <p className='text-center'>{props.cell.row.original.member?.name ?? 'Không có'}</p>
+              {props.cell.row.original.member && (
+                <p
+                  className='absolute left-18 mt-10 text-[12px] flex-row-center gap-1 rounded-lg opacity-70 hover:opacity-100 cursor-pointer'
+                  onClick={() => router.push(`${URL_SYSTEMS.RANK}/${props.cell.row.original.member.id}`)}
+                >
+                  Xem thêm
+                  <ArrowRight size={12} />
+                </p>
+              )}
+            </div>
+            {collapseStates[props.cell.row.id] && (
+              <CustomizeCell id={props.cell.row.id} collapseStates={collapseStates} data={dataCustomizeCell} />
+            )}
+          </React.Fragment>
+        );
+      },
+      header: ({ column }) => <DataTableColumnHeader column={column} title='Vận động viên vô địch' />,
     },
     {
       id: 'point',
@@ -167,8 +164,9 @@ export function TableGroupTournament() {
             <p className='text-center'>Hoàn thành</p>
             {collapseStates[props.cell.row.id] && (
               <div className='relative w-[100px] h-[50px] flex items-center justify-center'>
-                <p className='absolute flex-row-center gap-1 mt-8 rounded-lg opacity-70 hover:opacity-100 cursor-pointer text-center'
-                 onClick={() => router.push(`${URL_SYSTEMS.DETAIL_TOURNAMENT}/${props.cell.row.id}`)}
+                <p
+                  className='absolute flex-row-center gap-1 mt-8 rounded-lg opacity-70 hover:opacity-100 cursor-pointer text-center'
+                  onClick={() => router.push(`${URL_SYSTEMS.DETAIL_TOURNAMENT}/${props.cell.row.original.id}`)}
                 >
                   Xem thêm
                   <ArrowRight size={12} />
@@ -178,29 +176,23 @@ export function TableGroupTournament() {
           </React.Fragment>
         );
       },
-      header: ({ column }) => (
-        <DataTableColumnHeader
-          column={column}
-          title='Trạng thái'
-          // defaultFilter={getFieldValueOnSearchParam('age')}
-        />
-      ),
+      header: ({ column }) => <DataTableColumnHeader column={column} title='Trạng thái' />,
     },
   ];
   return (
     <section id='TableGroupTournament' className='w-full mt-4 space-y-4'>
+      <SearchGroupTournament
+        searchDefault={searchDefault}
+        titleGroupTournament={titleGroupTournament}
+        bannerGroupTournament={bannerGroupTournament}
+        onChangeSearchArrayParams={onChangeSearchArrayParams}
+      />
       <DataTable
-        data={detailDataTable || []}
+        setCollapseStates={setCollapseStates}
+        data={tournaments.content}
         columns={columnNews}
         tableName={TABLE_NAME}
-        isLoading={false}
-        pageSize={0}
-        pageIndex={0}
-        pageCount={0}
-        setCollapseStates={setCollapseStates}
-        handChangePagination={function (value: number, type: 'Page_change' | 'Size_change'): void {
-          throw new Error('Function not implemented.');
-        }}
+        {...tableConfig}
       />
     </section>
   );

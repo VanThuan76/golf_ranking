@@ -4,13 +4,16 @@ import { ColumnDef } from '@tanstack/react-table';
 import { useRouter } from 'next/router';
 import { ArrowRight, ChevronDown, ChevronUp } from 'lucide-react';
 
-import DataTableColumnHeader from '@/components/customization/table/dataTableColumnHeader';
+import DataTableColumnHeader from '@/components/customization/table/DataTableColumnHeader';
 import DataTable from '@/components/customization/table/DataTable';
-import { IRankDetailUser } from 'src/schemas/user.table.type';
-import { detailDataTable } from 'src/shared/mocks/table';
 import CountryFlag from '@/components/customization/CountryFlag';
 import { URL_SYSTEMS } from 'src/shared/constants';
+import { ITournamentSummary } from 'src/schemas/tournament-summary.table.type';
 
+type Props = {
+  tournamentSummary: ITournamentSummary[];
+  tableConfig: any;
+};
 const CustomizeCell = ({
   id,
   collapseStates,
@@ -43,12 +46,11 @@ const CustomizeCell = ({
   );
 };
 
-export function TableDetailRank() {
+export function TableDetailRank({ tournamentSummary, tableConfig }: Props) {
   const router = useRouter();
   const [collapseStates, setCollapseStates] = useState<Record<string, boolean>>({});
-  const TABLE_NAME = 'Detai Ranking';
-  // const { data, tableConfig, getFieldValueOnSearchParam } = useGetListNews();
-  const columnNews: ColumnDef<IRankDetailUser>[] = [
+  const TABLE_NAME = 'Detail Ranking';
+  const columnNews: ColumnDef<ITournamentSummary>[] = [
     {
       id: 'time',
       accessorKey: 'time',
@@ -56,18 +58,18 @@ export function TableDetailRank() {
         const dataCustomizeCell = [
           {
             title: 'Khu vực',
-            value: props.cell.row.original.area,
+            value: props.cell.row.original.tournament.region,
           },
           {
             title: 'Tỉnh/TP',
-            value: props.cell.row.original.location,
+            value: props.cell.row.original.tournament.city,
           },
         ];
         return (
           <React.Fragment>
             <div className='min-w-[50px] h-[20px] flex-row-around-center'>
               {collapseStates[props.cell.row.id] ? <ChevronDown /> : <ChevronUp />}
-              <p className='text-center'>{props.cell.row.original.time}</p>
+              <p className='text-center'>{props.cell.row.original.tournament.from_date} - {props.cell.row.original.tournament.to_date}</p>
             </div>
             {collapseStates[props.cell.row.id] && (
               <CustomizeCell id={props.cell.row.id} collapseStates={collapseStates} data={dataCustomizeCell} />
@@ -79,19 +81,17 @@ export function TableDetailRank() {
         <DataTableColumnHeader
           column={column}
           title='Thời gian'
-          // defaultFilter={getFieldValueOnSearchParam('rank')}
         />
       ),
     },
     {
       id: 'tournament_name',
-      accessorKey: 'tournament_name',
       cell(props) {
         return (
           <React.Fragment>
             <div className='min-w-[150px] h-[20px] flex-row-center gap-2'>
-              <CountryFlag countryCode={props.cell.row.original.country} />
-              <p className='text-center'>{props.cell.row.original.tournament_name}</p>
+              <CountryFlag countryCode={props.cell.row.original.tournament.country} />
+              <p className='text-center'>{props.cell.row.original.tournament.name}</p>
             </div>
             {collapseStates[props.cell.row.id] && (
               <CustomizeCell
@@ -100,7 +100,7 @@ export function TableDetailRank() {
                 data={[
                   {
                     title: 'Loại giải đấu',
-                    value: props.cell.row.original.tournament_category,
+                    value: props.cell.row.original.tournament.tournament_type.name,
                   },
                 ]}
               />
@@ -112,17 +112,16 @@ export function TableDetailRank() {
         <DataTableColumnHeader
           column={column}
           title='Giải đấu'
-          // defaultFilter={getFieldValueOnSearchParam('code_vjgr')}
         />
       ),
     },
     {
-      id: 'rank',
-      accessorKey: 'rank',
+      id: 'member_best_rank',
+      accessorKey: 'member_best_rank',
       cell(props) {
         return (
           <React.Fragment>
-            <p className='text-center'>{props.cell.row.original.rank}</p>
+            <p className='text-center'>{props.cell.row.original.member.best_rank ? props.cell.row.original.member.best_rank : 0 }</p>
             {collapseStates[props.cell.row.id] && (
               <CustomizeCell
                 id={props.cell.row.id}
@@ -130,7 +129,7 @@ export function TableDetailRank() {
                 data={[
                   {
                     title: 'Thể thức',
-                    value: props.cell.row.original.tournament_type,
+                    value: props.cell.row.original.tournament.format
                   },
                 ]}
               />
@@ -142,17 +141,16 @@ export function TableDetailRank() {
         <DataTableColumnHeader
           column={column}
           title='Xếp hạng'
-          // defaultFilter={getFieldValueOnSearchParam('name_member')}
         />
       ),
     },
     {
-      id: 'point',
-      accessorKey: 'point',
+      id: 'total_score',
+      accessorKey: 'total_score',
       cell(props) {
         return (
           <React.Fragment>
-            <p className='text-center'>{props.cell.row.original.point}</p>
+            <p className='text-center'>{props.cell.row.original.total_score}</p>
             {collapseStates[props.cell.row.id] && (
               <div className='relative w-[100px] h-[50px] flex items-center justify-center' onClick={() => router.push(`${URL_SYSTEMS.DETAIL_TOURNAMENT}/${props.cell.row.id}`)}>
                 <p className='absolute flex-row-center gap-1 mt-8 rounded-lg opacity-70 hover:opacity-100 cursor-pointer text-center'>
@@ -173,10 +171,10 @@ export function TableDetailRank() {
       ),
     },
     {
-      id: 'award',
-      accessorKey: 'award',
+      id: 'point',
+      accessorKey: 'point',
       cell(props) {
-        return <p className='text-center'>{props.cell.row.original.award}</p>;
+        return <p className='text-center'>{props.cell.row.original.point}</p>;
       },
       header: ({ column }) => (
         <DataTableColumnHeader
@@ -190,17 +188,11 @@ export function TableDetailRank() {
   return (
     <section id='TableDetailRank' className='w-full mt-4 space-y-4'>
       <DataTable
-        data={detailDataTable || []}
+        setCollapseStates={setCollapseStates}
+        data={tournamentSummary}
         columns={columnNews}
         tableName={TABLE_NAME}
-        isLoading={false}
-        pageSize={0}
-        pageIndex={0}
-        pageCount={0}
-        setCollapseStates={setCollapseStates}
-        handChangePagination={function (value: number, type: 'Page_change' | 'Size_change'): void {
-          throw new Error('Function not implemented.');
-        }}
+        {...tableConfig}
       />
     </section>
   );

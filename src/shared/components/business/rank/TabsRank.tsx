@@ -1,42 +1,50 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { GetServerSideProps } from 'next';
+import { useGetListGroup } from 'src/queries/group.queires';
+import { useGetListMemberBySearch } from 'src/queries/member.queries';
+import SearchRank from './SearchRank';
 import TableRank from './TableRank';
 
-const TabsListGender = () => {
-  return (
-    <Tabs defaultValue='male' className='w-full'>
-      <TabsList>
-        <TabsTrigger value='male'>Nam</TabsTrigger>
-        <TabsTrigger value='female'>Nữ</TabsTrigger>
-      </TabsList>
-    </Tabs>
-  );
+type Props = {
+  searchDefault: {
+    name: string;
+    vjgr_code: string;
+    nationality: string;
+  };
 };
-const TabsRank = () => {
+const TabsRank = ({ searchDefault }: Props) => {
+  const { data: groups } = useGetListGroup();
+  const { data: members, tableConfig, getFieldValueOnSearchParam, onChangeSearchArrayParams } = useGetListMemberBySearch();
   return (
     <section id='TabsRank' className='w-full'>
+      <SearchRank searchDefault={searchDefault} onChangeSearchArrayParams={onChangeSearchArrayParams} />
       <Tabs defaultValue='mix' className='w-full'>
         <TabsList>
           <TabsTrigger value='mix'>Bảng tổng hợp</TabsTrigger>
-          <TabsTrigger value='under-18'>Bảng U18</TabsTrigger>
-          <TabsTrigger value='under-15'>Bảng U15</TabsTrigger>
-          <TabsTrigger value='under-12'>Bảng U12</TabsTrigger>
-          <TabsTrigger value='under-9'>Bảng U9</TabsTrigger>
+          {groups &&
+            groups.map(group => (
+              <TabsTrigger key={group.id} value={`group-${group.id}`}>
+                Bảng {group.name}
+              </TabsTrigger>
+            ))}
         </TabsList>
         <TabsContent value='mix'>
-          <TableRank />
+          <TableRank
+            members={members?.content || []}
+            tableConfig={tableConfig}
+            getFieldValueOnSearchParam={getFieldValueOnSearchParam}
+          />
         </TabsContent>
-        <TabsContent value='under-18'>
-          <TabsListGender />
-        </TabsContent>
-        <TabsContent value='under-15'>
-          <TabsListGender />
-        </TabsContent>
-        <TabsContent value='under-12'>
-          <TabsListGender />
-        </TabsContent>
-        <TabsContent value='under-9'>
-          <TabsListGender />
-        </TabsContent>
+        {groups &&
+          groups.map(group => (
+            <TabsContent key={group.id} value={`group-${group.id}`}>
+              <TableRank
+                members={members?.content.filter(member => member.group_id === group.id) || []}
+                tableConfig={tableConfig}
+                getFieldValueOnSearchParam={getFieldValueOnSearchParam}
+              />
+            </TabsContent>
+          ))}
       </Tabs>
     </section>
   );

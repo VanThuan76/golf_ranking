@@ -6,7 +6,7 @@ interface Props {
 }
 const LayoutWebsite = ({ children }: Props) => {
   const { user } = useAppSelector(state => state.appSlice);
-  const isLogin = Boolean(user);
+  const isLogin = user?.id !== null ? true : false
   return ( 
     <>
       <HeaderLayoutWebsite isLogin={isLogin ? true : false}/>

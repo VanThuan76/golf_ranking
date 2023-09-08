@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Column } from '@tanstack/react-table';
-import { ArrowDownIcon, ArrowUpIcon, SearchIcon } from 'lucide-react';
+import { ArrowDownIcon, ArrowUpIcon, EyeIcon, SearchIcon, Settings2Icon } from 'lucide-react';
 import classNames from 'classnames';
 
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
@@ -20,12 +20,13 @@ const DataTableColumnHeader = <TData, TValue>({
   title,
   className,
   defaultFilter,
+  defaultSort,
 }: DataTableColumnHeaderProps<TData, TValue>) => {
   const [searchValue, setSearchValue] = useState<string>(defaultFilter);
   if (!column.getCanSort()) {
-    return <div className={cn(className)}>{title}</div>;
+    return <div className={cn('text-center', className)}>{title}</div>;
   }
-  const itemClassName = 'p-2 rounded-md flex gap-4 items-center hover:bg-foreground/5 cursor-pointer';
+  const itemClassName = 'p-2 rounded-md flex gap-2 items-center hover:bg-foreground/5 cursor-pointer';
   return (
     <div className={cn('flex items-center space-x-2', className)}>
       <Popover>
@@ -33,11 +34,12 @@ const DataTableColumnHeader = <TData, TValue>({
           <Button
             variant='ghost'
             size='sm'
-            className={classNames('w-full h-8 data-[state=open]:bg-accent', {
-              'bg-accent': !!defaultFilter,
+            className={classNames('-ml-3 h-8 data-[state=open]:bg-accent w-full flex justify-center', {
+              'bg-primary/10': !!defaultFilter,
             })}
           >
             <span>{title}</span>
+            <Settings2Icon className='ml-2 h-4 w-4' />
           </Button>
         </PopoverTrigger>
         <PopoverContent align='start' className='px-1 py-0'>
@@ -49,36 +51,52 @@ const DataTableColumnHeader = <TData, TValue>({
             <ArrowDownIcon className='mr-2 h-3.5 w-3.5 text-muted-foreground/70' />
             Desc
           </div>
-          <div className={itemClassName}>
-            <Input
-              value={searchValue}
-              onChange={v => {
-                setSearchValue(v.target.value);
-              }}
-            />
-            <Button
-              onClick={() => {
-                const metaCol = column?.columnDef.meta as any;
-                if (metaCol.searchFn) {
-                  metaCol.searchFn(searchValue);
-                }
-              }}
-            >
-              <SearchIcon />
-            </Button>
-            <Button
-              variant={'destructive'}
-              onClick={() => {
-                setSearchValue('');
-                const metaCol = column?.columnDef.meta as any;
-                if (metaCol.searchFn) {
-                  metaCol.searchFn(undefined);
-                }
-              }}
-            >
-              X
-            </Button>
-          </div>
+          {/* {column.getCanHide() && (
+            <div onClick={() => column.toggleVisibility(false)} className={itemClassName}>
+              <EyeIcon className='mr-2 h-3.5 w-3.5 text-muted-foreground/70' />
+              Hide
+            </div>
+          )} */}
+          {(column?.columnDef?.meta as any)?.searchFn !== undefined &&
+            <div className={itemClassName}>
+              <Input
+                value={searchValue}
+                onChange={v => {
+                  setSearchValue(v.target.value);
+                }}
+                onKeyDown={(event) => {
+                  if (event.key === 'Enter') {
+                    const metaCol = column?.columnDef.meta as any;
+                    if (metaCol?.searchFn) {
+                      metaCol.searchFn(searchValue);
+                    }
+                  }
+                }}
+              />
+              <Button
+                onClick={() => {
+                  const metaCol = column?.columnDef.meta as any;
+                  if (metaCol?.searchFn) {
+                    metaCol.searchFn(searchValue);
+                  }
+                }}
+              >
+                <SearchIcon />
+              </Button>
+              <Button
+                variant={'outline'}
+                onClick={() => {
+                  setSearchValue('');
+                  const metaCol = column?.columnDef.meta as any;
+                  if (metaCol?.searchFn) {
+                    metaCol.searchFn(undefined);
+                  }
+                }}
+              >
+                X
+              </Button>
+            </div>
+          }
         </PopoverContent>
       </Popover>
     </div>

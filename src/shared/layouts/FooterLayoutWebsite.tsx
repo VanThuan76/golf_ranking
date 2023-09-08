@@ -37,7 +37,7 @@ const FooterLayoutWebsite = () => {
           </div>
         </div>
         <div className='w-full py-5 flex-col-end md:flex-row border-t-2'>
-          <p>Bản quyền nội dung thuộc về Công ty Digital Sport Service (DSS)</p>
+          <p>Bản quyền nội dung thuộc về Công ty Metaverse Vietnam</p>
         </div>
       </div>
     </section>

@@ -4,7 +4,6 @@ import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { IResgister } from 'src/schemas/user.table.type';
 import { Button } from '@/components/ui/button';
 import { Form } from '@/components/ui/form';
 import { Loader2 } from 'lucide-react';
@@ -14,17 +13,18 @@ import IconLogoFacebook from '@/components/icons/IconLogoFacebook';
 import IconLogoGoogle from '@/components/icons/IconLogoGoogle';
 import { ConfirmDialog } from '@/components/customization/ConfirmDialog';
 import { API_SSO_FACEBOOK, API_SSO_GOOGLE, URL_SYSTEMS } from 'src/shared/constants';
+import { IRegister } from 'src/schemas/auth.type';
 
 type Props = {
-  formSchema: z.Schema<IResgister>;
-  onSubmit: (value: Partial<IResgister>) => void;
+  formSchema: z.Schema<IRegister>;
+  onSubmit: (value: Partial<IRegister>) => void;
   isLoading?: boolean;
-  defaultValue?: Partial<IResgister>;
+  defaultValue?: Partial<IRegister>;
   className?: string;
 };
 
 export function FormRegister({ formSchema, onSubmit, isLoading, defaultValue, className }: Props) {
-  const [initialValues, setInitialValues] = useState<Partial<IResgister>>(defaultValue || {});
+  const [initialValues, setInitialValues] = useState<Partial<IRegister>>(defaultValue || {});
   const [type, setType] = useState('');
   const router = useRouter();
   const redirectURL = (type: string) => {
@@ -59,7 +59,7 @@ export function FormRegister({ formSchema, onSubmit, isLoading, defaultValue, cl
         className={`w-full space-y-8 ${className}`}
       >
         <div className='w-full grid grid-cols-1 md:grid-cols-2 justify-between items-center gap-2'>
-          <InputText form={form} fieldName='fullName' label='Họ và tên*' placeHolder='Nhập họ tên của bạn' />
+          <InputText form={form} fieldName='name' label='Họ và tên*' placeHolder='Nhập họ tên của bạn' />
           <InputText form={form} fieldName='email' label='Email*' placeHolder='Nhập email của bạn' />
         </div>
         <div className='w-full grid grid-cols-1 md:grid-cols-2 justify-between items-center gap-2'>
@@ -72,10 +72,10 @@ export function FormRegister({ formSchema, onSubmit, isLoading, defaultValue, cl
           />
           <InputPassword
             form={form}
-            fieldName='passwordConfirm'
+            fieldName='password_confirmation'
             label='Xác nhận mật khẩu*'
             placeHolder='Nhập lại mật khẩu'
-            inputProps={{ type: 'passwordConfirm' }}
+            inputProps={{ type: 'password_confirmation' }}
           />
         </div>
         <div className='flex-col-center gap-2'>

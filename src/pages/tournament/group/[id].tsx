@@ -1,28 +1,76 @@
 import Head from 'next/head';
 import dynamic from 'next/dynamic';
-
-import { SearchGroupTournament } from '@/components/business/tournament/group/SearchGroupTournament';
+import React from 'react';
+import { useRouter } from 'next/router';
+import { GetServerSideProps } from 'next';
+import { useGetListTournament } from 'src/queries/tournament.queires';
+import { Filter } from '@/utils/typeSearchParams';
+import { tournamentGroupData } from 'src/shared/mocks/tournament';
 import LayoutWebsite from 'src/shared/layouts/LayoutWebsite';
 import TableGroupTournament from '@/components/business/tournament/group/TableGroupTournament';
 
 const ScrollRevealWrapper = dynamic(() => import('@/components/customization/ScrollRevealWrapper'), { ssr: false });
-const GroupTournament = () => {
+type Props = {
+  name: string;
+  nationality: string;
+  tournament_type_id: number;
+  from_date: string;
+  to_date: string;
+  status: number;
+};
+
+const GroupTournament = ({ name, nationality, tournament_type_id, from_date, to_date, status }: Props) => {
+  const { query } = useRouter();
+  const searchDefault = {
+    name: name,
+    nationality: nationality,
+    tournament_type_id: tournament_type_id,
+    from_date: from_date,
+    to_date: to_date,
+    status: status,
+  };
+  const filterGroupTournament: Filter[] = [
+    {
+      field: 'tournament_group_id',
+      value: query.id,
+    },
+  ];
+  const tournamentGroup = tournamentGroupData.find(item => item.id === Number(query.id));
+  const { data: tournaments, tableConfig, onChangeSearchArrayParams } = useGetListTournament(filterGroupTournament);
+  if (!tournaments) return <React.Fragment></React.Fragment>;
   return (
-    <>
+    <React.Fragment>
       <Head>
         <title>Hệ thống Vietnam Golf Association</title>
         <meta name='description' content='Hệ thống Vietnam Golf Association' />
         <meta name='keywords' content='Hệ thống Vietnam Golf Association' />
       </Head>
       <ScrollRevealWrapper>
-        <SearchGroupTournament />
+        <TableGroupTournament
+          searchDefault={searchDefault}
+          onChangeSearchArrayParams={onChangeSearchArrayParams}
+          titleGroupTournament={tournamentGroup?.name || ''}
+          bannerGroupTournament={tournamentGroup?.image || ''}
+          tournaments={tournaments}
+          tableConfig={tableConfig}
+        />
       </ScrollRevealWrapper>
-      <ScrollRevealWrapper>
-        <TableGroupTournament />
-      </ScrollRevealWrapper>
-    </>
+    </React.Fragment>
   );
 };
 
 GroupTournament.getLayout = (children: React.ReactNode) => <LayoutWebsite>{children}</LayoutWebsite>;
 export default GroupTournament;
+
+export const getServerSideProps: GetServerSideProps = async ctx => {
+  return {
+    props: {
+      name: parseInt(ctx.query['name'] as string),
+      nationality: (ctx.query['nationality'] as string) || '',
+      tournament_type_id: (ctx.query['tournament_type_id'] as string) || '',
+      from_date: parseInt(ctx.query['from_date'] as string),
+      to_date: parseInt(ctx.query['from_date'] as string),
+      status: (ctx.query['status'] as string) || '',
+    },
+  };
+};

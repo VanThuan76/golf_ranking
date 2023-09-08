@@ -1,17 +1,18 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
 import { deleteCookie, getCookie } from 'cookies-next';
+import { IUser } from 'src/schemas/auth.type';
 import { APP_SAVE_KEY } from '../constants';
 
 type APPSTATE = {
-  user: undefined;
+  user: IUser | undefined;
   isLogined: boolean;
   isRouteLoading: boolean;
 };
 
 const user: any = JSON.parse(getCookie(APP_SAVE_KEY.USER_DATA) as string || '{}')
 const initialState: APPSTATE = {
-  user: undefined,
+  user: user || undefined,
   isLogined: false,
   isRouteLoading: false,
 };

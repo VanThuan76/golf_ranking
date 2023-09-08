@@ -17,7 +17,7 @@
     "baseUrl": ".",
     "paths": {
       "@/modules/*": ["./src/shared/modules/*"],
-      "@/components/*": ["./src/shared/components/*"],
+      "@/components/*": ["./src/shared/components/*", "./src/shared/components/customization/*" ],
       "@/hooks/*": ["./src/shared/hooks/*"],
       "@/utils/*": ["./src/shared/utils/*"],
       "@/mocks/*": ["./src/shared/mock/*"]

@@ -69,7 +69,7 @@ export default function usePagination<T>({ queryKey, apiFn, defaultParams }: Pro
             oldQuery[param] = value;
         }
         // reset to first page
-        if(param !== 'page'){
+        if (param !== 'page') {
             oldQuery.page = '0'
         }
         router.push({
@@ -119,6 +119,27 @@ export default function usePagination<T>({ queryKey, apiFn, defaultParams }: Pro
             query: newQuery,
         });
     }
+
+    function onChangeSearchArrayParams(newFilters: Filter[]) {
+        const oldQuery = router.query;
+        const oldFilterArr = parseURLSearch(oldQuery.search as string);
+        let updatedFilterArr = [...oldFilterArr];
+        for (const newFilter of newFilters) {
+            const existingFilterIndex = updatedFilterArr.findIndex((item) => item.field === newFilter.field);
+            if (existingFilterIndex !== -1) {
+                updatedFilterArr[existingFilterIndex] = { ...updatedFilterArr[existingFilterIndex], value: newFilter.value };
+            } else {
+                updatedFilterArr.push(newFilter);
+            }
+        }
+        const newFilterArrJson = stringifyArrayObj(updatedFilterArr.filter((item) => item.value !== undefined));
+        const newQuery = { ...oldQuery, page: 0, search: newFilterArrJson };
+        router.push({
+            pathname: router.pathname,
+            query: newQuery,
+        });
+    }
+
     const finalFilter = defaultParams?.filters ? [...filters, ...defaultParams.filters] : filters;
     const { data, isLoading, refetch } = useQuery({
         queryKey: [...queryKey, router],
@@ -130,7 +151,7 @@ export default function usePagination<T>({ queryKey, apiFn, defaultParams }: Pro
         pageIndex: pageIndex,
         isLoading,
         //@ts-ignore
-        pageCount: data?.data?.totalPages,
+        pageCount: data?.totalPages,
         handChangePagination: (value: number, type: 'Page_change' | 'Size_change') => {
             if (type === 'Page_change') {
                 onChangeParams(PAGINATION.PAGEKEY, value);
@@ -154,6 +175,7 @@ export default function usePagination<T>({ queryKey, apiFn, defaultParams }: Pro
         onChangeParams,
         onChangeParamsObj,
         onChangeSearchParams,
+        onChangeSearchArrayParams,
         getFieldValueOnSearchParam,
         getFieldValueOnSearchParam2
     };

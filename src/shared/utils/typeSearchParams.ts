@@ -4,9 +4,7 @@ export type FieldType = "STRING" | "LONG" | "INTEGER" | "DOUBLE" | "DATE" | "CHA
 export type Direction = 'DESC' | "ASC"
 export type Filter = {
     field: string,
-    op: OpType,
     value: any,
-    fieldType: FieldType
 }
 export type Sort = {
     field: string,
