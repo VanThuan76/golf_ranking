@@ -1,9 +1,7 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import FooterLayoutWebsite from './FooterLayoutWebsite';
 import HeaderLayoutWebsite from './HeaderLayoutWebsite';
 import { useAppSelector } from '@/hooks/useRedux';
-import { useGetUserById } from 'src/queries/user.queries';
-
 interface Props {
   children: React.ReactNode;
 }
@@ -11,13 +9,6 @@ interface Props {
 const LayoutWebsite = ({ children }: Props) => {
   const { user } = useAppSelector(state => state.appSlice);
   const isLogin = user?.user !== undefined ? true : false;
-
-  useEffect(() => {
-    if (isLogin) {
-      useGetUserById(user?.user.id as React.Key, { enabled: true });
-    }
-  }, [isLogin]);
-
   return (
     <React.Fragment>
       <HeaderLayoutWebsite isLogin={isLogin ? true : false} />

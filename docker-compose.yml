@@ -7,7 +7,10 @@ services:
       dockerfile: Dockerfile
     container_name: golf_ranking
     ports:
-      - "3000:3000"
+      - "3000:80"
+      - "3000:443"
     restart: always
     environment:
-      - NODE_ENV=production 
+      - NODE_ENV=production
+    volumes:
+      - /etc/ssl/certs:/etc/ssl/certs

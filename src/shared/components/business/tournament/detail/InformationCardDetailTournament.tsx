@@ -44,7 +44,7 @@ export function InformationCardDetailTournament({ groups, tournamentInfor }: Pro
                 <Tag size={16} />
                 {groups &&
                   groups.map(group => (
-                    <div className='flex-row-end'>
+                    <div key={group.id} className='flex-row-end'>
                       <Dot size={16} />
                       <p className='text-xs'>{group.name}</p>
                     </div>

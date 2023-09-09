@@ -4,19 +4,18 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import { Form } from '@/components/ui/form';
-import { IResetPassword } from 'src/schemas/user.table.type';
 import InputPassword from '@/components/customization/form/InputPassword';
 
 type Props = {
-  formSchema: z.Schema<IResetPassword>;
-  onSubmit: (value: Partial<IResetPassword>) => void;
+  formSchema: z.Schema<any>;
+  onSubmit: (value: Partial<any>) => void;
   isLoading?: boolean;
-  defaultValue?: Partial<IResetPassword>;
+  defaultValue?: Partial<any>;
   className?: string;
 };
 
 export function FormResetPassword({ formSchema, onSubmit, isLoading, defaultValue, className }: Props) {
-  const [initialValues, setInitialValues] = useState<Partial<IResetPassword>>(defaultValue || {});
+  const [initialValues, setInitialValues] = useState<Partial<any>>(defaultValue || {});
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: initialValues,

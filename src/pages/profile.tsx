@@ -7,8 +7,8 @@ import ProfileUser from '@/components/business/user/ProfileUser';
 
 const ScrollRevealWrapper = dynamic(() => import('@/components/customization/ScrollRevealWrapper'), { ssr: false });
 const DetailProfile = () => {
-  const { user } = useAppSelector(state => state.appSlice);
-  const isLogin = user?.user !== undefined ? true : false;
+  // const { user } = useAppSelector(state => state.appSlice);
+  // const isLogin = user?.user !== undefined ? true : false;
   return (
     <React.Fragment>
       <Head>
@@ -17,7 +17,7 @@ const DetailProfile = () => {
         <meta name='keywords' content='Golf Achievement Công nghệ thông tin, Giải pháp số' />
       </Head>
       <ScrollRevealWrapper>
-        <ProfileUser isLogin={isLogin ? true : false} />
+        <ProfileUser isLogin={false} />
       </ScrollRevealWrapper>
     </React.Fragment>
   );
