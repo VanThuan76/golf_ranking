@@ -11,6 +11,7 @@ export const API_SSO_GOOGLE = `${process.env.NEXT_PUBLIC_PRODUCT_API_URL}/auth/r
 export const URL_SYSTEMS = {
     LOGIN: "/login",
     REGISTER: "/register",
+    MEMBER_REGISTER: "/member/register",
     FORGOT_PASSWORD: "/forgot-password",
     RANK: "/rank",
     TOURNAMENT: "/tournament",

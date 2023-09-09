@@ -2,8 +2,9 @@ import { useToast } from "@/components/ui/use-toast"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { useDispatch } from "react-redux"
 import { axiosInstanceNoAuth } from "src/https.config"
-import { ILogin, IRegister, IUser } from "src/schemas/auth.type"
+import { IAuthResponse, ILogin, IRegister } from "src/schemas/auth.type"
 import { IBaseResponse } from "src/schemas/baseResponse.type"
+import { IUser } from "src/schemas/user.table.type"
 import { login } from "src/shared/stores/appSlice"
 
 const QUERY_KEY = "AuthQuery"
@@ -34,7 +35,7 @@ export const useLogin = (onSuccessHandle?: () => void) => {
     const queryClient = useQueryClient()
     const { toast } = useToast()
     return useMutation({
-        mutationFn: (body: ILogin) => axiosInstanceNoAuth.post<IBaseResponse<IUser>>('/login', body),
+        mutationFn: (body: ILogin) => axiosInstanceNoAuth.post<IBaseResponse<IAuthResponse>>('/login', body),
         onSuccess: (data) => {
             if (!data.data) return
             queryClient.invalidateQueries({ queryKey: [QUERY_KEY] })

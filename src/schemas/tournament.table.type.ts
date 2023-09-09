@@ -1,5 +1,6 @@
 import { IMember } from "./member.table.type";
 import { ITournamentType } from "./tournament-type.table.type";
+export type StatusTournamentString = 'Hoàn thành' | 'Đang tổ chức' | 'Sắp bắt đầu' | 'Đăng ký';
 
 export interface ITournament {
   id: number;
@@ -18,6 +19,7 @@ export interface ITournament {
   tournament_group: Tournamentgroup;
   member: IMember;
   organiser: Organiser;
+  image?: string;
 }
 
 interface Organiser {

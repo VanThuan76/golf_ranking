@@ -1,5 +1,5 @@
 import { IMember } from "./member.table.type";
-import { ITournament } from "./tournament.table.type";
+import { ITournament, StatusTournamentString } from "./tournament.table.type";
 
 export interface ITournamentSummary {
     id: number;
@@ -7,7 +7,7 @@ export interface ITournamentSummary {
     to_par: number;
     total_score: number;
     point: number;
-    status: number;
+    status: StatusTournamentString;
     created_at: string;
     updated_at: string;
     tournament: ITournament;

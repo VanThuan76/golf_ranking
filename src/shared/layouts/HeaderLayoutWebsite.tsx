@@ -106,7 +106,7 @@ const HeaderLayoutWebsite = ({isLogin}: Props) => {
               <button onClick={() => router.push("/login")} className='dark:text-white font-bold py-2 px-4 rounded cursor-pointer hidden lg:block'>
                 Đăng nhập
               </button>
-              <Button onClick={() => router.push("/member/register")} className='bg-white text-black cursor-pointer hidden lg:block'>Đăng ký thành viên</Button>
+              <Button onClick={() => router.push("/member/register")} className='bg-white text-black cursor-pointer hidden lg:block hover:bg-slate-300'>Đăng ký thành viên</Button>
             </React.Fragment>
           )}
           {/* ///Options Menu */}

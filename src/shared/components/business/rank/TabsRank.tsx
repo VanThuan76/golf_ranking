@@ -1,5 +1,4 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { GetServerSideProps } from 'next';
 import { useGetListGroup } from 'src/queries/group.queires';
 import { useGetListMemberBySearch } from 'src/queries/member.queries';
 import SearchRank from './SearchRank';

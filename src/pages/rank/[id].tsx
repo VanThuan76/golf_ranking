@@ -8,6 +8,8 @@ import { IBaseResponse } from 'src/schemas/baseResponse.type';
 import { useGetListTournamentSummary } from 'src/queries/tournament-summary.queires';
 import LayoutWebsite from 'src/shared/layouts/LayoutWebsite';
 import TableDetailRank from '@/components/business/rank/detail/TableDetailRank';
+import Breadcrumb from '@/components/customization/Breadcrumb';
+import { URL_SYSTEMS } from 'src/shared/constants';
 
 const ScrollRevealWrapper = dynamic(() => import('@/components/customization/ScrollRevealWrapper'), { ssr: false });
 type Props = {
@@ -24,6 +26,7 @@ const DetailRanking = ({ member }: Props) => {
         <meta name='description' content='Bảng xếp hạng chi tiết Golf Achievement' />
         <meta name='keywords' content='Golf Achievement Công nghệ thông tin, Giải pháp số' />
       </Head>
+      <Breadcrumb title={`Quay lại Bảng xếp hạng`} url={URL_SYSTEMS.RANK} />
       <ScrollRevealWrapper>
         <InformationCardDetailRank data={member.data} />
       </ScrollRevealWrapper>

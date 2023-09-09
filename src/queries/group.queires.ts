@@ -14,3 +14,13 @@ export const useGetListGroup = (options?: Partial<UseQueryOptions>) => {
         enabled: options?.enabled
     })
 }
+export const useGetListGroupByTournament = (id: React.Key, options?: Partial<UseQueryOptions>) => {
+    return useQuery({
+        queryKey: [QUERY_KEY, 'get-all'],
+        queryFn: () => axiosInstanceNoAuth.get<IBaseResponse<IGroup[]>>(`/groups-by-tournament/${id}`),
+        select(data) {
+            return data.data
+        },
+        enabled: options?.enabled
+    })
+}

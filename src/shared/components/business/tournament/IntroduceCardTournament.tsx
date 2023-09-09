@@ -12,14 +12,14 @@ const IntroduceCardTournament = ({ data, className, size }: Props) => {
   const router = useRouter();
   return (
     <section id='IntroduceCardTournament' className={`relative w-full text-white rounded-lg shadow-lg ${className}`}>
-      {/* <PreImage
+      <PreImage
         src={data.image as string}
         height={size || 160}
         width={1980}
-        layer={false}
+        layer={true}
         alt={'News'}
         className='w-full h-full rounded-lg object-cover'
-      /> */}
+      />
       <div className='absolute bottom-0 w-full flex flex-col justify-center items-center gap-3 p-5'>
         <h2 className='text-lg lg:text-xl'>{data.name}</h2>
         <button

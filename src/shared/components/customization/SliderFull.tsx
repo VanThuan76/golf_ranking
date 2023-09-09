@@ -55,7 +55,7 @@ const SliderFull = ({ slides }: Props) => {
                 src={slide.image}
                 alt={`Slide ${index}`}
                 width={1980}
-                height={500}
+                height={700}
                 className='w-full object-cover rounded-lg'
               />
             </motion.div>

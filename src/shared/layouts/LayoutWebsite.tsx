@@ -1,20 +1,31 @@
+import React, { useEffect } from 'react';
 import FooterLayoutWebsite from './FooterLayoutWebsite';
 import HeaderLayoutWebsite from './HeaderLayoutWebsite';
 import { useAppSelector } from '@/hooks/useRedux';
+import { useGetUserById } from 'src/queries/user.queries';
+
 interface Props {
   children: React.ReactNode;
 }
+
 const LayoutWebsite = ({ children }: Props) => {
   const { user } = useAppSelector(state => state.appSlice);
-  const isLogin = user?.id !== null ? true : false
-  return ( 
-    <>
-      <HeaderLayoutWebsite isLogin={isLogin ? true : false}/>
+  const isLogin = user?.user !== undefined ? true : false;
+
+  useEffect(() => {
+    if (isLogin) {
+      useGetUserById(user?.user.id as React.Key, { enabled: true });
+    }
+  }, [isLogin]);
+
+  return (
+    <React.Fragment>
+      <HeaderLayoutWebsite isLogin={isLogin ? true : false} />
       <main className='w-full min-h-screen dark:bg-[#141523] pb-4 md:pb-8 lg:pb-16 xl:pb-24 px-4 md:px-24 lg:px-32 xl:px-40'>
         {children}
       </main>
       <FooterLayoutWebsite />
-    </>
+    </React.Fragment>
   );
 };
 

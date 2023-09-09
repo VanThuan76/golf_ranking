@@ -8,6 +8,8 @@ import { Filter } from '@/utils/typeSearchParams';
 import { tournamentGroupData } from 'src/shared/mocks/tournament';
 import LayoutWebsite from 'src/shared/layouts/LayoutWebsite';
 import TableGroupTournament from '@/components/business/tournament/group/TableGroupTournament';
+import Breadcrumb from '@/components/customization/Breadcrumb';
+import { URL_SYSTEMS } from 'src/shared/constants';
 
 const ScrollRevealWrapper = dynamic(() => import('@/components/customization/ScrollRevealWrapper'), { ssr: false });
 type Props = {
@@ -45,6 +47,7 @@ const GroupTournament = ({ name, nationality, tournament_type_id, from_date, to_
         <meta name='description' content='Hệ thống Vietnam Golf Association' />
         <meta name='keywords' content='Hệ thống Vietnam Golf Association' />
       </Head>
+      <Breadcrumb title={`Quay lại Danh sách hệ thống giải đấu`} url={URL_SYSTEMS.TOURNAMENT} />
       <ScrollRevealWrapper>
         <TableGroupTournament
           searchDefault={searchDefault}

@@ -29,3 +29,16 @@ export interface IMemberSearch {
   vjgr_code?: string;
   nationality?: string;
 }
+export interface IMemberRegister {
+  name: string;
+  handicap_vga: string;
+  gender: number;
+  date_of_birth: string;
+  nationality: string;
+  email: string;
+  phone_number: string;
+  guardian_name: string;
+  relationship: string;
+  guardian_email: string;
+  guardian_phone: string;
+}

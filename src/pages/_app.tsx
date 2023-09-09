@@ -14,6 +14,7 @@ import useRouterChange from "@/hooks/useRouterChange";
 import { store } from 'src/shared/stores';
 import { Jelly } from "@uiball/loaders";
 import { Toaster } from "@/components/ui/toaster";
+import ProgressBarNext from "@/components/customization/ProgressBarNext";
 
 const interText = Montserrat({
   subsets: ['vietnamese'],
@@ -70,6 +71,7 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
           <link rel='apple-touch-icon' href='/logo.svg' />
         </Head>
         <Provider store={store}>
+          <ProgressBarNext />
           <QueryClientProvider client={queryClient}>
             <ConfigLayout getLayout={getLayout}>
               <Component {...pageProps} />

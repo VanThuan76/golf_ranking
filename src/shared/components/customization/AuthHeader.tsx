@@ -25,7 +25,7 @@ const AuthHeader = () => {
     <DropdownMenu>
       <DropdownMenuTrigger asChild className='cursor-pointer'>
         <div className='hidden lg:flex flex-row-center gap-8'>
-          {user && user.member_id !== 0 && (
+          {user && user.member !== null && (
             <React.Fragment>
               <p className='pr-4 border-r-2 border-r-white'>Test</p>
               <div className='flex-row-end gap-4'>
@@ -51,7 +51,7 @@ const AuthHeader = () => {
             title='Thay đổi mật khẩu'
           />
         </DropdownMenuItem>
-        {user && user.member_id !== 0 && (
+        {user && user.member !== null && (
           <DropdownMenuItem>
             <RowAuthHeader icon={<Trophy size={12} />} title='Thành tích' />
           </DropdownMenuItem>

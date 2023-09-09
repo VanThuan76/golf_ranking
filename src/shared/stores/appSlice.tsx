@@ -1,11 +1,11 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
 import { deleteCookie, getCookie } from 'cookies-next';
-import { IUser } from 'src/schemas/auth.type';
+import { IAuthResponse } from 'src/schemas/auth.type';
 import { APP_SAVE_KEY } from '../constants';
 
 type APPSTATE = {
-  user: IUser | undefined;
+  user: IAuthResponse | undefined;
   isLogined: boolean;
   isRouteLoading: boolean;
 };
