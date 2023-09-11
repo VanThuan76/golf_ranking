@@ -48,7 +48,7 @@ export function InformationCardDetailRank({ data }: Props) {
         </div>
       </div>
       <div className='w-full md:w-[90%] grid grid-cols-2 md:grid-cols-4 z-30 gap-1 md:gap-5'>
-        <CustomizeCard title='Xếp hạng hiện tại' value={data.best_rank || 0} desc='' />
+        <CustomizeCard title='Xếp hạng hiện tại' value={data.current_rank || 0} desc='' />
         <CustomizeCard title='Xếp hạng cao nhất' value={data.best_rank || 0} desc='' />
         <CustomizeCard title='Tham gia' value={data.counting_tournament} desc='giải đấu' />
         <CustomizeCard title='Vô địch' value={data.number_of_wins} desc='' />

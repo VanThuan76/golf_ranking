@@ -16,9 +16,7 @@ const formSchema = z.object({
     .string({ required_error: 'Vui lòng nhập handicap_vga' })
     .min(1, { message: 'Vui lòng nhập handicap_vga' }),
   gender: z.number({ required_error: 'Vui lòng chọn giới tính' }),
-  date_of_birth: z
-    .string({ required_error: 'Vui lòng nhập ngày sinh của bạn' })
-    .min(1, { message: 'Vui lòng nhập ngày sinh của bạn' }),
+  date_of_birth: z.date({ required_error: 'Vui lòng nhập ngày sinh của bạn' }),
   nationality: z
     .string({ required_error: 'Vui lòng nhập quốc gia của bạn' })
     .min(1, { message: 'Vui lòng nhập quốc gia của bạn' }),
@@ -52,7 +50,7 @@ const RegisterMember = () => {
           <Breadcrumb title={`Quay lại Giải đấu`} url={URL_SYSTEMS.TOURNAMENT} />
           <div className='font-semibold text-2xl w-full text-black'>Đăng ký thành viên</div>
           <p>Đăng ký thành viên để tham gia giải đấu và bảng xếp hạng</p>
-          <FormRegisterMember formSchema={formSchema} onSubmit={() => {}} />
+          <FormRegisterMember formSchema={formSchema} />
         </div>
       </div>
     </div>

@@ -53,7 +53,7 @@ export function FormResetPassword({ formSchema, onSubmit, isLoading, defaultValu
           label='Mật khẩu mới*'
           placeHolder='Nhập mật khẩu mới'
           inputProps={{ type: 'new_password' }}
-        />{' '}
+        />
         <InputPassword
           form={form}
           fieldName='new_password_confirm'

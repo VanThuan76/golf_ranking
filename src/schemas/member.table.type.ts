@@ -1,6 +1,6 @@
 import { IGroup } from "./group.table.type";
 
-export interface IMember {
+export interface IMember  {
   id: number;
   group_id: number;
   vjgr_code: string;
@@ -14,14 +14,16 @@ export interface IMember {
   points: number;
   counting_tournament: number;
   number_of_wins: number;
-  best_rank?: number;
-  guardian_name?: string;
-  relationship?: string;
+  best_rank?: any;
+  current_rank?: any;
+  rank_change?: any;
+  guardian_name: string;
+  relationship: string;
   guardian_phone?: number;
-  guardian_email?: any;
+  guardian_email: string;
   status: string;
-  created_at?: string;
-  updated_at?: string;
+  created_at: string;
+  updated_at: string;
   group: IGroup;
 }
 export interface IMemberSearch {
@@ -33,7 +35,7 @@ export interface IMemberRegister {
   name: string;
   handicap_vga: string;
   gender: number;
-  date_of_birth: string;
+  date_of_birth: Date;
   nationality: string;
   email: string;
   phone_number: string;

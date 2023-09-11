@@ -8,42 +8,6 @@ import { Command, CommandGroup, CommandItem } from "@/components/ui/command";
 import { Badge } from "@/components/ui/badge";
 
 type Framework = Record<"value" | "label", string>;
-
-// const FRAMEWORKS = [
-//     {
-//         value: "next.js",
-//         label: "Next.js",
-//     },
-//     {
-//         value: "sveltekit",
-//         label: "SvelteKit",
-//     },
-//     {
-//         value: "nuxt.js",
-//         label: "Nuxt.js",
-//     },
-//     {
-//         value: "remix",
-//         label: "Remix",
-//     },
-//     {
-//         value: "astro",
-//         label: "Astro",
-//     },
-//     {
-//         value: "wordpress",
-//         label: "WordPress",
-//     },
-//     {
-//         value: "express.js",
-//         label: "Express.js",
-//     },
-//     {
-//         value: "nest.js",
-//         label: "Nest.js",
-//     }
-// ] satisfies Framework[];
-
 type Props = {
     form: UseFormReturn<any>
     fieldName: string

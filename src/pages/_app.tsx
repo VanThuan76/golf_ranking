@@ -15,7 +15,6 @@ import { store } from 'src/shared/stores';
 import { Jelly } from "@uiball/loaders";
 import { Toaster } from "@/components/ui/toaster";
 import ProgressBarNext from "@/components/customization/ProgressBarNext";
-import { useGetUserById } from "src/queries/user.queries";
 
 const interText = Montserrat({
   subsets: ['vietnamese'],
@@ -41,10 +40,6 @@ const ConfigLayout = ({
   children: React.ReactElement;
   getLayout: (page: ReactElement) => React.ReactNode;
 }) => {
-  // const { user } = useAppSelector(state => state.appSlice);
-  // const isLogin = user?.user !== undefined ? true : false;
-  // useGetUserById(user?.user.id as React.Key, { enabled: isLogin });
-
   const isRouteLoading = useAppSelector(state => state.appSlice.isRouteLoading);
   useRouterChange();
   return (

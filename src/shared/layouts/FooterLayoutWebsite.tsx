@@ -4,6 +4,8 @@ import IconLocation from '@/components/icons/footer/IconLocation';
 import IconPhone from '@/components/icons/footer/IconPhone';
 import IconMail from '@/components/icons/footer/IconMail';
 import IconFacebook from '@/components/icons/footer/IconFacebook';
+import Link from 'next/link';
+import { SOCIAL_BUSINESS } from '../constants';
 
 const FooterLayoutWebsite = () => {
   return (
@@ -12,7 +14,9 @@ const FooterLayoutWebsite = () => {
         <div className='w-full mb-4 flex-col-between-start md:flex-row'>
           <div className='flex-col-start gap-5'>
             <IconLogo color='#fff' />
-            <IconFacebook />
+            <Link href={SOCIAL_BUSINESS.FACEBOOK} target="_blank">
+              <IconFacebook />
+            </Link>
           </div>
           <div className='flex-col-start gap-5'>
             <h2 className='font-bold'>Về chúng tôi</h2>

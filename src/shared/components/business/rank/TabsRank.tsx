@@ -18,6 +18,7 @@ const TabsRank = ({ searchDefault }: Props) => {
     <section id='TabsRank' className='w-full'>
       <SearchRank searchDefault={searchDefault} onChangeSearchArrayParams={onChangeSearchArrayParams} />
       <Tabs defaultValue='mix' className='w-full'>
+      <div className='w-full overflow-hidden overflow-x-scroll'>
         <TabsList>
           <TabsTrigger value='mix'>Bảng tổng hợp</TabsTrigger>
           {groups &&
@@ -27,6 +28,7 @@ const TabsRank = ({ searchDefault }: Props) => {
               </TabsTrigger>
             ))}
         </TabsList>
+        </div>
         <TabsContent value='mix'>
           <TableRank
             members={members?.content || []}
