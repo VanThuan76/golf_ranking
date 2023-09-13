@@ -18,7 +18,7 @@ type Props = {
     options?: { value: any, label: string }[]
 }
 
-export function InputSelect({ className, form, label, placeHolder, fieldName, options = [] }: Props) {
+export default function InputSelect({ className, form, label, placeHolder, fieldName, options = [] }: Props) {
     return (
         <FormField
             control={form.control}

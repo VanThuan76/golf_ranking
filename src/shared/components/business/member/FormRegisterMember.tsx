@@ -9,7 +9,7 @@ import { Loader2 } from 'lucide-react';
 import { IMemberRegister } from 'src/schemas/member.table.type';
 import { useGetListCommonCode } from 'src/queries/common-code.queires';
 import { InputCheckBox } from '@/shared/components/customization/form/InputCheckBox';
-import { InputSelect } from '@/shared/components/customization/form/InputSelect';
+import InputSelect from '@/shared/components/customization/form/InputSelect';
 import InputDatePicker from '@/shared/components/customization/form/InputDatePicker';
 import InputNumber from '@/shared/components/customization/form/InputNumber';
 import InputText from '@/shared/components/customization/form/InputText';
@@ -113,11 +113,7 @@ export function FormRegisterMember({ formSchema, isLoading, defaultValue, classN
             />
           </div>
         </div>
-        <InputCheckBox
-          title='Tôi đồng ý với Điều kiện & điều khoản thành viên'
-          form={form}
-          fieldName='guardian_phone'
-        />
+        <InputCheckBox title="Tôi đồng ý với Điều kiện & điều khoản thành viên" form={form} fieldName='guardian_phone' />
         <Button className='w-full' type='submit'>
           {isLoading && <Loader2 size={16} className='animate-spin' />}Đăng ký
         </Button>
