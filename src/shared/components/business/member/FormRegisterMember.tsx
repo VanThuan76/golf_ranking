@@ -12,8 +12,8 @@ import { useGetListCommonCode } from 'src/queries/common-code.queires';
 import InputSelect from '@/components/customization/form/InputSelect';
 import InputDatePicker from '@/components/customization/form/InputDatePicker';
 import { Checkbox } from '@/components/ui/checkbox';
-import InputNumber from '@/components/customization/form/inputNumber';
 import { InputCheckBox } from '@/components/customization/form/InputCheckBox';
+import InputNumber from '@/components/customization/form/InputNumber';
 
 type Props = {
   formSchema: z.Schema<IMemberRegister>;
