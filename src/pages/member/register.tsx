@@ -3,10 +3,10 @@ import * as z from 'zod';
 import { bannerLogin } from 'src/shared/mocks/login';
 import BlankLayout from 'src/shared/layouts/BlankLayout';
 import { URL_SYSTEMS } from 'src/shared/constants';
-import SliderFull from '@/shared/components/customization/SliderFull';
-import Breadcrumb from '@/shared/components/customization/Breadcrumb';
-import { FormRegisterMember } from '@/shared/components/business/member/FormRegisterMember';
-import IconLogoDark from '@/shared/components/icons/IconLogoDark';
+import Breadcrumb from '@/src/shared/components/customization/Breadcrumb';
+import { FormRegisterMember } from '@/src/shared/components/business/member/FormRegisterMember';
+import IconLogoDark from '@/src/shared/components/icons/IconLogoDark';
+import SliderFull from '@/src/shared/components/customization/SliderFull';
 
 const formSchema = z.object({
   name: z

@@ -1,7 +1,7 @@
 import React from 'react'
-import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/shared/components/ui/form'
+import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/src/shared/components/ui/form'
 import { Eye, EyeOff } from 'lucide-react'
-import { Input } from '@/shared/components/ui/input'
+import { Input } from '@/src/shared/components/ui/input'
 
 type Props = {
     form: any

@@ -2,7 +2,7 @@
 import * as React from 'react';
 import { useTheme } from 'next-themes';
 import { Moon, Sun } from 'lucide-react';
-import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from '@/shared/components/ui/dropdown-menu';
+import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from '@/src/shared/components/ui/dropdown-menu';
 
 interface Props{
   className?: string

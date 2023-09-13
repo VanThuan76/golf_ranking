@@ -5,7 +5,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogDescription,
-} from '@/shared/components/ui/dialog';
+} from '@/src/shared/components/ui/dialog';
 
 interface Props {
   titleDialog: string;

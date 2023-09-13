@@ -2,7 +2,7 @@ import { PAGINATION } from 'src/shared/constants/settings';
 import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/router';
 import { useDebugValue } from 'react';
-import { Filter, ISearchParams } from '@/shared/utils/typeSearchParams';
+import { Filter, ISearchParams } from '@/src/shared/utils/typeSearchParams';
 
 type Props<T> = {
     apiFn: (_params?: ISearchParams) => Promise<T>;

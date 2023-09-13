@@ -1,4 +1,4 @@
-import { PreImage } from "@/shared/components/customization/PreImage";
+import { PreImage } from "@/src/shared/components/customization/PreImage";
 import { ISectionBannerRank } from "src/shared/mocks/home";
 
 interface Props {

@@ -6,7 +6,7 @@ import {
 } from "@radix-ui/react-icons"
 import * as MenubarPrimitive from "@radix-ui/react-menubar"
 
-import { cn } from "@/shared/utils/tailwindPlugin"
+import { cn } from "@/src/shared/utils/tailwindPlugin"
 
 const MenubarMenu = MenubarPrimitive.Menu
 

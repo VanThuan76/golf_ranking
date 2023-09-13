@@ -3,11 +3,11 @@ import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { Form } from '@/shared/components/ui/form';
-import InputText from '@/shared/components/customization/form/InputText';
-import IconLogoFacebook from '@/shared/components/icons/IconLogoFacebook';
-import IconLogoGoogle from '@/shared/components/icons/IconLogoGoogle';
-import { ConfirmDialog } from '@/shared/components/customization/ConfirmDialog';
+import { Form } from '@/src/shared/components/ui/form';
+import InputText from '@/src/shared/components/customization/form/InputText';
+import IconLogoFacebook from '@/src/shared/components/icons/IconLogoFacebook';
+import IconLogoGoogle from '@/src/shared/components/icons/IconLogoGoogle';
+import { ConfirmDialog } from '@/src/shared/components/customization/ConfirmDialog';
 import { API_SSO_FACEBOOK, API_SSO_GOOGLE } from 'src/shared/constants';
 
 type Props = {

@@ -1,8 +1,8 @@
 import { ChevronLeftIcon, ChevronRightIcon, ChevronsLeftIcon, ChevronsRightIcon } from 'lucide-react';
 import { Table } from '@tanstack/react-table';
 
-import { Button } from '@/shared/components/ui/button';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/shared/components/ui/select';
+import { Button } from '@/src/shared/components/ui/button';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/src/shared/components/ui/select';
 
 interface DataTablePaginationProps<TData> {
   table: Table<TData>;

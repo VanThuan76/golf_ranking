@@ -3,15 +3,15 @@ import { motion } from 'framer-motion';
 import React, { useEffect, useState } from 'react';
 import { ChevronDown, Menu } from 'lucide-react';
 
-import { Sheet, SheetContent, SheetTrigger } from '@/shared/components/ui/sheet';
+import { Sheet, SheetContent, SheetTrigger } from '@/src/shared/components/ui/sheet';
 import { menu } from '../mocks/header';
-import IconCrown from '@/shared/components/icons/menu/IconCrown';
-import IconTrophy from '@/shared/components/icons/menu/IconTrophy';
-import { Button } from '@/shared/components/ui/button';
+import IconCrown from '@/src/shared/components/icons/menu/IconCrown';
+import IconTrophy from '@/src/shared/components/icons/menu/IconTrophy';
+import { Button } from '@/src/shared/components/ui/button';
 import { useRouter } from 'next/router';
-import ThemeModeToggle from '@/shared/components/customization/ToggleThemeMode';
-import IconLogoLight from '@/shared/components/icons/IconLogoLight';
-import AuthHeader from '@/shared/components/customization/AuthHeader';
+import ThemeModeToggle from '@/src/shared/components/customization/ToggleThemeMode';
+import IconLogoLight from '@/src/shared/components/icons/IconLogoLight';
+import AuthHeader from '@/src/shared/components/customization/AuthHeader';
 interface Props{
   isLogin: boolean
 }

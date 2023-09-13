@@ -1,4 +1,4 @@
-import { useToast } from "@/shared/components/ui/use-toast"
+import { useToast } from "@/src/shared/components/ui/use-toast"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { setCookie } from "cookies-next"
 import { useDispatch } from "react-redux"

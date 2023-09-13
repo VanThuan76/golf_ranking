@@ -10,7 +10,7 @@ import {
   useFormContext,
 } from "react-hook-form"
 
-import { cn } from "@/shared/utils/tailwindPlugin"
+import { cn } from "@/src/shared/utils/tailwindPlugin"
 import { Label } from "./label"
 
 const Form = FormProvider

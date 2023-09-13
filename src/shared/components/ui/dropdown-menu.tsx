@@ -5,7 +5,7 @@ import {
   ChevronRightIcon,
   DotFilledIcon,
 } from "@radix-ui/react-icons"
-import { cn } from "@/shared/utils/tailwindPlugin"
+import { cn } from "@/src/shared/utils/tailwindPlugin"
 
 
 const DropdownMenu = DropdownMenuPrimitive.Root

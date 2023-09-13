@@ -5,12 +5,12 @@ import {
   DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuItem,
-} from '@/shared/components/ui/dropdown-menu';
-import { useAppSelector } from '@/shared/hooks/useRedux';
+} from '@/src/shared/components/ui/dropdown-menu';
+import { useAppSelector } from '@/src/shared/hooks/useRedux';
 import { useRouter } from 'next/router';
 import { URL_SYSTEMS } from 'src/shared/constants';
 import TriggerDialogForm from './dialog/TriggerDialogForm';
-import { FormResetPassword } from '@/shared/modules/auth/FormResetPassword';
+import { FormResetPassword } from '@/src/shared/modules/auth/FormResetPassword';
 import { z } from 'zod';
 
 const formSchema = z.object({

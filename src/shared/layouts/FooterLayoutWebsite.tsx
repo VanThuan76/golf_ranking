@@ -1,9 +1,9 @@
 import { footerContactData } from '../mocks/footer';
-import IconLogo from '@/shared/components/icons/IconLogoDark';
-import IconLocation from '@/shared/components/icons/footer/IconLocation';
-import IconPhone from '@/shared/components/icons/footer/IconPhone';
-import IconMail from '@/shared/components/icons/footer/IconMail';
-import IconFacebook from '@/shared/components/icons/footer/IconFacebook';
+import IconLogo from '@/src/shared/components/icons/IconLogoDark';
+import IconLocation from '@/src/shared/components/icons/footer/IconLocation';
+import IconPhone from '@/src/shared/components/icons/footer/IconPhone';
+import IconMail from '@/src/shared/components/icons/footer/IconMail';
+import IconFacebook from '@/src/shared/components/icons/footer/IconFacebook';
 import Link from 'next/link';
 import { SOCIAL_BUSINESS } from '../constants';
 

@@ -1,4 +1,4 @@
-import RegisterModule from "@/shared/modules/auth/RegisterModule";
+import RegisterModule from "../shared/modules/auth/RegisterModule";
 import BlankLayout from "src/shared/layouts/BlankLayout";
 
 const Register = () => {

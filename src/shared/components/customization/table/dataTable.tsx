@@ -12,8 +12,8 @@ import {
   useReactTable,
 } from '@tanstack/react-table';
 
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/shared/components/ui/table';
-import { Skeleton } from '@/shared/components/ui/skeleton';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/src/shared/components/ui/table';
+import { Skeleton } from '@/src/shared/components/ui/skeleton';
 import DataTablePagination from './DataTablePagination';
 
 export const COLUMNDATA_TYPE = {

@@ -2,11 +2,11 @@ import React from 'react'
 import { UseFormReturn } from 'react-hook-form'
 import { Check, ChevronsUpDown } from 'lucide-react'
 
-import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/shared/components/ui/form'
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from '@/shared/components/ui/command'
-import { Popover, PopoverContent, PopoverTrigger } from '@/shared/components/ui/popover'
-import { Button } from '@/shared/components/ui/button'
-import { cn } from '@/shared/utils/tailwindPlugin'
+import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/src/shared/components/ui/form'
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from '@/src/shared/components/ui/command'
+import { Popover, PopoverContent, PopoverTrigger } from '@/src/shared/components/ui/popover'
+import { Button } from '@/src/shared/components/ui/button'
+import { cn } from '@/src/shared/utils/tailwindPlugin'
 
 /* TODO : filter theo label hoac value */
 type Props = {

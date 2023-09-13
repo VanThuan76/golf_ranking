@@ -3,17 +3,17 @@ import dynamic from 'next/dynamic';
 import React from 'react';
 import LayoutWebsite from 'src/shared/layouts/LayoutWebsite';
 import { useRouter } from 'next/router';
-import { InformationCardDetailTournament } from '@/shared/components/business/tournament/detail/InformationCardDetailTournament';
-import { Filter } from '@/shared/utils/typeSearchParams';
+import { InformationCardDetailTournament } from '@/src/shared/components/business/tournament/detail/InformationCardDetailTournament';
+import { Filter } from '@/src/shared/utils/typeSearchParams';
 import { useGetListTournamentDetail } from 'src/queries/tournament-detail.queires';
 import { useGetListGroupByTournament } from 'src/queries/group.queires';
 import { URL_SYSTEMS } from 'src/shared/constants';
-import TabsDetailTournament from '@/shared/components/business/tournament/detail/TabsDetailTournament';
-import Breadcrumb from '@/shared/components/customization/Breadcrumb';
-import HintConditionDetailTournament from '@/shared/components/business/tournament/detail/HintConditionDetailTournament';
+import TabsDetailTournament from '@/src/shared/components/business/tournament/detail/TabsDetailTournament';
+import Breadcrumb from '@/src/shared/components/customization/Breadcrumb';
+import HintConditionDetailTournament from '@/src/shared/components/business/tournament/detail/HintConditionDetailTournament';
 import { StatusTournamentString } from 'src/schemas/tournament.table.type';
 
-const ScrollRevealWrapper = dynamic(() => import('@/shared/components/customization/ScrollRevealWrapper'), { ssr: false });
+const ScrollRevealWrapper = dynamic(() => import('@/src/shared/components/customization/ScrollRevealWrapper'), { ssr: false });
 
 const DetailTournament = () => {
   const { query } = useRouter();

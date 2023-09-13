@@ -1,4 +1,4 @@
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/shared/components/ui/tabs';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/src/shared/components/ui/tabs';
 import { useGetListGroup } from 'src/queries/group.queires';
 import { useGetListMemberBySearch } from 'src/queries/member.queries';
 import SearchRank from './SearchRank';

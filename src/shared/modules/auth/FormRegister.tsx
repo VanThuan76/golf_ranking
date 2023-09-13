@@ -4,14 +4,14 @@ import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { Button } from '@/shared/components/ui/button';
-import { Form } from '@/shared/components/ui/form';
+import { Button } from '@/src/shared/components/ui/button';
+import { Form } from '@/src/shared/components/ui/form';
 import { Loader2 } from 'lucide-react';
-import InputText from '@/shared/components/customization/form/InputText';
-import InputPassword from '@/shared/components/customization/form/InputPassword';
-import IconLogoFacebook from '@/shared/components/icons/IconLogoFacebook';
-import IconLogoGoogle from '@/shared/components/icons/IconLogoGoogle';
-import { ConfirmDialog } from '@/shared/components/customization/ConfirmDialog';
+import InputText from '@/src/shared/components/customization/form/InputText';
+import InputPassword from '@/src/shared/components/customization/form/InputPassword';
+import IconLogoFacebook from '@/src/shared/components/icons/IconLogoFacebook';
+import IconLogoGoogle from '@/src/shared/components/icons/IconLogoGoogle';
+import { ConfirmDialog } from '@/src/shared/components/customization/ConfirmDialog';
 import { API_SSO_FACEBOOK, API_SSO_GOOGLE, URL_SYSTEMS } from 'src/shared/constants';
 import { IRegister } from 'src/schemas/auth.type';
 

@@ -2,16 +2,16 @@ import Head from 'next/head';
 import dynamic from 'next/dynamic';
 import React from 'react';
 import { useRouter } from 'next/router';
-import { InformationCardDetailRank } from '@/shared/components/business/rank/detail/InformationCardDetailRank';
+import { InformationCardDetailRank } from '@/src/shared/components/business/rank/detail/InformationCardDetailRank';
 import { IMember } from 'src/schemas/member.table.type';
 import { IBaseResponse } from 'src/schemas/baseResponse.type';
 import { useGetListTournamentSummary } from 'src/queries/tournament-summary.queires';
 import LayoutWebsite from 'src/shared/layouts/LayoutWebsite';
-import TableDetailRank from '@/shared/components/business/rank/detail/TableDetailRank';
-import Breadcrumb from '@/shared/components/customization/Breadcrumb';
+import TableDetailRank from '@/src/shared/components/business/rank/detail/TableDetailRank';
+import Breadcrumb from '@/src/shared/components/customization/Breadcrumb';
 import { URL_SYSTEMS } from 'src/shared/constants';
 
-const ScrollRevealWrapper = dynamic(() => import('@/shared/components/customization/ScrollRevealWrapper'), { ssr: false });
+const ScrollRevealWrapper = dynamic(() => import('@/src/shared/components/customization/ScrollRevealWrapper'), { ssr: false });
 type Props = {
   member: IBaseResponse<IMember>;
 };

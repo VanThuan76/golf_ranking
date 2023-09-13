@@ -3,16 +3,16 @@ import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { Button } from '@/shared/components/ui/button';
-import { Form } from '@/shared/components/ui/form';
+import { Button } from '@/src/shared/components/ui/button';
+import { Form } from '@/src/shared/components/ui/form';
 import { Loader2 } from 'lucide-react';
 import { IMemberRegister } from 'src/schemas/member.table.type';
 import { useGetListCommonCode } from 'src/queries/common-code.queires';
-import { InputCheckBox } from '@/shared/components/customization/form/InputCheckBox';
-import InputSelect from '@/shared/components/customization/form/InputSelect';
-import InputDatePicker from '@/shared/components/customization/form/InputDatePicker';
-import InputNumber from '@/shared/components/customization/form/InputNumber';
-import InputText from '@/shared/components/customization/form/InputText';
+import { InputCheckBox } from '@/src/shared/components/customization/form/InputCheckBox';
+import InputSelect from '@/src/shared/components/customization/form/InputSelect';
+import InputDatePicker from '@/src/shared/components/customization/form/InputDatePicker';
+import InputNumber from '@/src/shared/components/customization/form/InputNumber';
+import InputText from '@/src/shared/components/customization/form/InputText';
 
 type Props = {
   formSchema: z.Schema<IMemberRegister>;

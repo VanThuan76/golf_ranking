@@ -1,7 +1,7 @@
 import React from 'react';
 import { UseFormReturn } from 'react-hook-form';
-import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/shared/components/ui/form';
-import { Input } from '@/shared/components/ui/input';
+import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/src/shared/components/ui/form';
+import { Input } from '@/src/shared/components/ui/input';
 
 type Props = {
   form: UseFormReturn<any>;

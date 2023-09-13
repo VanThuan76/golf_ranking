@@ -1,4 +1,4 @@
-import { PreImage } from '@/shared/components/customization/PreImage';
+import { PreImage } from '@/src/shared/components/customization/PreImage';
 import { useRouter } from 'next/router';
 import { ITournament } from 'src/schemas/tournament.table.type';
 import { URL_SYSTEMS } from 'src/shared/constants';

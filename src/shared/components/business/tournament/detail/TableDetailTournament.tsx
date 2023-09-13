@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { ColumnDef } from '@tanstack/react-table';
 import { ChevronDown, ChevronUp } from 'lucide-react';
-import CountryFlag from '@/shared/components/customization/CountryFlag';
-import DataTableColumnHeader from '@/shared/components/customization/table/DataTableColumnHeader';
-import DataTable from '@/shared/components/customization/table/DataTable';
+import CountryFlag from '@/src/shared/components/customization/CountryFlag';
+import DataTableColumnHeader from '@/src/shared/components/customization/table/DataTableColumnHeader';
+import DataTable from '@/src/shared/components/customization/table/DataTable';
 import { ITournamentDetail } from 'src/schemas/tournament-detail.table.type';
 
 type Props = {
