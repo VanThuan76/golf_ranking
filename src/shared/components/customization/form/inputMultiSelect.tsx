@@ -3,9 +3,9 @@ import { UseFormReturn } from "react-hook-form";
 import { Command as CommandPrimitive } from "cmdk";
 import { X } from "lucide-react";
 
-import { FormField, FormItem, FormLabel } from "@/components/ui/form";
-import { Command, CommandGroup, CommandItem } from "@/components/ui/command";
-import { Badge } from "@/components/ui/badge";
+import { FormField, FormItem, FormLabel } from "@/shared/components/ui/form";
+import { Command, CommandGroup, CommandItem } from "@/shared/components/ui/command";
+import { Badge } from "@/shared/components/ui/badge";
 
 type Framework = Record<"value" | "label", string>;
 type Props = {

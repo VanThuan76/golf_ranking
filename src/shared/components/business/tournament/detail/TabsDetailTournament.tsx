@@ -1,4 +1,4 @@
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/shared/components/ui/tabs';
 import { IGroup } from 'src/schemas/group.table.type';
 import { ITournamentDetail } from 'src/schemas/tournament-detail.table.type';
 import TableDetailTournament from './TableDetailTournament';

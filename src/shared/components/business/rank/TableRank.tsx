@@ -4,12 +4,12 @@ import { ColumnDef } from '@tanstack/react-table';
 import { useRouter } from 'next/router';
 import { ArrowRight, ArrowUp, ChevronDown, ChevronUp } from 'lucide-react';
 
-import DataTableColumnHeader from '@/components/customization/table/DataTableColumnHeader';
-import DataTable from '@/components/customization/table/DataTable';
-import CountryFlag from '@/components/customization/CountryFlag';
+import DataTableColumnHeader from '@/shared/components/customization/table/DataTableColumnHeader';
+import DataTable from '@/shared/components/customization/table/DataTable';
+import CountryFlag from '@/shared/components/customization/CountryFlag';
 import { URL_SYSTEMS } from 'src/shared/constants';
 import { IMember } from 'src/schemas/member.table.type';
-import { calculateAge } from '@/utils/business/calculateAge';
+import { calculateAge } from '@/shared/utils/business/calculateAge';
 
 type Props = {
   members: IMember[];

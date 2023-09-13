@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import React from 'react';
 import LayoutWebsite from 'src/shared/layouts/LayoutWebsite';
-import IntroduceCardTournament from '@/components/business/tournament/IntroduceCardTournament';
+import IntroduceCardTournament from '@/shared/components/business/tournament/IntroduceCardTournament';
 import { tournamentGroupData } from 'src/shared/mocks/tournament';
 export function Tournament() {
   return (

@@ -3,8 +3,8 @@ import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { Form } from '@/components/ui/form';
-import InputPassword from '@/components/customization/form/InputPassword';
+import { Form } from '@/shared/components/ui/form';
+import InputPassword from '@/shared/components/customization/form/InputPassword';
 
 type Props = {
   formSchema: z.Schema<any>;

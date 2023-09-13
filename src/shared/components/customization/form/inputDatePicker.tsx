@@ -3,12 +3,12 @@ import utc from 'dayjs/plugin/utc'
 import timezone from 'dayjs/plugin/timezone'
 import { CalendarIcon } from 'lucide-react';
 
-import { cn } from '@/utils/tailwindPlugin';
+import { cn } from '@/shared/utils/tailwindPlugin';
 import { TIME_FORMAT_READ } from 'src/shared/constants/settings';
-import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { Button } from '@/components/ui/button';
-import { Calendar, CalendarProps } from '@/components/ui/calendar';
+import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/shared/components/ui/form';
+import { Popover, PopoverContent, PopoverTrigger } from '@/shared/components/ui/popover';
+import { Button } from '@/shared/components/ui/button';
+import { Calendar, CalendarProps } from '@/shared/components/ui/calendar';
 
 dayjs.extend(utc);
 dayjs.extend(timezone);

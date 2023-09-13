@@ -1,7 +1,7 @@
 import React from 'react';
 import FooterLayoutWebsite from './FooterLayoutWebsite';
 import HeaderLayoutWebsite from './HeaderLayoutWebsite';
-import { useAppSelector } from '@/hooks/useRedux';
+import { useAppSelector } from '@/shared/hooks/useRedux';
 import { useGetUserById } from 'src/queries/user.queries';
 interface Props {
   children: React.ReactNode;

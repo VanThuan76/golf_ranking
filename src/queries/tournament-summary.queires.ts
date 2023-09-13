@@ -1,5 +1,5 @@
-import usePagination from "@/hooks/usePagination"
-import { Filter } from "@/utils/typeSearchParams"
+import usePagination from "@/shared/hooks/usePagination"
+import { Filter } from "@/shared/utils/typeSearchParams"
 import { axiosInstanceNoAuth } from "src/https.config"
 import { IBaseResponseWithCount } from "src/schemas/baseResponse.type"
 import { ITournamentSummary } from "src/schemas/tournament-summary.table.type"

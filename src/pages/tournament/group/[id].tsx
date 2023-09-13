@@ -4,14 +4,14 @@ import React from 'react';
 import { useRouter } from 'next/router';
 import { GetServerSideProps } from 'next';
 import { useGetListTournament } from 'src/queries/tournament.queires';
-import { Filter } from '@/utils/typeSearchParams';
+import { Filter } from '@/shared/utils/typeSearchParams';
 import { tournamentGroupData } from 'src/shared/mocks/tournament';
 import LayoutWebsite from 'src/shared/layouts/LayoutWebsite';
-import TableGroupTournament from '@/components/business/tournament/group/TableGroupTournament';
-import Breadcrumb from '@/components/customization/Breadcrumb';
+import TableGroupTournament from '@/shared/components/business/tournament/group/TableGroupTournament';
+import Breadcrumb from '@/shared/components/customization/Breadcrumb';
 import { URL_SYSTEMS } from 'src/shared/constants';
 
-const ScrollRevealWrapper = dynamic(() => import('@/components/customization/ScrollRevealWrapper'), { ssr: false });
+const ScrollRevealWrapper = dynamic(() => import('@/shared/components/customization/ScrollRevealWrapper'), { ssr: false });
 type Props = {
   name: string;
   nationality: string;

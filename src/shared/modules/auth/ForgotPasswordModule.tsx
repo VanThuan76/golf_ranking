@@ -1,7 +1,7 @@
 import * as z from 'zod';
 
-import SliderFull from '@/components/customization/SliderFull';
-import IconLogo from '@/components/icons/IconLogoDark';
+import SliderFull from '@/shared/components/customization/SliderFull';
+import IconLogo from '@/shared/components/icons/IconLogoDark';
 import { bannerLogin } from 'src/shared/mocks/login';
 import { FormForgotPassword } from './FormForgotPassword';
 import { FormResetPassword } from './FormResetPassword';

@@ -8,13 +8,13 @@ import { Montserrat} from 'next/font/google'
 import { Provider } from 'react-redux';
 import { ThemeProvider as NextThemesProvider } from 'next-themes';
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { useAppSelector } from "@/hooks/useRedux";
-import useRouterChange from "@/hooks/useRouterChange";
+import useRouterChange from "@/shared/hooks/useRouterChange";
+import ProgressBarNext from "@/shared/components/customization/ProgressBarNext";
 
 import { store } from 'src/shared/stores';
 import { Jelly } from "@uiball/loaders";
-import { Toaster } from "@/components/ui/toaster";
-import ProgressBarNext from "@/components/customization/ProgressBarNext";
+import { useAppSelector } from "@/shared/hooks/useRedux";
+import { Toaster } from "@/shared/components/ui/toaster";
 
 const interText = Montserrat({
   subsets: ['vietnamese'],

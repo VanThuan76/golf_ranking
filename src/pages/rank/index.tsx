@@ -2,12 +2,12 @@ import Head from 'next/head';
 import dynamic from 'next/dynamic';
 import React from 'react';
 import LayoutWebsite from 'src/shared/layouts/LayoutWebsite';
-import BannerRank from '@/components/business/rank/BannerRank';
-import TabsRank from '@/components/business/rank/TabsRank';
+import BannerRank from '@/shared/components/business/rank/BannerRank';
+import TabsRank from '@/shared/components/business/rank/TabsRank';
 import { sectionBanner } from 'src/shared/mocks/home';
 import { GetServerSideProps } from 'next';
 
-const ScrollRevealWrapper = dynamic(() => import('@/components/customization/ScrollRevealWrapper'), { ssr: false });
+const ScrollRevealWrapper = dynamic(() => import('@/shared/components/customization/ScrollRevealWrapper'), { ssr: false });
 type Props = {
   name: string;
   vjgr_code: string;

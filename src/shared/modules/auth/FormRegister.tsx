@@ -4,14 +4,14 @@ import { useRouter } from 'next/router';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { Button } from '@/components/ui/button';
-import { Form } from '@/components/ui/form';
+import { Button } from '@/shared/components/ui/button';
+import { Form } from '@/shared/components/ui/form';
 import { Loader2 } from 'lucide-react';
-import InputText from '@/components/customization/form/InputText';
-import InputPassword from '@/components/customization/form/InputPassword';
-import IconLogoFacebook from '@/components/icons/IconLogoFacebook';
-import IconLogoGoogle from '@/components/icons/IconLogoGoogle';
-import { ConfirmDialog } from '@/components/customization/ConfirmDialog';
+import InputText from '@/shared/components/customization/form/InputText';
+import InputPassword from '@/shared/components/customization/form/InputPassword';
+import IconLogoFacebook from '@/shared/components/icons/IconLogoFacebook';
+import IconLogoGoogle from '@/shared/components/icons/IconLogoGoogle';
+import { ConfirmDialog } from '@/shared/components/customization/ConfirmDialog';
 import { API_SSO_FACEBOOK, API_SSO_GOOGLE, URL_SYSTEMS } from 'src/shared/constants';
 import { IRegister } from 'src/schemas/auth.type';
 

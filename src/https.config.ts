@@ -117,5 +117,5 @@ class Axios {
 }
 
 
-export const axiosInstance = new Axios(process.env.NEXT_PUBLIC_PRODUCT_API_URL || process.env.NEXT_PUBLIC_LOCAL_API_URL as string, false);
-export const axiosInstanceNoAuth = new Axios(process.env.NEXT_PUBLIC_PRODUCT_API_URL || process.env.NEXT_PUBLIC_LOCAL_API_URL as string, true);
+export const axiosInstance = new Axios(process.env.NEXT_PUBLIC_PRODUCT_API_URL as string, false);
+export const axiosInstanceNoAuth = new Axios(process.env.NEXT_PUBLIC_PRODUCT_API_URL as string, true);

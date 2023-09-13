@@ -1,15 +1,15 @@
-import InputSelect from '@/components/customization/form/InputSelect';
-import InputText from '@/components/customization/form/InputText';
-import InputDatePicker from '@/components/customization/form/InputDatePicker';
-import { Button } from '@/components/ui/button';
-import { Form } from '@/components/ui/form';
+import InputSelect from '@/shared/components/customization/form/InputSelect';
+import InputText from '@/shared/components/customization/form/InputText';
+import InputDatePicker from '@/shared/components/customization/form/InputDatePicker';
+import { Button } from '@/shared/components/ui/button';
+import { Form } from '@/shared/components/ui/form';
 import { Search } from 'lucide-react';
 import { useForm } from 'react-hook-form';
-import { PreImage } from '@/components/customization/PreImage';
+import { PreImage } from '@/shared/components/customization/PreImage';
 import { useGetListCommonCode } from 'src/queries/common-code.queires';
 import { useGetListTournamentType } from 'src/queries/tournament-type.queries';
 import { IGroupTournamentSearch } from 'src/schemas/tournament.table.type';
-import { Filter } from '@/utils/typeSearchParams';
+import { Filter } from '@/shared/utils/typeSearchParams';
 
 type Props = {
   searchDefault: IGroupTournamentSearch

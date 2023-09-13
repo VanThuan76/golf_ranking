@@ -1,4 +1,4 @@
-import useTrans from '@/hooks/useTrans';
+import useTrans from '@/shared/hooks/useTrans';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '../ui/dropdown-menu';
 
 const SwitchLanguageMode = () => {

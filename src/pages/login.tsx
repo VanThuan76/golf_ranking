@@ -1,4 +1,4 @@
-import LoginModule from "@/modules/auth/LoginModule";
+import LoginModule from "@/shared/modules/auth/LoginModule";
 import BlankLayout from "src/shared/layouts/BlankLayout";
 
 const Login = () => {

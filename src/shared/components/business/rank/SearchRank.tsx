@@ -1,8 +1,8 @@
-import InputSelect from '@/components/customization/form/InputSelect';
-import InputText from '@/components/customization/form/InputText';
-import { Button } from '@/components/ui/button';
-import { Form } from '@/components/ui/form';
-import { Filter } from '@/utils/typeSearchParams';
+import InputSelect from '@/shared/components/customization/form/InputSelect';
+import InputText from '@/shared/components/customization/form/InputText';
+import { Button } from '@/shared/components/ui/button';
+import { Form } from '@/shared/components/ui/form';
+import { Filter } from '@/shared/utils/typeSearchParams';
 import { Search } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { IMemberSearch } from 'src/schemas/member.table.type';

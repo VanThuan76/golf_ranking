@@ -1,22 +1,22 @@
-FROM node:16-alpine
+FROM node:16-alpine as builder
 
 RUN mkdir -p /usr/src/app
-ENV PORT 3000
-
 WORKDIR /usr/src/app
 
 COPY package.json /usr/src/app
 COPY yarn.lock /usr/src/app
 
-# Production use node instead of root
-# USER node
-RUN yarn cache clean
-RUN yarn install 
+RUN yarn install
 
 COPY . /usr/src/app
-COPY . .
 
-RUN yarn build
+RUN yarn build:production
+
+RUN pwd && ls
+
+
+COPY . /usr/src/app
+
 
 EXPOSE 3000
 CMD ["yarn", "start"]

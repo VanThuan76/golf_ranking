@@ -1,6 +1,6 @@
 import { UseFormReturn } from 'react-hook-form';
-import { Checkbox } from '@/components/ui/checkbox';
-import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import { Checkbox } from '@/shared/components/ui/checkbox';
+import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from '@/shared/components/ui/form';
 type Props = {
   form: UseFormReturn<any>;
   fieldName: string;

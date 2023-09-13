@@ -1,5 +1,5 @@
-import CountryFlag from '@/components/customization/CountryFlag';
-import { PreImage } from '@/components/customization/PreImage';
+import CountryFlag from '@/shared/components/customization/CountryFlag';
+import { PreImage } from '@/shared/components/customization/PreImage';
 import { MapPin, Dot, Tag } from 'lucide-react';
 import { IGroup } from 'src/schemas/group.table.type';
 import { ITournament } from 'src/schemas/tournament.table.type';

@@ -2,11 +2,12 @@ import Head from 'next/head';
 import dynamic from 'next/dynamic';
 import React from 'react';
 import LayoutWebsite from 'src/shared/layouts/LayoutWebsite';
-import ProfileUser from '@/components/business/user/ProfileUser';
-import ProfileMember from '@/components/business/user/ProfileMember';
-import { useAppSelector } from '@/hooks/useRedux';
+import ProfileUser from '@/shared/components/business/user/ProfileUser';
+import ProfileMember from '@/shared/components/business/user/ProfileMember';
+import { useAppSelector } from '@/shared/hooks/useRedux';
 
-const ScrollRevealWrapper = dynamic(() => import('@/components/customization/ScrollRevealWrapper'), { ssr: false });
+
+const ScrollRevealWrapper = dynamic(() => import('@/shared/components/customization/ScrollRevealWrapper'), { ssr: false });
 const DetailProfile = () => {
   const { user } = useAppSelector(state => state.appSlice);
   if(!user) return <></>

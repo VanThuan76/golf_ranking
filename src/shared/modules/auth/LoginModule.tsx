@@ -4,8 +4,8 @@ import { bannerLogin } from 'src/shared/mocks/login';
 import { ILogin } from 'src/schemas/auth.type';
 import { FormLogin } from './FormLogin';
 import { useLogin } from 'src/queries/auth/auth.queires';
-import SliderFull from '@/components/customization/SliderFull';
-import IconLogo from '@/components/icons/IconLogoDark';
+import SliderFull from '@/shared/components/customization/SliderFull';
+import IconLogo from '@/shared/components/icons/IconLogoDark';
 
 const formSchema = z.object({
   email: z

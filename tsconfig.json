@@ -16,12 +16,7 @@
     "incremental": true,
     "baseUrl": ".",
     "paths": {
-      "@/modules/*": ["./src/shared/modules/*"],
-      "@/components/*": ["./src/shared/components/*"],
-      "@/hooks/*": ["./src/shared/hooks/*"],
-      "@/utils/*": ["./src/shared/utils/*"],
-      "@/mocks/*": ["./src/shared/mock/*"]
-
+      "@/*": ["./src/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],

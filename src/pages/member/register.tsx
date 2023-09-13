@@ -1,12 +1,12 @@
 import * as z from 'zod';
 
 import { bannerLogin } from 'src/shared/mocks/login';
-import SliderFull from '@/components/customization/SliderFull';
-import IconLogo from '@/components/icons/IconLogoDark';
 import BlankLayout from 'src/shared/layouts/BlankLayout';
-import Breadcrumb from '@/components/customization/Breadcrumb';
-import { FormRegisterMember } from '@/components/business/member/FormRegisterMember';
 import { URL_SYSTEMS } from 'src/shared/constants';
+import SliderFull from '@/shared/components/customization/SliderFull';
+import Breadcrumb from '@/shared/components/customization/Breadcrumb';
+import { FormRegisterMember } from '@/shared/components/business/member/FormRegisterMember';
+import IconLogoDark from '@/shared/components/icons/IconLogoDark';
 
 const formSchema = z.object({
   name: z
@@ -46,7 +46,7 @@ const RegisterMember = () => {
       </div>
       <div className='w-full min-h-[700px] col-span-1 mx-auto'>
         <div className='w-full h-full flex-col-between-start space-y-6'>
-          <IconLogo className='float-left' />
+          <IconLogoDark className='float-left' />
           <Breadcrumb title={`Quay lại Giải đấu`} url={URL_SYSTEMS.TOURNAMENT} />
           <div className='font-semibold text-2xl w-full text-black'>Đăng ký thành viên</div>
           <p>Đăng ký thành viên để tham gia giải đấu và bảng xếp hạng</p>

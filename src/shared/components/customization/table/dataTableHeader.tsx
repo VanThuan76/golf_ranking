@@ -2,8 +2,8 @@ import React from 'react'
 import { Table } from '@tanstack/react-table';
 import { EyeIcon } from 'lucide-react';
 
-import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
-import { Button } from '@/components/ui/button';
+import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuTrigger } from '@/shared/components/ui/dropdown-menu';
+import { Button } from '@/shared/components/ui/button';
 
 interface DataTableHeaderProps<TData> {
     table: Table<TData>;

@@ -1,8 +1,8 @@
 import React from 'react';
 import { UseFormReturn } from 'react-hook-form';
 
-import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
-import { Textarea } from '@/components/ui/textarea';
+import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/shared/components/ui/form';
+import { Textarea } from '@/shared/components/ui/textarea';
 
 type Props = {
   form: UseFormReturn<any>;

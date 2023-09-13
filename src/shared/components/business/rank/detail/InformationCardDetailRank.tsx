@@ -1,6 +1,6 @@
-import CountryFlag from '@/components/customization/CountryFlag';
-import { PreImage } from '@/components/customization/PreImage';
-import { calculateAge } from '@/utils/business/calculateAge';
+import CountryFlag from '@/shared/components/customization/CountryFlag';
+import { PreImage } from '@/shared/components/customization/PreImage';
+import { calculateAge } from '@/shared/utils/business/calculateAge';
 import { Dot, Tag } from 'lucide-react';
 import { IMember } from 'src/schemas/member.table.type';
 import { imageRankDetail } from 'src/shared/mocks/rank';
