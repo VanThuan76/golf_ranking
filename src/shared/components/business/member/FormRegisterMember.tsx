@@ -7,13 +7,12 @@ import { Button } from '@/components/ui/button';
 import { Form } from '@/components/ui/form';
 import { Loader2 } from 'lucide-react';
 import { IMemberRegister } from 'src/schemas/member.table.type';
-import InputText from '@/components/customization/form/InputText';
 import { useGetListCommonCode } from 'src/queries/common-code.queires';
+import { InputCheckBox } from '@/components/customization/form/InputCheckBox';
 import InputSelect from '@/components/customization/form/InputSelect';
 import InputDatePicker from '@/components/customization/form/InputDatePicker';
-import { Checkbox } from '@/components/ui/checkbox';
-import { InputCheckBox } from '@/components/customization/form/InputCheckBox';
 import InputNumber from '@/components/customization/form/InputNumber';
+import InputText from '@/components/customization/form/InputText';
 
 type Props = {
   formSchema: z.Schema<IMemberRegister>;
