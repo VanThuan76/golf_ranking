@@ -1,5 +1,5 @@
 export const bannerLogin = [
-    { image: "/images/Đăng nhập_ đăng ký 1.JPG" },
-    { image: "/images/Đăng nhập_ đăng ký 2.JPG"},
-    { image: "/images/Đăng nhập_ đăng ký 3.JPG"},
+    { image: "/images/LoginRegister1.JPG" },
+    { image: "/images/LoginRegister2.JPG"},
+    { image: "/images/LoginRegister3.JPG"},
 ]
