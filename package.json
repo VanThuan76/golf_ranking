@@ -12,11 +12,8 @@
     "build": "next build",
     "build:test": "env-cmd -f .env.test yarn build",
     "build:production": "env-cmd -f .env.production yarn build",
-    "start": "next start",
-    "lint": "next lint",
-    "type-check": "tsc --noEmit",
-    "build-ts": "npm run type-check && next-transpile-modules && next build",
-    "postinstall": "npm run build-ts"
+    "start": "NODE_ENV=production node server.js",
+    "lint": "next lint"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.2.0",
@@ -54,6 +51,7 @@
     "env-cmd": "^10.1.0",
     "eslint": "8.47.0",
     "eslint-config-next": "13.4.19",
+    "express": "^4.18.2",
     "framer-motion": "^10.16.1",
     "lucide-react": "^0.268.0",
     "next": "13.4.19",
