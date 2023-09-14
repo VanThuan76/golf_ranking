@@ -12,9 +12,9 @@ import useRouterChange from "../shared/hooks/useRouterChange";
 import ProgressBarNext from "../shared/components/customization/ProgressBarNext";
 
 import { store } from 'src/shared/stores';
-import { Jelly } from "@uiball/loaders";
 import { useAppSelector } from "../shared/hooks/useRedux";
 import { Toaster } from "../shared/components/ui/toaster";
+import { Jelly } from "@uiball/loaders";
 
 const interText = Montserrat({
   subsets: ['vietnamese'],

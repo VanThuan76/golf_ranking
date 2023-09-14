@@ -1,5 +1,8 @@
 {
   "name": "golf_ranking",
+  "imports": {
+    "@/*": ["./*"]
+  },
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -8,8 +11,7 @@
     "build:test": "env-cmd -f .env.test yarn build",
     "build:production": "env-cmd -f .env.production yarn build",
     "start": "next start",
-    "lint": "next lint",
-    "postinstall": "tsconfig-paths install -p tsconfig.json -s ./src"
+    "lint": "next lint"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.2.0",
