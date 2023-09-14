@@ -1,7 +1,9 @@
 {
   "name": "golf_ranking",
   "imports": {
-    "@/*": ["./*"]
+    "@/*": [
+      "./*"
+    ]
   },
   "version": "0.1.0",
   "private": true,
@@ -11,7 +13,10 @@
     "build:test": "env-cmd -f .env.test yarn build",
     "build:production": "env-cmd -f .env.production yarn build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "type-check": "tsc --noEmit",
+    "build-ts": "npm run type-check && next-transpile-modules && next build",
+    "postinstall": "npm run build-ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.2.0",
@@ -54,6 +59,7 @@
     "next": "13.4.19",
     "next-nprogress-bar": "^2.1.2",
     "next-themes": "^0.2.1",
+    "next-transpile-modules": "^10.0.1",
     "nprogress": "^0.2.0",
     "react": "18.2.0",
     "react-country-flag": "^3.1.0",
