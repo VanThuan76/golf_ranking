@@ -1,7 +1,7 @@
-const express = require('express');
-const https = require('https');
-const fs = require('fs');
-const next = require('next');
+import express from 'express';
+import https from 'https';
+import fs from 'fs';
+import next from 'next';
 
 const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
@@ -24,15 +24,16 @@ app.prepare().then(() => {
     cert: fs.readFileSync('/etc/letsencrypt/live/vjgr.com.vn/fullchain.pem'),
   };
 
-  // Create an HTTPS server
-  https.createServer(httpsOptions, server).listen(httpsPort, (err) => {
-    if (err) throw err;
+  https.createServer(httpsOptions, server).listen(httpsPort, () => {
     console.log(`HTTPS server is running on port ${httpsPort}`);
+  }).on('error', (err) => {
+    if (err) throw err;
   });
 
-  // Create an HTTP server for redirection to HTTPS
-  server.listen(httpPort, (err) => {
-    if (err) throw err;
+  server.listen(httpPort, () => {
     console.log(`HTTP server is running on port ${httpPort}`);
+  }).on('error', (err) => {
+    if (err) throw err;
   });
+
 });
