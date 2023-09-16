@@ -8,7 +8,7 @@ const app = next({ dev });
 const handle = app.getRequestHandler();
 
 const httpPort = 3001;
-const httpsPort = 3000; // Port for HTTPS
+const httpsPort = 443; // Port for HTTPS
 
 app.prepare().then(() => {
   const server = express();
