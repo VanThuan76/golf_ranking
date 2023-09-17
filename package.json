@@ -12,7 +12,7 @@
     "build": "next build",
     "build:test": "env-cmd -f .env.test yarn build",
     "build:production": "env-cmd -f .env.production yarn build",
-    "start": "next start",
+    "start": "NODE_ENV=production node server.mjs",
     "lint": "next lint"
   },
   "dependencies": {
