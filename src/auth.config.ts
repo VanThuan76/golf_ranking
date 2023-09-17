@@ -1,5 +1,5 @@
 import { setCookie } from 'cookies-next';
-import { NextAuthOptions } from 'next-auth';
+import { AuthOptions } from 'next-auth/core/types';
 import FacebookProvider from "next-auth/providers/facebook";
 import GoogleProvider from "next-auth/providers/google";
 import { axiosInstanceNoAuth } from './https.config';
@@ -7,7 +7,7 @@ import { IBaseResponse } from './schemas/baseResponse.type';
 import { IUser } from './schemas/user.table.type';
 import { APP_SAVE_KEY } from './shared/constants';
 
-const authConfig: NextAuthOptions = {
+const authConfig: AuthOptions = {
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID as string,
@@ -19,7 +19,7 @@ const authConfig: NextAuthOptions = {
     }),
   ],
   callbacks: {
-    async signIn({ user, account, profile }) {
+    async signIn({ profile }) {
       const response = await axiosInstanceNoAuth.post<IBaseResponse<[]>>("/check-email-exists", { email: profile?.email });
       if (response && Number(response.message) === 400) {
         const body = {
@@ -38,7 +38,7 @@ const authConfig: NextAuthOptions = {
     async jwt({ token }) {
       return token
     },
-    async session({ session, token, user }) {
+    async session({ session }) {
       return session
     },
   },
