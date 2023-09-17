@@ -42,5 +42,6 @@ const authConfig: NextAuthOptions = {
       return session
     },
   },
+  secret: process.env.NEXTAUTH_SECRET
 };
 export default authConfig
