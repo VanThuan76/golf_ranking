@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import React, { useEffect, useState } from 'react';
-import { ChevronDown, Menu } from 'lucide-react';
+import { ChevronDown, LogOut, Menu } from 'lucide-react';
 
 import { Sheet, SheetContent, SheetTrigger } from '@/src/shared/components/ui/sheet';
 import { menu } from '../mocks/header';
@@ -12,10 +12,11 @@ import { useRouter } from 'next/router';
 import ThemeModeToggle from '@/src/shared/components/customization/ToggleThemeMode';
 import IconLogoLight from '@/src/shared/components/icons/IconLogoLight';
 import AuthHeader from '@/src/shared/components/customization/AuthHeader';
-interface Props{
-  isLogin: boolean
+interface Props {
+  isLogin: boolean;
+  isMember: boolean;
 }
-const HeaderLayoutWebsite = ({isLogin}: Props) => {
+const HeaderLayoutWebsite = ({ isLogin, isMember }: Props) => {
   const router = useRouter();
   const [isScrolled, setIsScrolled] = useState(false);
   useEffect(() => {
@@ -99,15 +100,23 @@ const HeaderLayoutWebsite = ({isLogin}: Props) => {
         </div>
         <div className='flex-row-center gap-12'>
           {/* ///Auth Menu */}
+          {!isMember && (
+            <Button
+              onClick={() => router.push('/member/register')}
+              className='bg-white text-black cursor-pointer hidden lg:block hover:bg-slate-300'
+            >
+              Đăng ký thành viên
+            </Button>
+          )}
           {isLogin ? (
             <AuthHeader />
           ) : (
-            <React.Fragment>
-              <button onClick={() => router.push("/login")} className='dark:text-white font-bold py-2 px-4 rounded cursor-pointer hidden lg:block'>
-                Đăng nhập
-              </button>
-              <Button onClick={() => router.push("/member/register")} className='bg-white text-black cursor-pointer hidden lg:block hover:bg-slate-300'>Đăng ký thành viên</Button>
-            </React.Fragment>
+            <button
+              onClick={() => router.push('/login')}
+              className='dark:text-white font-bold py-2 px-4 rounded cursor-pointer hidden lg:block'
+            >
+              Đăng nhập
+            </button>
           )}
           {/* ///Options Menu */}
           <ThemeModeToggle className='hidden md:block' />
@@ -120,15 +129,35 @@ const HeaderLayoutWebsite = ({isLogin}: Props) => {
                 </div>
               </SheetTrigger>
               <SheetContent className='w-[220px]' side={'left'}>
-                <div className='flex-col-start gap-4'>
-                  {menu.map((item, idx) => (
-                    <Link href={`/${item.path}`} key={idx}>
-                      <div className='flex-row-between-center gap-2'>
-                        {item.path === 'rank' ? <IconCrown /> : <IconTrophy />}
-                        <li className='list-none'>{item.title}</li>
-                      </div>
-                    </Link>
-                  ))}
+                <div className='w-full h-full flex-col-between-start'>
+                  <div className='w-full h-full flex-col-start gap-4'>
+                    {menu.map((item, idx) => (
+                      <Link href={`/${item.path}`} key={idx}>
+                        <div className='flex-row-between-center gap-2'>
+                          {item.path === 'rank' ? <IconCrown /> : <IconTrophy />}
+                          <li className='list-none'>{item.title}</li>
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
+                  {isLogin ? (
+                    <AuthHeader className='flex-col-start !block' />
+                  ) : (
+                    <React.Fragment>
+                      <Button
+                        onClick={() => router.push('/login')}
+                        className='mb-5 w-full bg-white text-black cursor-pointer hover:bg-slate-300'
+                      >
+                        Đăng nhập
+                      </Button>
+                      <Button
+                        onClick={() => router.push('/member/register')}
+                        className='w-full bg-white text-black cursor-pointer hover:bg-slate-300'
+                      >
+                        Đăng ký thành viên
+                      </Button>
+                    </React.Fragment>
+                  )}
                 </div>
               </SheetContent>
             </Sheet>

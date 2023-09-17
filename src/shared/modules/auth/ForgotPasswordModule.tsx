@@ -5,35 +5,46 @@ import IconLogo from '@/src/shared/components/icons/IconLogoDark';
 import { bannerLogin } from 'src/shared/mocks/login';
 import { FormForgotPassword } from './FormForgotPassword';
 import { FormResetPassword } from './FormResetPassword';
+import { useVerifyEmail } from '@/src/queries/user.queries';
+import { useState } from 'react';
 
 const formForgotPasswordSchema = z.object({
   email: z.string({ required_error: 'Vui lòng điền tên đăng nhập' }).min(1, { message: 'Vui lòng điền tên đăng nhập' }),
 });
-
-const formResetPasswordSchema = z.object({
-  current_password: z
-    .string({ required_error: 'Vui lòng nhập mật khẩu hiện tại' })
-    .min(1, { message: 'Vui lòng nhập mật khẩu hiện tại' }),
+export const formResetPasswordSchema = z.object({
+  old_password: z
+    .string({ required_error: 'Vui lòng nhập mật khẩu hiện tại của bạn' })
+    .min(1, { message: 'Vui lòng nhập mật khẩu hiện tại của bạn' }),
   new_password: z
-    .string({ required_error: 'Vui lòng nhập mật khẩu mới' })
-    .min(1, { message: 'Vui lòng nhập mật khẩu mới' }),
-  new_password_confirm: z
-    .string({ required_error: 'Vui lòng nhập lại mật khẩu mới' })
-    .min(1, { message: 'Vui lòng nhập lại mật khẩu mới' }),
+    .string({ required_error: 'Vui lòng nhập mật khẩu mới của bạn' })
+    .min(1, { message: 'Vui lòng nhập mật khẩu mới của bạn' }),
+  password_confirmation: z
+    .string({ required_error: 'Vui lòng nhập mật khẩu mới của bạn' })
+    .min(1, { message: 'Vui lòng nhập mật khẩu mới của bạn' }),
 });
-
 const ForgotPasswordModule = () => {
-  const test = true;
+  const [isVerified, setIsVerified] = useState(false);
+  const doVerifyEmail = useVerifyEmail();
+  function onSubmit(value: Partial<{ email: string }>) {
+    if (value.email) {
+      const bodyRequest = {
+        email: value.email,
+      };
+      doVerifyEmail.mutate(bodyRequest);
+    } else {
+      console.error('Thiếu giá trị trong form đăng ký');
+    }
+  }
   return (
-    <div className='w-full h-full flex-col-start gap-4 md:grid lg:max-w-none lg:grid-cols-2 lg:px-0 overflow-hidden'>
+    <div className='w-full h-full flex-col-center gap-4 md:grid lg:max-w-none lg:grid-cols-2 lg:px-0 overflow-hidden'>
       <div className='w-full col-span-1 mx-auto'>
         <div className='w-full flex-col-start space-y-6'>
           <IconLogo className='float-left' />
           <div className='font-bold text-3xl w-full text-black'>Quên mật khẩu</div>
-          {test ? (
-            <FormResetPassword formSchema={formResetPasswordSchema} onSubmit={() => {}} />
+          {isVerified ? (
+            <FormResetPassword formSchema={formResetPasswordSchema} onSubmit={onSubmit} />
           ) : (
-            <FormForgotPassword formSchema={formForgotPasswordSchema} onSubmit={() => {}} />
+            <FormForgotPassword formSchema={formForgotPasswordSchema} onSubmit={onSubmit} />
           )}
         </div>
       </div>

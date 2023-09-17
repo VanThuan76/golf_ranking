@@ -16,7 +16,7 @@ const TabsRank = ({ searchDefault }: Props) => {
   const { data: members, tableConfig, getFieldValueOnSearchParam, onChangeSearchArrayParams } = useGetListMemberBySearch();
   return (
     <section id='TabsRank' className='w-full'>
-      <SearchRank searchDefault={searchDefault} onChangeSearchArrayParams={onChangeSearchArrayParams} />
+      <SearchRank members={members?.content || []} searchDefault={searchDefault} onChangeSearchArrayParams={onChangeSearchArrayParams} />
       <Tabs defaultValue='mix' className='w-full'>
       <div className='w-full overflow-hidden overflow-x-scroll'>
         <TabsList>

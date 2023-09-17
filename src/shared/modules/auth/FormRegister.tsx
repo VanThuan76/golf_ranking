@@ -9,11 +9,10 @@ import { Form } from '@/src/shared/components/ui/form';
 import { Loader2 } from 'lucide-react';
 import InputText from '@/src/shared/components/customization/form/InputText';
 import InputPassword from '@/src/shared/components/customization/form/InputPassword';
-import IconLogoFacebook from '@/src/shared/components/icons/IconLogoFacebook';
-import IconLogoGoogle from '@/src/shared/components/icons/IconLogoGoogle';
-import { ConfirmDialog } from '@/src/shared/components/customization/ConfirmDialog';
-import { API_SSO_FACEBOOK, API_SSO_GOOGLE, URL_SYSTEMS } from 'src/shared/constants';
+import { URL_SYSTEMS } from 'src/shared/constants';
 import { IRegister } from 'src/schemas/auth.type';
+import FacebookSignButton from './FacebookSignButton';
+import GoogleSignButton from './GoogleSignButton';
 
 type Props = {
   formSchema: z.Schema<IRegister>;
@@ -25,15 +24,7 @@ type Props = {
 
 export function FormRegister({ formSchema, onSubmit, isLoading, defaultValue, className }: Props) {
   const [initialValues, setInitialValues] = useState<Partial<IRegister>>(defaultValue || {});
-  const [type, setType] = useState('');
   const router = useRouter();
-  const redirectURL = (type: string) => {
-    if (type === 'facebook') {
-      return window.open(API_SSO_FACEBOOK, '_blank');
-    } else {
-      return window.open(API_SSO_GOOGLE, '_blank');
-    }
-  };
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: initialValues,
@@ -86,22 +77,11 @@ export function FormRegister({ formSchema, onSubmit, isLoading, defaultValue, cl
             Bạn đã có tài khoản thành viên? <strong className='cursor-pointer' onClick={() => router.push(URL_SYSTEMS.LOGIN)}>Đăng nhập</strong>
           </p>
         </div>
-        <ConfirmDialog
-          triggerCpn={
-            <div className='relative w-full pt-4 flex-row-center gap-2 border-slate-200 border-t-2'>
-              <p className='absolute -top-6 p-2 bg-white text-sm'>Hoặc đăng nhập với</p>
-              <div className='w-full py-2 flex items-center justify-center rounded-lg border-slate-200 border-2 cursor-pointer hover:bg-slate-200'>
-                <IconLogoFacebook onClick={() => setType('facebook')} />
-              </div>
-              <div className='w-full py-2 flex items-center justify-center rounded-lg border-slate-200 border-2 cursor-pointer hover:bg-slate-200'>
-                <IconLogoGoogle onClick={() => setType('google')} />
-              </div>
-            </div>
-          }
-          title='Xác nhận chuyển hướng'
-          content='Chắc chắn tiếp tục?'
-          onOk={() => redirectURL(type)}
-        />
+        <div className='relative w-full pt-4 flex-row-center gap-2 border-slate-200 border-t-2'>
+          <p className='text-sm absolute -top-6 p-2 bg-white'>Hoặc đăng nhập với</p>
+          <FacebookSignButton />
+          <GoogleSignButton />
+        </div>
       </form>
     </Form>
   );

@@ -6,9 +6,6 @@ export const APP_SAVE_KEY = {
     USER_DATA: process.env.NEXT_PUBLIC_APP_NAME + ':user_data',
     USER_ID: process.env.NEXT_PUBLIC_APP_NAME + ':user_id',
 }
-// export const API_SSO_FACEBOOK = `${process.env.NEXT_PUBLIC_PRODUCT_API_URL}/auth/redirect/facebook`
-export const API_SSO_GOOGLE = `${process.env.NEXT_PUBLIC_PRODUCT_API_URL}/auth/redirect/google`
-
 export const URL_SYSTEMS = {
     LOGIN: "/login",
     REGISTER: "/register",

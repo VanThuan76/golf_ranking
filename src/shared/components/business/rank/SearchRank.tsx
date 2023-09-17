@@ -1,3 +1,4 @@
+import { useGetListMemberBySearch } from '@/src/queries/member.queries';
 import InputSelect from '@/src/shared/components/customization/form/InputSelect';
 import InputText from '@/src/shared/components/customization/form/InputText';
 import { Button } from '@/src/shared/components/ui/button';
@@ -5,7 +6,7 @@ import { Form } from '@/src/shared/components/ui/form';
 import { Filter } from '@/src/shared/utils/typeSearchParams';
 import { Search } from 'lucide-react';
 import { useForm } from 'react-hook-form';
-import { IMemberSearch } from 'src/schemas/member.table.type';
+import { IMember, IMemberSearch } from 'src/schemas/member.table.type';
 
 type InputSelectProps = {
   fieldName: string;
@@ -13,26 +14,24 @@ type InputSelectProps = {
   label?: string;
   placeHolder?: string;
   userId?: React.Key;
+  data: {value: string, label: string}[]
   handleOnChange?: (value: any) => void;
 };
 const InputSelectCountry = (props: InputSelectProps) => {
-  const fake = [
-    { value: 1, label: 'VN' },
-    { value: 2, label: 'UK' },
-  ];
   return (
     <InputSelect
       fieldName={props.fieldName || 'country'}
       form={props.form}
       label={props.label}
       placeHolder={props.placeHolder || 'Chọn quốc gia'}
-      options={fake}
+      options={props.data}
       // handleOnChange={props.handleOnChange}
     />
   );
 };
 
 type Props = {
+  members: IMember[]
   searchDefault: {
     name: string;
     vjgr_code: string;
@@ -41,7 +40,13 @@ type Props = {
   onChangeSearchArrayParams: any;
 };
 
-const SearchRank = ({ searchDefault, onChangeSearchArrayParams }: Props) => {
+const SearchRank = ({ members, searchDefault, onChangeSearchArrayParams }: Props) => {
+  const uniqueNationalities = Array.from(new Set(members.map(member => member.nationality)));
+  const transformedNationalitySearch = uniqueNationalities.map((member) => ({
+    value: member,
+    label: member,
+  }));
+  
   const form = useForm({
     defaultValues: searchDefault,
   });
@@ -72,6 +77,7 @@ const SearchRank = ({ searchDefault, onChangeSearchArrayParams }: Props) => {
             <InputText placeHolder='Nhập họ tên thành viên' fieldName='name' label='Thành viên' form={form}></InputText>
             <InputText placeHolder='Nhập mã VJGR' fieldName='vjgr_code' label='Mã VJGR' form={form}></InputText>
             <InputSelectCountry
+              data={transformedNationalitySearch || []}
               placeHolder='Tất cả'
               fieldName='nationality'
               label='Quốc tịch'

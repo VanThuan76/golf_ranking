@@ -2,7 +2,6 @@ import * as z from 'zod';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-
 import { Button } from '@/src/shared/components/ui/button';
 import { Form } from '@/src/shared/components/ui/form';
 import { Loader2 } from 'lucide-react';
@@ -16,12 +15,13 @@ import InputText from '@/src/shared/components/customization/form/InputText';
 
 type Props = {
   formSchema: z.Schema<IMemberRegister>;
+  onSubmit: (value: Partial<IMemberRegister>) => void;
   isLoading?: boolean;
   defaultValue?: Partial<IMemberRegister>;
   className?: string;
 };
 
-export function FormRegisterMember({ formSchema, isLoading, defaultValue, className }: Props) {
+export function FormRegisterMember({ formSchema,onSubmit, isLoading, defaultValue, className }: Props) {
   const { data: commonCode } = useGetListCommonCode();
   const [initialValues, setInitialValues] = useState<Partial<IMemberRegister>>(defaultValue || {});
   const form = useForm<z.infer<typeof formSchema>>({
@@ -39,13 +39,6 @@ export function FormRegisterMember({ formSchema, isLoading, defaultValue, classN
       }
     }
   }, [defaultValue, form]);
-  const onSubmit = async (data: Partial<IMemberRegister>) => {
-    try {
-      console.log(data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
   return (
     <Form {...form}>
       <form
@@ -80,7 +73,7 @@ export function FormRegisterMember({ formSchema, isLoading, defaultValue, classN
               form={form}
             ></InputSelect>
             <InputDatePicker form={form} fieldName='date_of_birth' label='Ngày sinh*' placeHolder='Ngày sinh của bạn' />
-            <InputText form={form} fieldName='nationally' label='Quốc tịch*' placeHolder='Nhập quốc tịch của bạn' />
+            <InputText form={form} fieldName='nationally' label='Mã quốc tịch*' placeHolder='Ví dụ: VN' />
           </div>
           <div className='w-full grid grid-cols-1 md:grid-cols-2 justify-between items-center gap-2'>
             <InputText form={form} fieldName='email' label='Email' placeHolder='Nhập email của bạn' />
@@ -113,7 +106,7 @@ export function FormRegisterMember({ formSchema, isLoading, defaultValue, classN
             />
           </div>
         </div>
-        <InputCheckBox title="Tôi đồng ý với Điều kiện & điều khoản thành viên" form={form} fieldName='guardian_phone' />
+        {/* <InputCheckBox title="Tôi đồng ý với Điều kiện & điều khoản thành viên" form={form} fieldName='guardian_phone' /> */}
         <Button className='w-full' type='submit'>
           {isLoading && <Loader2 size={16} className='animate-spin' />}Đăng ký
         </Button>

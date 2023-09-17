@@ -5,6 +5,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 
 import { Form } from '@/src/shared/components/ui/form';
 import InputPassword from '@/src/shared/components/customization/form/InputPassword';
+import { Loader2 } from 'lucide-react';
+import { Button } from '../../components/ui/button';
 
 type Props = {
   formSchema: z.Schema<any>;
@@ -42,10 +44,10 @@ export function FormResetPassword({ formSchema, onSubmit, isLoading, defaultValu
       >
         <InputPassword
           form={form}
-          fieldName='current_password'
+          fieldName='old_password'
           label='Mật khẩu hiện tại*'
           placeHolder='Nhập mật khẩu hiện tại'
-          inputProps={{ type: 'current_password' }}
+          inputProps={{ type: 'old_password' }}
         />
         <InputPassword
           form={form}
@@ -56,11 +58,14 @@ export function FormResetPassword({ formSchema, onSubmit, isLoading, defaultValu
         />
         <InputPassword
           form={form}
-          fieldName='new_password_confirm'
+          fieldName='password_confirmation'
           label='Xác nhận mật khẩu*'
           placeHolder='Nhập lại mật khẩu mới'
-          inputProps={{ type: 'new_password_confirm' }}
+          inputProps={{ type: 'password_confirmation' }}
         />
+        <Button className='w-full' type='submit'>
+          {isLoading && <Loader2 size={16} className='animate-spin' />}Thay đổi
+        </Button>
       </form>
     </Form>
   );

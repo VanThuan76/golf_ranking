@@ -32,6 +32,8 @@ export interface IMemberSearch {
   nationality?: string;
 }
 export interface IMemberRegister {
+  user_id: number;
+  id?: number;
   name: string;
   handicap_vga: string;
   gender: number;
@@ -43,4 +45,6 @@ export interface IMemberRegister {
   relationship: string;
   guardian_email: string;
   guardian_phone: string;
+  updated_at?: string;
+  created_at?: string
 }

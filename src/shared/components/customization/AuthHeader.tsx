@@ -8,17 +8,20 @@ import {
 } from '@/src/shared/components/ui/dropdown-menu';
 import { useAppSelector } from '@/src/shared/hooks/useRedux';
 import { useRouter } from 'next/router';
-import { URL_SYSTEMS } from 'src/shared/constants';
+import { APP_SAVE_KEY, URL_SYSTEMS } from 'src/shared/constants';
 import TriggerDialogForm from './dialog/TriggerDialogForm';
 import { FormResetPassword } from '@/src/shared/modules/auth/FormResetPassword';
 import { z } from 'zod';
+import { ConfirmDialog } from './ConfirmDialog';
+import { signOut } from 'next-auth/react';
+import { deleteCookie } from 'cookies-next';
+import { IResetPassword } from '@/src/schemas/user.table.type';
+import { useResetPassword } from '@/src/queries/user.queries';
+import { formResetPasswordSchema } from '../../modules/auth/ForgotPasswordModule';
 
-const formSchema = z.object({
-  current_password: z
-    .string({ required_error: 'Vui lòng nhập họ tên của bạn' })
-    .min(1, { message: 'Vui lòng nhập họ tên của bạn' }),
-});
-
+type Props = {
+  className?: string;
+};
 const RowAuthHeader = ({
   title,
   icon,
@@ -32,7 +35,10 @@ const RowAuthHeader = ({
 }) => {
   const router = useRouter();
   return (
-    <div onClick={() => url !== "" && router.push(url || "")} className={`w-[200px] flex-row-between-center ${className}`}>
+    <div
+      onClick={() => url !== '' && router.push(url || '')}
+      className={`w-[200px] flex-row-between-center ${className}`}
+    >
       <div className='flex-row-center gap-1'>
         {icon}
         <p>{title}</p>
@@ -41,12 +47,22 @@ const RowAuthHeader = ({
     </div>
   );
 };
-const AuthHeader = () => {
+
+const AuthHeader = ({ className }: Props) => {
   const { user } = useAppSelector(state => state.appSlice);
+  const router = useRouter();
+  const doResetPassword = useResetPassword(() => router.push("/profile"));
+  const handlerLogout = () => {
+    router.push('/login');
+    signOut({ redirect: false });
+    deleteCookie(APP_SAVE_KEY.TOKEN_KEY);
+    deleteCookie(APP_SAVE_KEY.LOGIN_STATUS);
+    deleteCookie(APP_SAVE_KEY.USER_ID);
+  };
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild className='cursor-pointer'>
-        <div className='hidden lg:flex flex-row-center gap-8'>
+        <div className={`hidden lg:flex flex-row-center gap-8 ${className}`}>
           {user && user.member !== null ? (
             <React.Fragment>
               {user.member.vjgr_code && <p className='pr-4 border-r-2 border-r-white'>{user.member.vjgr_code}</p>}
@@ -67,10 +83,10 @@ const AuthHeader = () => {
         <DropdownMenuItem>
           <RowAuthHeader icon={<User2 size={12} />} title='Tài khoản của tôi' url={`${URL_SYSTEMS.PROFILE}`} />
         </DropdownMenuItem>
-        <DropdownMenuItem>
+        <div className='relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50'>
           <TriggerDialogForm
             className='min-w-[1080px]'
-            titleDialog='Chỉnh sửa ảnh'
+            titleDialog='Thay đổi mật khẩu'
             trigger={
               <RowAuthHeader
                 icon={<Settings size={12} />}
@@ -80,17 +96,24 @@ const AuthHeader = () => {
             }
             form={
               <FormResetPassword
-                formSchema={formSchema}
-                onSubmit={function (value: Partial<any>): void {
-                  throw new Error('Function not implemented.');
-                }} // data={data}
-                // onSubmit={function (value: Partial<any>): void {
-                //   throw new Error('Function not implemented.');
-                // }}
+                formSchema={formResetPasswordSchema}
+                onSubmit={function (value: Partial<IResetPassword>) {
+                  if (value.old_password && value.password_confirmation && value.new_password) {
+                    const bodyRequest = {
+                      user_id: user?.user.id || 0,
+                      old_password: value.old_password,
+                      new_password: value.new_password,
+                      password_confirmation: value.password_confirmation,
+                    };
+                    doResetPassword.mutate(bodyRequest);
+                  } else {
+                    console.error('Thiếu giá trị trong form');
+                  }
+                }}
               />
             }
           />
-        </DropdownMenuItem>
+        </div>
         {user && user.member !== null && (
           <DropdownMenuItem>
             <RowAuthHeader
@@ -100,9 +123,22 @@ const AuthHeader = () => {
             />
           </DropdownMenuItem>
         )}
-        <DropdownMenuItem>
-          <RowAuthHeader icon={<LogOut size={12} />} title='Đăng xuất' />
-        </DropdownMenuItem>
+        <div className='relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50'>
+          <ConfirmDialog
+            triggerCpn={
+              <div className='w-[200px] flex-row-between-center'>
+                <div className='flex-row-center gap-1'>
+                  <LogOut size={12} />
+                  <p>Đăng xuất</p>
+                </div>
+                <ChevronRight size={12} />
+              </div>
+            }
+            title='Xác nhận đăng xuất'
+            content='Bạn chắc chắn muốn đăng xuất'
+            onOk={() => handlerLogout()}
+          />
+        </div>
       </DropdownMenuContent>
     </DropdownMenu>
   );

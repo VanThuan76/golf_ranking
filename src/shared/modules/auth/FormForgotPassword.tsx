@@ -2,32 +2,23 @@ import * as z from 'zod';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-
 import { Form } from '@/src/shared/components/ui/form';
 import InputText from '@/src/shared/components/customization/form/InputText';
-import IconLogoFacebook from '@/src/shared/components/icons/IconLogoFacebook';
-import IconLogoGoogle from '@/src/shared/components/icons/IconLogoGoogle';
-import { ConfirmDialog } from '@/src/shared/components/customization/ConfirmDialog';
-import { API_SSO_FACEBOOK, API_SSO_GOOGLE } from 'src/shared/constants';
+import FacebookSignButton from './FacebookSignButton';
+import GoogleSignButton from './GoogleSignButton';
+import { Button } from '../../components/ui/button';
+import { Loader2 } from 'lucide-react';
 
 type Props = {
-  formSchema: z.Schema<{email: string}>;
-  onSubmit: (value: Partial<{email: string}>) => void;
+  formSchema: z.Schema<{ email: string }>;
+  onSubmit: (value: Partial<{ email: string }>) => void;
   isLoading?: boolean;
-  defaultValue?: Partial<{email: string}>;
+  defaultValue?: Partial<{ email: string }>;
   className?: string;
 };
 
 export function FormForgotPassword({ formSchema, onSubmit, isLoading, defaultValue, className }: Props) {
-  const [initialValues, setInitialValues] = useState<Partial<{email: string}>>(defaultValue || {});
-  const [type, setType] = useState('');
-  const redirectURL = (type: string) => {
-    if (type === 'facebook') {
-      return window.open(API_SSO_FACEBOOK, '_blank');
-    } else {
-      return window.open(API_SSO_GOOGLE, '_blank');
-    }
-  };
+  const [initialValues, setInitialValues] = useState<Partial<{ email: string }>>(defaultValue || {});
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: initialValues,
@@ -53,22 +44,14 @@ export function FormForgotPassword({ formSchema, onSubmit, isLoading, defaultVal
         className={`w-full space-y-8 ${className}`}
       >
         <InputText form={form} fieldName='email' label='Email*' placeHolder='Nhập email của bạn - @gmail.com' />
-        <ConfirmDialog
-          triggerCpn={
-            <div className='relative w-full pt-4 flex-row-center gap-2 border-slate-200 border-t-2'>
-              <p className='text-sm absolute -top-6 p-2 bg-white'>Hoặc đăng nhập với</p>
-              <div className='w-full py-2 flex items-center justify-center rounded-lg border-slate-200 border-2 cursor-pointer hover:bg-slate-200'>
-                <IconLogoFacebook onClick={() => setType('facebook')} />
-              </div>
-              <div className='w-full py-2 flex items-center justify-center rounded-lg border-slate-200 border-2 cursor-pointer hover:bg-slate-200'>
-                <IconLogoGoogle onClick={() => setType('google')} />
-              </div>
-            </div>
-          }
-          title='Xác nhận chuyển hướng'
-          content='Chắc chắn tiếp tục?'
-          onOk={() => redirectURL(type)}
-        />
+        <Button className='w-full' type='submit'>
+          {isLoading && <Loader2 size={16} className='animate-spin' />}Gửi
+        </Button>
+        <div className='relative w-full pt-4 flex-row-center gap-2 border-slate-200 border-t-2'>
+          <p className='text-sm absolute -top-6 p-2 bg-white'>Hoặc đăng nhập với</p>
+          <FacebookSignButton />
+          <GoogleSignButton />
+        </div>
       </form>
     </Form>
   );

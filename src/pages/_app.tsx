@@ -10,7 +10,7 @@ import { ThemeProvider as NextThemesProvider } from 'next-themes';
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import useRouterChange from "../shared/hooks/useRouterChange";
 import ProgressBarNext from "../shared/components/customization/ProgressBarNext";
-
+import { SessionProvider } from "next-auth/react"
 import { store } from 'src/shared/stores';
 import { useAppSelector } from "../shared/hooks/useRedux";
 import { Toaster } from "../shared/components/ui/toaster";
@@ -70,6 +70,7 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
           <link rel='icon' href='/logo.svg' />
           <link rel='apple-touch-icon' href='/logo.svg' />
         </Head>
+        <SessionProvider session={pageProps.session}>
         <Provider store={store}>
           <ProgressBarNext />
           <QueryClientProvider client={queryClient}>
@@ -78,6 +79,7 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
             </ConfigLayout>
           </QueryClientProvider>
         </Provider>
+        </SessionProvider>
       </main>
   );
 }

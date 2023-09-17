@@ -57,7 +57,6 @@ export default function InputSelect({ className, form, label, placeHolder, field
                                             value={op.value}
                                             key={op.value}
                                             onSelect={(value) => {
-                                                console.log(value)
                                                 form.setValue(fieldName, op.value)
                                             }}
                                         >

@@ -7,8 +7,10 @@ import Breadcrumb from '@/src/shared/components/customization/Breadcrumb';
 import { FormRegisterMember } from '@/src/shared/components/business/member/FormRegisterMember';
 import IconLogoDark from '@/src/shared/components/icons/IconLogoDark';
 import SliderFull from '@/src/shared/components/customization/SliderFull';
+import { IMemberRegister } from '@/src/schemas/member.table.type';
 
 const formSchema = z.object({
+  user_id: z.number(),
   name: z
     .string({ required_error: 'Vui lòng nhập họ tên của bạn' })
     .min(1, { message: 'Vui lòng nhập họ tên của bạn' }),
@@ -39,6 +41,20 @@ const formSchema = z.object({
 });
 
 const RegisterMember = () => {
+  function onSubmit(value: Partial<IMemberRegister>) {
+    if (value.name && value.handicap_vga && value.gender && value.date_of_birth) {
+      const bodyRequest = {
+        name: value.name,
+        handicap_vga: value.handicap_vga,
+        gender: value.gender,
+        date_of_birth: value.date_of_birth,
+      };
+      console.log(bodyRequest)
+      // doRegister.mutate(bodyRequest);
+    } else {
+      console.error('Thiếu giá trị trong form đăng ký');
+    }
+  }
   return (
     <div className='w-full min-h-screen flex-col-center gap-4 md:grid lg:max-w-none lg:grid-cols-2 lg:px-0 overflow-hidden'>
       <div className='hidden md:block max-w-[450px] col-span-1 mx-auto bg-transparent rounded-lg'>
@@ -50,7 +66,7 @@ const RegisterMember = () => {
           <Breadcrumb title={`Quay lại Giải đấu`} url={URL_SYSTEMS.TOURNAMENT} />
           <div className='font-semibold text-2xl w-full text-black'>Đăng ký thành viên</div>
           <p>Đăng ký thành viên để tham gia giải đấu và bảng xếp hạng</p>
-          <FormRegisterMember formSchema={formSchema} />
+          <FormRegisterMember formSchema={formSchema} onSubmit={onSubmit}/>
         </div>
       </div>
     </div>

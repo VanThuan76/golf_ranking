@@ -9,11 +9,12 @@ interface Props {
 
 const LayoutWebsite = ({ children }: Props) => {
   const { user } = useAppSelector(state => state.appSlice);
-  const isLogin = user?.user !== undefined ? true : false;
+  const isLogin = user?.user !== undefined;
+  const isMember = user?.member !== null;
   useGetUserById();
   return (
     <React.Fragment>
-      <HeaderLayoutWebsite isLogin={isLogin ? true : false} />
+      <HeaderLayoutWebsite isLogin={isLogin ? true : false} isMember={isMember} />
       <main className='w-full min-h-screen dark:bg-[#141523] pb-4 md:pb-8 lg:pb-16 xl:pb-24 px-4 md:px-24 lg:px-32 xl:px-40'>
         {children}
       </main>
