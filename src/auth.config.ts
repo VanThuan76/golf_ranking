@@ -43,6 +43,6 @@ const authConfig: NextAuthOptions = {
     },
   },
   secret: process.env.NEXTAUTH_SECRET,
-  debug: true
+  debug: process.env.NODE_ENV !== "production"
 };
 export default authConfig
