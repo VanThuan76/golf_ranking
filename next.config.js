@@ -4,8 +4,7 @@ const { i18n } = require('./next-i18next.config');
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ["vjgr.com.vn"],
-    path: '/_next/image',
+    domains: ["localhost", "vjgr.com.vn"],
   },
   i18n,
   typescript: {

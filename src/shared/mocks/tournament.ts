@@ -1,43 +1,54 @@
+import imageMemberDetails from "../../../public/static/images/MemberDetails.png"
+import imageVGAJuniorSolutionSystem from "../../../public/static/images/VGAJuniorSolutionSystem.jpg"
+import imageVietnamJuniorOpenVJO from "../../../public/static/images/VietnamJuniorOpen(VJO).jpg"
+import imageVietnamAmateurOpenVAO from "../../../public/static/images/VietnamAmateurOpen(VAO).jpg"
+import imageVGATourTournamentSystem from "../../../public/static/images/VGATourTournamentSystem.jpg"
+import imageDelocation from "../../../public/static/images/Delocation.jpg"
+import imageSoutheastAsiaRegionalTournaments from "../../../public/static/images/SoutheastAsiaRegionalTournaments.jpg"
+import imageAsianRegionalTournaments from "../../../public/static/images/AsianRegionalTournaments.jpg"
+import imageDifferentPrizeSystem from "../../../public/static/images/DifferentPrizeSystem.jpg"
+
+
 export const tournamentGroupData = [
     {
         id: 1,
         name: "Hệ thống giải VGA Junior",
-        image: "/static/images/VGAJuniorSolutionSystem.jpg"
+        image: imageVGAJuniorSolutionSystem
     },
     {
         id: 3,
         name: "Vietnam Junior Open (VJO)",
-        image: "/static/images/VietnamJuniorOpen(VJO).jpg"
+        image: imageVietnamJuniorOpenVJO
     },
     {
         id: 4,
         name: "Vietnam Amateur Open (VAO)",
-        image: "/static/images/VietnamAmateurOpen(VAO).jpg"
+        image: imageVietnamAmateurOpenVAO
     },
     {
         id: 5,
         name: "Hệ thống giải VGA Tour",
-        image: "/static/images/VGATourTournamentSystem.jpg"
+        image: imageVGATourTournamentSystem
     },
     {
         id: 6,
         name: "Các giải địa phương",
-        image: "/static/images/Delocation.jpg"
+        image: imageDelocation
     },
     {
         id: 7,
         name: "Các giải khu vực Đông Nam Á",
-        image: "/static/images/SoutheastAsiaRegionalTournaments.jpg"
+        image: imageSoutheastAsiaRegionalTournaments
     },
     {
         id: 8,
         name: "Các giải khu vực Châu Á",
-        image: "/static/images/AsianRegionalTournaments.jpg"
+        image: imageAsianRegionalTournaments
     },
     {
         id: 9,
         name: "Hệ thống giải khác",
-        image: "/static/images/DifferentPrizeSystem.jpg"
+        image: imageDifferentPrizeSystem
     }
 ]
 // export const tournamentGroupData = [
@@ -82,5 +93,5 @@ export const tournamentGroupData = [
 //         image: "https://photos.google.com/search/_tra_/photo/AF1QipP2vMHDOLNbtyM-v0Ig-VJf5Ya_xzxKGMGiAQI"
 //     }
 // ]
-export const imageGroupDetail = "/static/images/MemberDetails.png"
+export const imageGroupDetail = imageMemberDetails
 // export const imageGroupDetail = "https://photos.google.com/search/_tra_/photo/AF1QipPf4JNYJjrhJf2ToMYR7pXQ2LS4MaVOAY25XZo"

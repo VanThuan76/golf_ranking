@@ -1,7 +1,11 @@
+import imageLoginRegister1 from "../../../public/static/images/LoginRegister1.jpg"
+import imageLoginRegister2 from "../../../public/static/images/LoginRegister2.jpg"
+import imageLoginRegister3 from "../../../public/static/images/LoginRegister3.jpg"
+
 export const bannerLogin = [
-    { image: "/static/images/LoginRegister1.jpg" },
-    { image: "/static/images/LoginRegister2.jpg"},
-    { image: "/static/images/LoginRegister3.jpg"},
+    { image: imageLoginRegister1 },
+    { image: imageLoginRegister2 },
+    { image: imageLoginRegister3 },
 ]
 // export const bannerLogin = [
 //     { image: "https://photos.google.com/search/_tra_/photo/AF1QipOz809RttG8jHpmsvcrQV6oh-AKtpZy3ASchFQ" },
