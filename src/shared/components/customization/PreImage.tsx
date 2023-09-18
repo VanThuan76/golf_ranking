@@ -16,8 +16,8 @@ export function PreImage({ src, layer, ...rest }: Props) {
   return (
     <React.Fragment>
       <div className='relative w-full h-full overflow-hidden'>
-        <Image
-          src={src}
+        <img
+          src={src as string}
           style={{ width: `${rest.width}px`, height: `${rest.height}px` }}
           {...rest}
           onLoad={() => setImageLoaded(true)}
