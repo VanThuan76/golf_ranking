@@ -15,16 +15,15 @@ export const useGetUserById = (options?: Partial<UseQueryOptions>) => {
     const dispatch = useDispatch();
     const id = getCookie(APP_SAVE_KEY.USER_ID)
     useEffect(() => {
-        if (!id) return;
-
-        const fetchData = async () => {
-            const response = await axiosInstanceNoAuth.get<IBaseResponse<IAuthResponse>>(`/user/${id}`);
-            if (response.data) {
-                dispatch(login(response.data));
-            }
-        };
-
-        fetchData();
+        if (id !== undefined) {
+            const fetchData = async () => {
+                const response = await axiosInstanceNoAuth.get<IBaseResponse<IAuthResponse>>(`/user/${id}`);
+                if (response.data) {
+                    dispatch(login(response.data));
+                }
+            };
+            fetchData();
+        }
     }, [dispatch, id]);
     return useQuery({
         queryKey: [QUERY_KEY, 'get-by-id'],
@@ -58,7 +57,7 @@ export const useVerifyEmail = (onSuccessHandle?: () => void) => {
     const queryClient = useQueryClient()
     const { toast } = useToast()
     return useMutation({
-        mutationFn: (body: {email:string}) => axiosInstanceNoAuth.post<IBaseResponse<[]>>('/check-email-exists', body),
+        mutationFn: (body: { email: string }) => axiosInstanceNoAuth.post<IBaseResponse<[]>>('/check-email-exists', body),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: [QUERY_KEY] })
             if (onSuccessHandle) onSuccessHandle()
