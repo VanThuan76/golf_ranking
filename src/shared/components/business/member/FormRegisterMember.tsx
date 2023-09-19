@@ -21,7 +21,7 @@ type Props = {
   className?: string;
 };
 
-export function FormRegisterMember({ formSchema,onSubmit, isLoading, defaultValue, className }: Props) {
+export function FormRegisterMember({ formSchema, onSubmit, isLoading, defaultValue, className }: Props) {
   const { data: commonCode } = useGetListCommonCode();
   const [initialValues, setInitialValues] = useState<Partial<IMemberRegister>>(defaultValue || {});
   const form = useForm<z.infer<typeof formSchema>>({
@@ -64,7 +64,7 @@ export function FormRegisterMember({ formSchema,onSubmit, isLoading, defaultValu
                 commonCode
                   ? commonCode
                       .filter(item => item.type === 'Gender')
-                      .map(item => ({ value: item.id, label: item.description_vi }))
+                      .map(item => ({ value: item.value, label: item.description_vi }))
                   : []
               }
               placeHolder='Cả 2'
@@ -73,7 +73,7 @@ export function FormRegisterMember({ formSchema,onSubmit, isLoading, defaultValu
               form={form}
             ></InputSelect>
             <InputDatePicker form={form} fieldName='date_of_birth' label='Ngày sinh*' placeHolder='Ngày sinh của bạn' />
-            <InputText form={form} fieldName='nationally' label='Mã quốc tịch*' placeHolder='Ví dụ: VN' />
+            <InputText form={form} fieldName='nationality' label='Mã quốc tịch*' placeHolder='Ví dụ: VN' />
           </div>
           <div className='w-full grid grid-cols-1 md:grid-cols-2 justify-between items-center gap-2'>
             <InputText form={form} fieldName='email' label='Email' placeHolder='Nhập email của bạn' />

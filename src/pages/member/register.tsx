@@ -8,9 +8,12 @@ import { FormRegisterMember } from '@/src/shared/components/business/member/Form
 import IconLogoDark from '@/src/shared/components/icons/IconLogoDark';
 import SliderFull from '@/src/shared/components/customization/SliderFull';
 import { IMemberRegister } from '@/src/schemas/member.table.type';
+import { useRegisterMember } from '@/src/queries/member.queries';
+import { useRouter } from 'next/router';
+import { useAppSelector } from '@/src/shared/hooks/useRedux';
+import React, { useEffect } from 'react';
 
 const formSchema = z.object({
-  user_id: z.number(),
   name: z
     .string({ required_error: 'Vui lòng nhập họ tên của bạn' })
     .min(1, { message: 'Vui lòng nhập họ tên của bạn' }),
@@ -41,35 +44,68 @@ const formSchema = z.object({
 });
 
 const RegisterMember = () => {
+  const { user } = useAppSelector(state => state.appSlice);
+  const router = useRouter();
+  const doRegisterMember = useRegisterMember(() => router.push('/login'));
   function onSubmit(value: Partial<IMemberRegister>) {
-    if (value.name && value.handicap_vga && value.gender && value.date_of_birth) {
+    if (
+      value.name &&
+      value.handicap_vga &&
+      value.gender &&
+      value.date_of_birth &&
+      value.nationality &&
+      value.email &&
+      value.phone_number &&
+      value.guardian_name &&
+      value.relationship &&
+      value.guardian_email &&
+      value.guardian_phone
+    ) {
       const bodyRequest = {
+        user_id: user?.user.id,
         name: value.name,
         handicap_vga: value.handicap_vga,
         gender: value.gender,
         date_of_birth: value.date_of_birth,
+        nationality: value.nationality,
+        email: value.email,
+        phone_number: value.phone_number,
+        guardian_name: value.guardian_name,
+        relationship: value.relationship,
+        guardian_email: value.guardian_email,
+        guardian_phone: value.guardian_phone,
+        ...value,
       };
-      console.log(bodyRequest)
-      // doRegister.mutate(bodyRequest);
+      doRegisterMember.mutate(bodyRequest);
     } else {
       console.error('Thiếu giá trị trong form đăng ký');
     }
   }
+  useEffect(() => {
+    if (!user?.user) {
+      router.push('/login');
+    }
+    return
+  }, []);
   return (
-    <div className='w-full min-h-screen flex-col-center gap-4 md:grid lg:max-w-none lg:grid-cols-2 lg:px-0 overflow-hidden'>
-      <div className='hidden md:block max-w-[450px] col-span-1 mx-auto bg-transparent rounded-lg'>
-        <SliderFull slides={bannerLogin} />
-      </div>
-      <div className='w-full min-h-[700px] col-span-1 mx-auto'>
-        <div className='w-full h-full flex-col-between-start space-y-6'>
-          <IconLogoDark className='float-left' />
-          <Breadcrumb title={`Quay lại Giải đấu`} url={URL_SYSTEMS.TOURNAMENT} />
-          <div className='font-semibold text-2xl w-full text-black'>Đăng ký thành viên</div>
-          <p>Đăng ký thành viên để tham gia giải đấu và bảng xếp hạng</p>
-          <FormRegisterMember formSchema={formSchema} onSubmit={onSubmit}/>
+    <React.Fragment>
+      {user?.user && (
+        <div className='w-full min-h-screen flex-col-center gap-4 md:grid lg:max-w-none lg:grid-cols-2 lg:px-0 overflow-hidden'>
+          <div className='hidden md:block max-w-[450px] col-span-1 mx-auto bg-transparent rounded-lg'>
+            <SliderFull slides={bannerLogin} />
+          </div>
+          <div className='w-full min-h-[700px] col-span-1 mx-auto'>
+            <div className='w-full h-full flex-col-between-start space-y-6'>
+              <IconLogoDark className='float-left' />
+              <Breadcrumb title={`Quay lại Giải đấu`} url={URL_SYSTEMS.TOURNAMENT} />
+              <div className='font-semibold text-2xl w-full text-black'>Đăng ký thành viên</div>
+              <p>Đăng ký thành viên để tham gia giải đấu và bảng xếp hạng</p>
+              <FormRegisterMember formSchema={formSchema} onSubmit={onSubmit} />
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
+      )}
+    </React.Fragment>
   );
 };
 

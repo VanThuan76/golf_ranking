@@ -16,7 +16,7 @@ const DetailProfile = () => {
       <Head>
         <title>Thông tin người dùng Golf Achievement</title>
         <meta name='description' content='Thông tin người dùng Golf Achievement' />
-        <meta name='keywords' content='Golf Achievement Công nghệ thông tin, Giải pháp số' />
+        <meta name='keywords' content='Golf Achievement' />
       </Head>
       <ScrollRevealWrapper>
         <ProfileUser user={user.user && user.user} />

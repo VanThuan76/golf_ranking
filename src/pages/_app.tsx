@@ -62,9 +62,9 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
   return (
       <main className={interText.className}>
         <Head>
-          <title>Website NGS</title>
-          <meta name='description' content='Website NGS' />
-          <meta name='keywords' content='Công nghệ thông tin, Giải pháp số' />
+          <title>Golf Achievement</title>
+          <meta name='description' content='Golf Achievement' />
+          <meta name='keywords' content='Golf Achievement' />
           <meta property='og:type' content='website' />
           <meta name='viewport' content='width=device-width, initial-scale=1.0' />
           <link rel='icon' href='/logo.svg' />
