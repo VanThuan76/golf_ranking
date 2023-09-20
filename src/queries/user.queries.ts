@@ -1,4 +1,4 @@
-import { useMutation, useQuery, useQueryClient, UseQueryOptions } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { getCookie } from "cookies-next";
 import { useDispatch } from "react-redux";
 import { axiosInstanceNoAuth } from "src/https.config";
@@ -6,30 +6,46 @@ import { IAuthResponse } from "src/schemas/auth.type";
 import { IBaseResponse } from "src/schemas/baseResponse.type";
 import { APP_SAVE_KEY } from "src/shared/constants";
 import { login } from "src/shared/stores/appSlice";
-import { useEffect } from "react";
 import { useToast } from "../shared/components/ui/use-toast";
 import { IResetPassword } from "../schemas/user.table.type";
+import { useSession } from "next-auth/react";
 const QUERY_KEY = "UserQuery";
 
-export const useGetUserById = (options?: Partial<UseQueryOptions>) => {
+export const useGetUserById = () => {
     const dispatch = useDispatch();
     const id = getCookie(APP_SAVE_KEY.USER_ID)
-    useEffect(() => {
-        if (id !== undefined) {
-            const fetchData = async () => {
-                const response = await axiosInstanceNoAuth.get<IBaseResponse<IAuthResponse>>(`/user/${id}`);
-                if (response.data) {
-                    dispatch(login(response.data));
-                }
-            };
-            fetchData();
-        }
-    }, [dispatch, id]);
     return useQuery({
         queryKey: [QUERY_KEY, 'get-by-id'],
         queryFn: () => axiosInstanceNoAuth.get<IBaseResponse<IAuthResponse>>(`/user/${id}`),
-        enabled: options?.enabled,
+        onSuccess(data) {
+            if (data.data) {
+                dispatch(login(data.data));
+            }
+        },
+        enabled: id !== undefined
     });
+};
+export const useGetUserByEmail = () => {
+    const dispatch = useDispatch();
+    const { data: session } = useSession();
+    return useQuery(
+        ['get-by-email', session?.user?.email],
+        async () => {
+            if (!session?.user?.email) {
+                return null;
+            }
+            const response = await axiosInstanceNoAuth.get<IBaseResponse<IAuthResponse>>(`/userEmail/${session.user.email}`);
+            return response.data;
+        },
+        {
+            enabled: !!session?.user?.email,
+            onSuccess: (data) => {
+                if (data) {
+                    dispatch(login(data));
+                }
+            },
+        }
+    );
 };
 export const useResetPassword = (onSuccessHandle?: () => void) => {
     const queryClient = useQueryClient()

@@ -1,15 +1,11 @@
 import Head from 'next/head';
 import dynamic from 'next/dynamic';
-import React, { useEffect } from 'react';
+import React from 'react';
 import LayoutWebsite from 'src/shared/layouts/LayoutWebsite';
 import BannerRank from '@/src/shared/components/business/rank/BannerRank';
 import TabsRank from '@/src/shared/components/business/rank/TabsRank';
 import { sectionBanner } from 'src/shared/mocks/home';
 import { GetServerSideProps } from 'next';
-import { getSession, useSession } from 'next-auth/react';
-import { useDispatch } from 'react-redux';
-import { login } from '@/src/shared/stores/appSlice';
-import { useRegister } from '@/src/queries/auth/auth.queires';
 
 const ScrollRevealWrapper = dynamic(() => import('@/src/shared/components/customization/ScrollRevealWrapper'), {
   ssr: false,
@@ -20,21 +16,11 @@ type Props = {
   nationality: string;
 };
 function Rank({ name, vjgr_code, nationality }: Props) {
-  const dispatch = useDispatch();
-  const { data: session } = useSession();
   const searchDefault = {
     name: name,
     vjgr_code: vjgr_code,
     nationality: nationality,
   };
-  useEffect(() => {
-    dispatch(
-      login({
-        user: session?.user,
-        member: null,
-      }),
-    );
-  }, []);
   return (
     <React.Fragment>
       <Head>
