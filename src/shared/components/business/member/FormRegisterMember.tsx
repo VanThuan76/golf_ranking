@@ -88,16 +88,16 @@ export function FormRegisterMember({ formSchema, onSubmit, isLoading, defaultVal
         <div className='w-full'>
           <h1>Thông tin bảo trợ</h1>
           <div className='w-full grid grid-cols-1 md:grid-cols-2 justify-between items-center gap-2'>
-            <InputText form={form} fieldName='guardian_name' label='Người bảo trợ' placeHolder='Nhập người bảo trợ' />
+            <InputText form={form} fieldName='guardian_name' label='Người bảo trợ*' placeHolder='Nhập người bảo trợ' />
             <InputText
               form={form}
               fieldName='relationship'
-              label='Mối quan hệ'
+              label='Mối quan hệ*'
               placeHolder='Nhập mối quan hệ bảo trợ'
             />
           </div>
           <div className='w-full grid grid-cols-1 md:grid-cols-2 justify-between items-center gap-2'>
-            <InputText form={form} fieldName='guardian_email' label='Email' placeHolder='Nhập email của bảo trợ' />
+            <InputText form={form} fieldName='guardian_email' label='Email*' placeHolder='Nhập email của bảo trợ' />
             <InputNumber
               form={form}
               fieldName='guardian_phone'

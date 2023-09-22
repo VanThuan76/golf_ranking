@@ -3,14 +3,14 @@ import { Filter } from "../shared/utils/typeSearchParams"
 import { axiosInstanceNoAuth } from "src/https.config"
 import { IBaseResponse, IBaseResponseWithCount } from "src/schemas/baseResponse.type"
 import { IMember, IMemberRegister } from "src/schemas/member.table.type"
-import { useMutation, useQuery, useQueryClient, UseQueryOptions } from "@tanstack/react-query"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { useToast } from "../shared/components/ui/use-toast"
 
 const QUERY_KEY = "MemberQuery"
 export const useGetListMemberBySearch = (defaultFilter?: Filter[]) => {
     return usePagination<IBaseResponseWithCount<IMember[]>>({
         queryKey: [QUERY_KEY, 'get-search'],
-        apiFn: (params) => axiosInstanceNoAuth.post<IBaseResponseWithCount<IMember[]>>('/members/search', {...params}),
+        apiFn: (params) => axiosInstanceNoAuth.post<IBaseResponseWithCount<IMember[]>>('/members/search', { ...params }),
         defaultParams: {
             page: 0,
             size: 10,

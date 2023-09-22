@@ -12,20 +12,17 @@ import { useRegisterMember } from '@/src/queries/member.queries';
 import { useRouter } from 'next/router';
 import { useAppSelector } from '@/src/shared/hooks/useRedux';
 import React, { useEffect } from 'react';
+import { convertStringDate } from '@/src/shared/utils/business/convertStringDate';
 
 const formSchema = z.object({
   name: z
     .string({ required_error: 'Vui lòng nhập họ tên của bạn' })
     .min(1, { message: 'Vui lòng nhập họ tên của bạn' }),
-  handicap_vga: z
-    .string({ required_error: 'Vui lòng nhập handicap_vga' })
-    .min(1, { message: 'Vui lòng nhập handicap_vga' }),
   gender: z.number({ required_error: 'Vui lòng chọn giới tính' }),
   date_of_birth: z.date({ required_error: 'Vui lòng nhập ngày sinh của bạn' }),
   nationality: z
     .string({ required_error: 'Vui lòng nhập quốc gia của bạn' })
     .min(1, { message: 'Vui lòng nhập quốc gia của bạn' }),
-  email: z.string({ required_error: 'Vui lòng nhập email của bạn' }).min(1, { message: 'Vui lòng nhập email của bạn' }),
   phone_number: z
     .string({ required_error: 'Vui lòng nhập số điện thoại của bạn' })
     .min(1, { message: 'Vui lòng nhập số điện thoại của bạn' }),
@@ -44,37 +41,35 @@ const formSchema = z.object({
 });
 
 const RegisterMember = () => {
-  const { user } = useAppSelector(state => state.appSlice);
+  const { isRegister, user } = useAppSelector(state => state.appSlice);
   const router = useRouter();
-  const doRegisterMember = useRegisterMember(() => router.push('/login'));
+  const doRegisterMember = useRegisterMember(() => router.push('/'));
   function onSubmit(value: Partial<IMemberRegister>) {
     if (
       value.name &&
-      value.handicap_vga &&
       value.gender &&
       value.date_of_birth &&
       value.nationality &&
-      value.email &&
       value.phone_number &&
       value.guardian_name &&
       value.relationship &&
       value.guardian_email &&
       value.guardian_phone
     ) {
+      const dateOfBirth = convertStringDate(value.date_of_birth as unknown as string)
       const bodyRequest = {
         user_id: user?.user.id,
         name: value.name,
-        handicap_vga: value.handicap_vga,
+        handicap_vga: value.handicap_vga || "",
         gender: value.gender,
-        date_of_birth: value.date_of_birth,
+        date_of_birth: dateOfBirth,
         nationality: value.nationality,
-        email: value.email,
+        email: value.email || "",
         phone_number: value.phone_number,
         guardian_name: value.guardian_name,
         relationship: value.relationship,
         guardian_email: value.guardian_email,
         guardian_phone: value.guardian_phone,
-        ...value,
       };
       doRegisterMember.mutate(bodyRequest);
     } else {
@@ -82,14 +77,14 @@ const RegisterMember = () => {
     }
   }
   useEffect(() => {
-    if (!user?.user) {
+    if (!isRegister) {
       router.push('/login');
     }
     return
   }, []);
   return (
     <React.Fragment>
-      {user?.user && (
+      {isRegister && (
         <div className='w-full min-h-screen flex-col-center gap-4 md:grid lg:max-w-none lg:grid-cols-2 lg:px-0 overflow-hidden'>
           <div className='hidden md:block max-w-[450px] col-span-1 mx-auto bg-transparent rounded-lg'>
             <SliderFull slides={bannerLogin} />

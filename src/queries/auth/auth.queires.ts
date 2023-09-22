@@ -7,16 +7,23 @@ import { IAuthResponse, ILogin, IRegister } from "src/schemas/auth.type"
 import { IBaseResponse } from "src/schemas/baseResponse.type"
 import { IUser } from "src/schemas/user.table.type"
 import { APP_SAVE_KEY } from "src/shared/constants"
-import { login } from "src/shared/stores/appSlice"
+import { login, register } from "src/shared/stores/appSlice"
 
 const QUERY_KEY = "AuthQuery"
 export const useRegister = (onSuccessHandle?: () => void) => {
+    const dispatch = useDispatch()
     const queryClient = useQueryClient()
     const { toast } = useToast()
     return useMutation({
         mutationFn: (body: IRegister) => axiosInstanceNoAuth.post<IBaseResponse<IUser>>('/register', body),
-        onSuccess: () => {
+        onSuccess: (data) => {
+            if (!data.data) return
+            setCookie(APP_SAVE_KEY.USER_ID, data.data.id)
             queryClient.invalidateQueries({ queryKey: [QUERY_KEY] })
+            dispatch(register({
+                user: data.data,
+                member: null
+            }))
             if (onSuccessHandle) onSuccessHandle()
             toast({
                 variant: 'success',

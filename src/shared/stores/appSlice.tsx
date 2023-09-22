@@ -7,6 +7,7 @@ import { APP_SAVE_KEY } from '../constants';
 type APPSTATE = {
   user: IAuthResponse | undefined;
   isLogined: boolean;
+  isRegister: boolean;
   isRouteLoading: boolean;
 };
 
@@ -14,6 +15,7 @@ const user: any = JSON.parse(getCookie(APP_SAVE_KEY.USER_DATA) as string || '{}'
 const initialState: APPSTATE = {
   user: user || undefined,
   isLogined: false,
+  isRegister: false,
   isRouteLoading: false,
 };
 export const appSlice = createSlice({
@@ -23,6 +25,10 @@ export const appSlice = createSlice({
     login: (state, action: PayloadAction<any | undefined>) => {
       state.user = action.payload;
       state.isLogined = true;
+    },
+    register: (state, action: PayloadAction<any | undefined>) => {
+      state.user = action.payload;
+      state.isRegister = true;
     },
     logout: state => {
       state.user = undefined;
@@ -35,5 +41,5 @@ export const appSlice = createSlice({
     },
   },
 });
-export const { login, logout, setLoading } = appSlice.actions;
+export const { login, register, logout, setLoading } = appSlice.actions;
 export default appSlice.reducer;

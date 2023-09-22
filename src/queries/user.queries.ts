@@ -9,6 +9,7 @@ import { login } from "src/shared/stores/appSlice";
 import { useToast } from "../shared/components/ui/use-toast";
 import { IResetPassword } from "../schemas/user.table.type";
 import { useSession } from "next-auth/react";
+import { useAppSelector } from "../shared/hooks/useRedux";
 const QUERY_KEY = "UserQuery";
 
 export const useGetUserById = () => {
@@ -27,18 +28,20 @@ export const useGetUserById = () => {
 };
 export const useGetUserByEmail = () => {
     const dispatch = useDispatch();
+    const { user } = useAppSelector(state => state.appSlice)
     const { data: session } = useSession();
     return useQuery(
-        ['get-by-email', session?.user?.email],
+        ['get-by-email', session?.user?.email || user?.user?.email],
         async () => {
-            if (!session?.user?.email) {
+            const email = session?.user?.email || user?.user?.email;
+            if (!email) {
                 return null;
             }
-            const response = await axiosInstanceNoAuth.get<IBaseResponse<IAuthResponse>>(`/userEmail/${session.user.email}`);
+            const response = await axiosInstanceNoAuth.get<IBaseResponse<IAuthResponse>>(`/userEmail/${email}`);
             return response.data;
         },
         {
-            enabled: !!session?.user?.email,
+            enabled: !!session?.user?.email || !!user?.user?.email,
             onSuccess: (data) => {
                 if (data) {
                     dispatch(login(data));
@@ -46,6 +49,7 @@ export const useGetUserByEmail = () => {
             },
         }
     );
+
 };
 export const useResetPassword = (onSuccessHandle?: () => void) => {
     const queryClient = useQueryClient()

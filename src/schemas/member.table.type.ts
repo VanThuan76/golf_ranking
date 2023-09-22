@@ -35,11 +35,11 @@ export interface IMemberRegister {
   user_id?: number;
   id?: number;
   name: string;
-  handicap_vga: string;
+  handicap_vga?: string;
   gender: number;
-  date_of_birth: Date;
+  date_of_birth: Date | string;
   nationality: string;
-  email: string;
+  email?: string;
   phone_number: string;
   guardian_name: string;
   relationship: string;

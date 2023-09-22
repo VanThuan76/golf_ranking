@@ -20,7 +20,7 @@ const formSchema = z.object({
 
 const RegisterModule = () => {
   const router = useRouter()
-  const doRegister = useRegister(() => router.push('/login'));
+  const doRegister = useRegister(() => router.push('/member/register'));
   function onSubmit(value: Partial<IRegister>) {
     if (value.name && value.email && value.password && value.password_confirmation) {
       const bodyRequest = {
