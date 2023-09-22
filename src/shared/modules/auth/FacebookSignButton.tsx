@@ -3,7 +3,7 @@ import { signIn } from 'next-auth/react';
 
 const FacebookSignButton = () => {
   const handleRedirect = () => {
-    signIn('facebook', { callbackUrl: '/' });
+    signIn('facebook', { callbackUrl: '/member/register' });
   };
   return (
     <div

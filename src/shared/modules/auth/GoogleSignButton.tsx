@@ -2,7 +2,7 @@ import IconLogoGoogle from '../../components/icons/IconLogoGoogle';
 import { signIn } from 'next-auth/react';
 const GoogleSignButton = () => {
   const handleRedirect = () => {
-    signIn('google', { callbackUrl: '/' });
+    signIn('google', { callbackUrl: '/member/register' });
   };
   return (
     <div
