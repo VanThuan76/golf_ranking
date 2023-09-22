@@ -41,7 +41,7 @@ const formSchema = z.object({
 });
 
 const RegisterMember = () => {
-  const { user } = useAppSelector(state => state.appSlice);
+  const { isRegister, user } = useAppSelector(state => state.appSlice);
   const router = useRouter();
   const doRegisterMember = useRegisterMember(() => router.push('/'));
   function onSubmit(value: Partial<IMemberRegister>) {
@@ -76,6 +76,12 @@ const RegisterMember = () => {
       console.error('Thiếu giá trị trong form đăng ký');
     }
   }
+  useEffect(() => {
+    if (user?.member) {
+      router.push('/');
+    }
+    return;
+  }, []);
   return (
     <React.Fragment>
       <div className='w-full min-h-screen flex-col-center gap-4 md:grid lg:max-w-none lg:grid-cols-2 lg:px-0 overflow-hidden'>
