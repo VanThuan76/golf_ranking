@@ -77,7 +77,7 @@ const RegisterMember = () => {
     }
   }
   useEffect(() => {
-    if (!isRegister) {
+    if (!user?.user.email) {
       router.push('/login');
     }
     return
