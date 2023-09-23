@@ -12,6 +12,7 @@ import InputSelect from '@/src/shared/components/customization/form/InputSelect'
 import InputDatePicker from '@/src/shared/components/customization/form/InputDatePicker';
 import InputNumber from '@/src/shared/components/customization/form/InputNumber';
 import InputText from '@/src/shared/components/customization/form/InputText';
+import UseRouter from '@/src/shared/utils/function/UseRouter';
 
 type Props = {
   formSchema: z.Schema<IMemberRegister>;
@@ -46,7 +47,7 @@ export function FormRegisterMember({ formSchema, onSubmit, isLoading, defaultVal
         onError={e => {
           new Error(`Error ${e}`);
         }}
-        className={`w-full space-y-8 ${className}`}
+        className={`w-full space-y-6 ${className}`}
       >
         <div className='w-full'>
           <div className='w-full grid grid-cols-1 md:grid-cols-2 justify-between items-center gap-2'>
@@ -107,9 +108,16 @@ export function FormRegisterMember({ formSchema, onSubmit, isLoading, defaultVal
           </div>
         </div>
         {/* <InputCheckBox title="Tôi đồng ý với Điều kiện & điều khoản thành viên" form={form} fieldName='guardian_phone' /> */}
-        <Button className='w-full' type='submit'>
-          {isLoading && <Loader2 size={16} className='animate-spin' />}Đăng ký
-        </Button>
+        <div className='w-full grid grid-cols-3 gap-12'>
+          <UseRouter url='/'>
+            <Button type='button' className='w-full col-span-1'>
+              Bỏ qua
+            </Button>
+          </UseRouter>
+          <Button className='w-full col-span-2' type='submit'>
+            {isLoading && <Loader2 size={16} className='animate-spin' />}Đăng ký
+          </Button>
+        </div>
       </form>
     </Form>
   );

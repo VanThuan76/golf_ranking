@@ -125,7 +125,7 @@ export function TableRank({ members, tableConfig, getFieldValueOnSearchParam }: 
       cell(props) {
         return (
           <React.Fragment>
-            <div className='min-w-[150px] h-[20px] flex-row-center gap-2'>
+            <div className='min-w-[150px] h-[20px] flex-row-start gap-2'>
               <CountryFlag countryCode={props.cell.row.original.nationality} />
               <p className='text-center'>{props.cell.row.original.name}</p>
             </div>

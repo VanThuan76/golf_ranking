@@ -91,7 +91,7 @@ const RegisterMember = () => {
         <div className='w-full min-h-[700px] col-span-1 mx-auto'>
           <div className='w-full h-full flex-col-between-start space-y-6'>
             <IconLogoDark className='float-left' />
-            <Breadcrumb title={`Quay lại Giải đấu`} url={URL_SYSTEMS.TOURNAMENT} />
+            {/* <Breadcrumb title={`Quay lại Giải đấu`} url={URL_SYSTEMS.TOURNAMENT} /> */}
             <div className='font-semibold text-2xl w-full text-black'>Đăng ký thành viên</div>
             <p>Đăng ký thành viên để tham gia giải đấu và bảng xếp hạng</p>
             <FormRegisterMember formSchema={formSchema} onSubmit={onSubmit} />
