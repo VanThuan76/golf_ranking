@@ -5,11 +5,12 @@ import { useRouter } from 'next/router';
 import { GetServerSideProps } from 'next';
 import { useGetListTournament } from 'src/queries/tournament.queires';
 import { Filter } from '@/src/shared/utils/typeSearchParams';
-import { tournamentGroupData } from 'src/shared/mocks/tournament';
+import { TournamentGroupData } from 'src/shared/mocks/tournament';
 import LayoutWebsite from 'src/shared/layouts/LayoutWebsite';
 import TableGroupTournament from '@/src/shared/components/business/tournament/group/TableGroupTournament';
 import Breadcrumb from '@/src/shared/components/customization/Breadcrumb';
 import { URL_SYSTEMS } from 'src/shared/constants';
+import useTrans from '@/src/shared/hooks/useTrans';
 
 const ScrollRevealWrapper = dynamic(() => import('@/src/shared/components/customization/ScrollRevealWrapper'), { ssr: false });
 type Props = {
@@ -23,6 +24,7 @@ type Props = {
 
 const GroupTournament = ({ name, nationality, tournament_type_id, from_date, to_date, status }: Props) => {
   const { query } = useRouter();
+  const {trans} = useTrans()
   const searchDefault = {
     name: name,
     nationality: nationality,
@@ -37,17 +39,18 @@ const GroupTournament = ({ name, nationality, tournament_type_id, from_date, to_
       value: query.id,
     },
   ];
-  const tournamentGroup = tournamentGroupData.find(item => item.id === Number(query.id));
+  const tournamentGroupDataTrans = TournamentGroupData()
+  const tournamentGroup = tournamentGroupDataTrans.find(item => item.id === Number(query.id));
   const { data: tournaments, tableConfig, onChangeSearchArrayParams } = useGetListTournament(filterGroupTournament);
   if (!tournaments) return <React.Fragment></React.Fragment>;
   return (
     <React.Fragment>
       <Head>
-        <title>Hệ thống Vietnam Golf Association</title>
-        <meta name='description' content='Hệ thống Vietnam Golf Association' />
-        <meta name='keywords' content='Hệ thống Vietnam Golf Association' />
+        <title>{trans.tournament.titleGroup}</title>
+        <meta name='description' content={trans.tournament.titleGroup} />
+        <meta name='keywords' content='Vietnam Golf Association' />
       </Head>
-      <Breadcrumb title={`Quay lại Danh sách hệ thống giải đấu`} url={URL_SYSTEMS.TOURNAMENT} />
+      <Breadcrumb title={trans.tournament.breadcrumb} url={URL_SYSTEMS.TOURNAMENT} />
       <ScrollRevealWrapper>
         <TableGroupTournament
           searchDefault={searchDefault}

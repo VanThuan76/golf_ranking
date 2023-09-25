@@ -10,14 +10,21 @@ import { useGetListCommonCode } from 'src/queries/common-code.queires';
 import { useGetListTournamentType } from 'src/queries/tournament-type.queries';
 import { IGroupTournamentSearch } from 'src/schemas/tournament.table.type';
 import { Filter } from '@/src/shared/utils/typeSearchParams';
+import useTrans from '@/src/shared/hooks/useTrans';
 
 type Props = {
-  searchDefault: IGroupTournamentSearch
+  searchDefault: IGroupTournamentSearch;
   onChangeSearchArrayParams: any;
   titleGroupTournament: string;
   bannerGroupTournament: string;
 };
-export function SearchGroupTournament({ searchDefault, onChangeSearchArrayParams, titleGroupTournament, bannerGroupTournament }: Props) {
+export function SearchGroupTournament({
+  searchDefault,
+  onChangeSearchArrayParams,
+  titleGroupTournament,
+  bannerGroupTournament,
+}: Props) {
+  const { trans } = useTrans();
   const form = useForm({
     defaultValues: searchDefault,
   });
@@ -26,14 +33,14 @@ export function SearchGroupTournament({ searchDefault, onChangeSearchArrayParams
   const onSubmit = async (data: IGroupTournamentSearch) => {
     try {
       const filters: Filter[] = [
-        { field: "name", value: data.name},
-        { field: "nationality", value: data.nationality},
-        { field: "tournament_type_id", value: data.tournament_type_id},
-        { field: "from_date", value: data.from_date},
-        { field: "to_date", value: data.to_date},
-        { field: "status", value: data.status}
-      ]
-      onChangeSearchArrayParams(filters)
+        { field: 'name', value: data.name },
+        { field: 'nationality', value: data.nationality },
+        { field: 'tournament_type_id', value: data.tournament_type_id },
+        { field: 'from_date', value: data.from_date },
+        { field: 'to_date', value: data.to_date },
+        { field: 'status', value: data.status },
+      ];
+      onChangeSearchArrayParams(filters);
     } catch (error) {
       console.log(error);
     }
@@ -55,9 +62,9 @@ export function SearchGroupTournament({ searchDefault, onChangeSearchArrayParams
           >
             <div className='w-full grid grid-cols-1 md:grid-cols-4 gap-5'>
               <InputText
-                placeHolder='Nhập tên giải đấu'
+                placeHolder={trans.common.fillIn + ' ' + trans.common.tournament}
                 fieldName='name'
-                label='Giải đấu'
+                label={trans.common.tournament}
                 form={form}
                 className='col-span-2'
               ></InputText>
@@ -66,9 +73,9 @@ export function SearchGroupTournament({ searchDefault, onChangeSearchArrayParams
                   { value: 1, label: 'VN' },
                   { value: 2, label: 'UK' },
                 ]}
-                placeHolder='Tất cả'
+                placeHolder={trans.common.all}
                 fieldName='nationality'
-                label='Quốc tịch'
+                label={trans.common.nationality}
                 form={form}
               ></InputSelect>
               <InputSelect
@@ -79,28 +86,38 @@ export function SearchGroupTournament({ searchDefault, onChangeSearchArrayParams
                         .map(item => ({ value: item.id, label: item.description_vi }))
                     : []
                 }
-                placeHolder='Tất cả'
+                placeHolder={trans.common.all}
                 fieldName='status'
-                label='Trạng thái'
+                label={trans.common.status}
                 form={form}
               ></InputSelect>
             </div>
             <div className='mt-2 w-full grid grid-cols-1 md:grid-cols-4 gap-5 justify-center items-center'>
               <InputSelect
                 options={tournamentType?.map(item => ({ value: item.id, label: item.name })) || []}
-                placeHolder='Tất cả'
+                placeHolder={trans.common.all}
                 fieldName='tournament_type_id'
-                label='Loại giải đấu'
+                label={trans.common.tournamentType}
                 form={form}
                 className='col-span-2'
               ></InputSelect>
-              <InputDatePicker form={form} fieldName='from_date' placeHolder='Ngày bắt đầu' label='Từ ngày' />
-              <InputDatePicker form={form} fieldName='to_date' placeHolder='Ngày kết thúc' label='Đến ngày' />
+              <InputDatePicker
+                form={form}
+                fieldName='from_date'
+                placeHolder={trans.common.startDay}
+                label={trans.common.fromDate}
+              />
+              <InputDatePicker
+                form={form}
+                fieldName='to_date'
+                placeHolder={trans.common.endDay}
+                label={trans.common.toDate}
+              />
             </div>
             <div className='block mt-2 ml-auto'>
               <Button className='bg-[var(--main-color)]' type='submit'>
                 <Search className='mr-2 h-4 w-4' />
-                Tìm kiếm
+                {trans.common.search}
               </Button>
             </div>
           </form>

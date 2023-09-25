@@ -1,5 +1,6 @@
 import CountryFlag from '@/src/shared/components/customization/CountryFlag';
 import { PreImage } from '@/src/shared/components/customization/PreImage';
+import useTrans from '@/src/shared/hooks/useTrans';
 import { MapPin, Dot, Tag } from 'lucide-react';
 import { IGroup } from 'src/schemas/group.table.type';
 import { ITournament } from 'src/schemas/tournament.table.type';
@@ -21,6 +22,7 @@ const CustomizeInfoCard = ({ title, value, desc }: { title: string; value: strin
   );
 };
 export function InformationCardDetailTournament({ groups, tournamentInfor }: Props) {
+  const { trans } = useTrans();
   return (
     <section
       id='InformationCardDetailTournament'
@@ -46,28 +48,36 @@ export function InformationCardDetailTournament({ groups, tournamentInfor }: Pro
                   groups.map(group => (
                     <div key={group.id} className='flex-row-end'>
                       <Dot size={16} />
-                      <p className='text-xs'>{group.name}</p>
+                      <p className='text-xs'>
+                        {group.name.split(' ')[1] === 'Nam'
+                          ? group.name.split(' ')[0] + ' ' + trans.common.male
+                          : group.name.split(' ')[0] + ' ' + trans.common.female}
+                      </p>
                     </div>
                   ))}
               </div>
             </div>
           </div>
         </div>
-        <div className='w-1/2 flex-col-end gap-2'>
-          <p>Nhà tổ chức</p>
-          <p className='text-2xl text-center font-semibold'>{tournamentInfor.organiser.name}</p>
+        <div className='w-1/4 flex-col-end gap-2'>
+          <p>{trans.common.organizer}</p>
+          <p className='text-2xl text-end font-semibold'>{tournamentInfor.organiser.name}</p>
         </div>
       </div>
       <div className='w-full grid grid-cols-2 md:grid-cols-5 z-30'>
         <CustomizeInfoCard
-          title='Thời gian'
+          title={trans.common.time}
           value={`${tournamentInfor.from_date} - ${tournamentInfor.to_date}`}
           desc=''
         />
-        <CustomizeInfoCard title='Loại giải đấu' value={tournamentInfor.tournament_type.name} desc='' />
-        <CustomizeInfoCard title='Số vòng đấu' value={tournamentInfor.number_round} desc='vòng' />
-        <CustomizeInfoCard title='Thể thức' value={tournamentInfor.format} desc='' />
-        <CustomizeInfoCard title='Trạng thái' value={tournamentInfor.status} desc='' />
+        <CustomizeInfoCard title={trans.common.tournamentType} value={tournamentInfor.tournament_type.name} desc='' />
+        <CustomizeInfoCard
+          title={trans.tournament.numberOfRound}
+          value={tournamentInfor.number_round}
+          desc={trans.tournament.round}
+        />
+        <CustomizeInfoCard title={trans.common.formula} value={tournamentInfor.format} desc='' />
+        <CustomizeInfoCard title={trans.common.status} value={tournamentInfor.status} desc='' />
       </div>
       <div className='absolute top-0 left-0 w-full object-center rounded-lg'>
         <PreImage

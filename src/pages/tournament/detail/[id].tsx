@@ -12,10 +12,12 @@ import TabsDetailTournament from '@/src/shared/components/business/tournament/de
 import Breadcrumb from '@/src/shared/components/customization/Breadcrumb';
 import HintConditionDetailTournament from '@/src/shared/components/business/tournament/detail/HintConditionDetailTournament';
 import { StatusTournamentString } from 'src/schemas/tournament.table.type';
+import useTrans from '@/src/shared/hooks/useTrans';
 
 const ScrollRevealWrapper = dynamic(() => import('@/src/shared/components/customization/ScrollRevealWrapper'), { ssr: false });
 
 const DetailTournament = () => {
+  const {trans} = useTrans()
   const { query } = useRouter();
   const filterDetailTournament: Filter[] = [
     {
@@ -29,11 +31,11 @@ const DetailTournament = () => {
   return (
     <React.Fragment>
       <Head>
-        <title>Hệ thống Vietnam Golf Association</title>
-        <meta name='description' content='Hệ thống Vietnam Golf Association' />
-        <meta name='keywords' content='Hệ thống Vietnam Golf Association' />
+        <title>{trans.tournament.titleDetail}</title>
+        <meta name='description' content={trans.tournament.titleDetail} />
+        <meta name='keywords' content='Vietnam Golf Association' />
       </Head>
-      <Breadcrumb title={`Quay lại ${tournamentDetail.content[0].tournament.tournament_group.name}`} url={`${URL_SYSTEMS.GROUP_TOURNAMENT}/${query.id}`} />
+      <Breadcrumb title={`${trans.common.return} ${tournamentDetail.content[0].tournament.tournament_group.name}`} url={`${URL_SYSTEMS.GROUP_TOURNAMENT}/${query.id}`} />
       <ScrollRevealWrapper>
         <InformationCardDetailTournament
           groups={groups || []}

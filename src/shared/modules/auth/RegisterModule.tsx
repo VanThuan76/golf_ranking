@@ -6,6 +6,9 @@ import { bannerLogin } from 'src/shared/mocks/login';
 import { FormRegister } from './FormRegister';
 import { useRegister } from 'src/queries/auth/auth.queires';
 import { IRegister } from 'src/schemas/auth.type';
+import useTrans from '@/src/shared/hooks/useTrans';
+import Breadcrumb from '@/src/shared/components/customization/Breadcrumb';
+import { URL_SYSTEMS } from '@/src/shared/constants';
 
 const formSchema = z.object({
   name: z
@@ -19,6 +22,7 @@ const formSchema = z.object({
 });
 
 const RegisterModule = () => {
+  const {trans} = useTrans()
   const router = useRouter()
   const doRegister = useRegister(() => router.push('/member/register'));
   function onSubmit(value: Partial<IRegister>) {
@@ -42,7 +46,8 @@ const RegisterModule = () => {
       <div className='w-full col-span-1 mx-auto'>
         <div className='w-full flex-col-start space-y-6'>
           <IconLogo className='float-left' />
-          <div className='font-semibold text-2xl w-full text-black'>Đăng ký tài khoản</div>
+          <Breadcrumb title={trans.auth.breadcrumbLogin} url={URL_SYSTEMS.HOME} />
+          <div className='font-semibold text-2xl w-full text-black'>{trans.auth.titleRegister}</div>
           <FormRegister formSchema={formSchema} onSubmit={onSubmit} />
         </div>
       </div>

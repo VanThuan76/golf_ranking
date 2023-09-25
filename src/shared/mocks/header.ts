@@ -1,10 +1,11 @@
-export const menu = [
+export const menuPath = [
     {
-        title: "Bảng xếp hạng",
         path: "rank"
     },
     {
-        title: "Giải đấu",
         path: "tournament"
     },
+    {
+        path: "update-soon"
+    }
 ]

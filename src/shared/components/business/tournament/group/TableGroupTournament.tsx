@@ -11,10 +11,11 @@ import { URL_SYSTEMS } from 'src/shared/constants';
 import { SearchGroupTournament } from './SearchGroupTournament';
 import { IGroupTournamentSearch, ITournament } from 'src/schemas/tournament.table.type';
 import { IBaseResponseWithCount } from 'src/schemas/baseResponse.type';
+import useTrans from '@/src/shared/hooks/useTrans';
 
 type Props = {
-  searchDefault: IGroupTournamentSearch
-  onChangeSearchArrayParams: any
+  searchDefault: IGroupTournamentSearch;
+  onChangeSearchArrayParams: any;
   titleGroupTournament: string;
   bannerGroupTournament: string;
   tournaments: IBaseResponseWithCount<ITournament[]>;
@@ -53,8 +54,16 @@ const CustomizeCell = ({
   );
 };
 
-export function TableGroupTournament({ searchDefault, onChangeSearchArrayParams, titleGroupTournament, bannerGroupTournament, tournaments, tableConfig }: Props) {
+export function TableGroupTournament({
+  searchDefault,
+  onChangeSearchArrayParams,
+  titleGroupTournament,
+  bannerGroupTournament,
+  tournaments,
+  tableConfig,
+}: Props) {
   const router = useRouter();
+  const { trans } = useTrans();
   const [collapseStates, setCollapseStates] = useState<Record<string, boolean>>({});
   const TABLE_NAME = 'GroupTournament';
   const columnNews: ColumnDef<ITournament>[] = [
@@ -64,11 +73,11 @@ export function TableGroupTournament({ searchDefault, onChangeSearchArrayParams,
       cell(props) {
         const dataCustomizeCell = [
           {
-            title: 'Khu vực',
+            title: trans.common.area,
             value: props.cell.row.original.region,
           },
           {
-            title: 'Tỉnh/TP',
+            title: trans.common.provinceCity,
             value: props.cell.row.original.city,
           },
         ];
@@ -86,7 +95,7 @@ export function TableGroupTournament({ searchDefault, onChangeSearchArrayParams,
           </React.Fragment>
         );
       },
-      header: ({ column }) => <DataTableColumnHeader column={column} title='Thời gian' />,
+      header: ({ column }) => <DataTableColumnHeader column={column} title={trans.common.time} />,
     },
     {
       id: 'tournament_name',
@@ -94,12 +103,12 @@ export function TableGroupTournament({ searchDefault, onChangeSearchArrayParams,
       cell(props) {
         const dataCustomizeCell = [
           {
-            title: 'Loại giải đấu',
+            title: trans.common.tournamentType,
             value: props.cell.row.original.tournament_type.name,
           },
           {
-            title: 'Số vòng đấu',
-            value: `${props.cell.row.original.number_round} vòng`,
+            title: trans.tournament.numberOfRound,
+            value: `${props.cell.row.original.number_round} ${trans.tournament.round}`,
           },
         ];
         return (
@@ -114,7 +123,7 @@ export function TableGroupTournament({ searchDefault, onChangeSearchArrayParams,
           </React.Fragment>
         );
       },
-      header: ({ column }) => <DataTableColumnHeader column={column} title='Giải đấu' />,
+      header: ({ column }) => <DataTableColumnHeader column={column} title={trans.common.tournament} />,
     },
     {
       id: 'member_best_rank',
@@ -122,11 +131,11 @@ export function TableGroupTournament({ searchDefault, onChangeSearchArrayParams,
       cell(props) {
         const dataCustomizeCell = [
           {
-            title: 'Thể thức',
+            title: trans.common.formula,
             value: props.cell.row.original.format,
           },
           {
-            title: 'Nhà tổ chức',
+            title: trans.common.organizer,
             value: props.cell.row.original.organiser.name,
           },
         ];
@@ -136,13 +145,13 @@ export function TableGroupTournament({ searchDefault, onChangeSearchArrayParams,
               {props.cell.row.original.member && (
                 <CountryFlag countryCode={props.cell.row.original.member.nationality} />
               )}
-              <p className='text-center'>{props.cell.row.original.member?.name ?? 'Không có'}</p>
+              <p className='text-center'>{props.cell.row.original.member?.name ?? trans.table.nothing}</p>
               {props.cell.row.original.member && (
                 <p
                   className='absolute left-18 mt-10 text-[12px] flex-row-center gap-1 rounded-lg opacity-70 hover:opacity-100 cursor-pointer'
                   onClick={() => router.push(`${URL_SYSTEMS.RANK}/${props.cell.row.original.member.id}`)}
                 >
-                  Xem thêm
+                  {trans.common.seeMore}
                   <ArrowRight size={12} />
                 </p>
               )}
@@ -153,7 +162,7 @@ export function TableGroupTournament({ searchDefault, onChangeSearchArrayParams,
           </React.Fragment>
         );
       },
-      header: ({ column }) => <DataTableColumnHeader column={column} title='Vận động viên vô địch' />,
+      header: ({ column }) => <DataTableColumnHeader column={column} title={trans.tournament.championAthlete} />,
     },
     {
       id: 'point',
@@ -161,14 +170,14 @@ export function TableGroupTournament({ searchDefault, onChangeSearchArrayParams,
       cell(props) {
         return (
           <React.Fragment>
-            <p className='text-center'>Hoàn thành</p>
+            <p className='text-center'>{trans.common.complete}</p>
             {collapseStates[props.cell.row.id] && (
               <div className='relative w-[100px] h-[50px] flex items-center justify-center'>
                 <p
                   className='absolute flex-row-center gap-1 mt-8 rounded-lg opacity-70 hover:opacity-100 cursor-pointer text-center'
                   onClick={() => router.push(`${URL_SYSTEMS.DETAIL_TOURNAMENT}/${props.cell.row.original.id}`)}
                 >
-                  Xem thêm
+                  {trans.common.seeMore}
                   <ArrowRight size={12} />
                 </p>
               </div>
@@ -176,7 +185,7 @@ export function TableGroupTournament({ searchDefault, onChangeSearchArrayParams,
           </React.Fragment>
         );
       },
-      header: ({ column }) => <DataTableColumnHeader column={column} title='Trạng thái' />,
+      header: ({ column }) => <DataTableColumnHeader column={column} title={trans.common.status} />,
     },
   ];
   return (

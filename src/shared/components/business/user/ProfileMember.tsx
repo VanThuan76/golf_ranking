@@ -1,3 +1,4 @@
+import useTrans from '@/src/shared/hooks/useTrans';
 import { IMember } from 'src/schemas/member.table.type';
 
 interface Props {
@@ -5,6 +6,7 @@ interface Props {
 }
 
 const ProfileMember = ({ member }: Props) => {
+  const {trans} = useTrans()
   if (!member) return <></>;
   const CardProfile = ({ title, label }: { title: any; label: string }) => {
     return (
@@ -16,7 +18,7 @@ const ProfileMember = ({ member }: Props) => {
   };
   return (
     <section id='ProfileMember' className='relative w-full mt-4 p-4 flex-col-between-start overflow-hidden'>
-      <h1 className='font-semibold text-2xl'>Thông tin thành viên</h1>
+      <h1 className='font-semibold text-2xl'>{trans.user.memberInfor}</h1>
       <div className='w-full p-12 grid grid-cols-1 md:grid-cols-3 gap-5 shadow-lg rounded-lg'>
         <CardProfile label='Mã VJGR' title={member.vjgr_code} />
         <CardProfile label='Handicap VGA' title={member.handicap_vga} />
@@ -24,7 +26,7 @@ const ProfileMember = ({ member }: Props) => {
         <CardProfile label='Giới tính' title={member.gender} />
         <CardProfile label='Ngày sinh' title={member.date_of_birth} />
       </div>
-      <h1 className='font-semibold text-2xl mt-4'>Thông tin bảo trợ</h1>
+      <h1 className='font-semibold text-2xl mt-4'>{trans.user.guardianInfor}</h1>
       <div className='w-full p-12 grid grid-cols-1 md:grid-cols-3 gap-5 shadow-lg rounded-lg'>
         <CardProfile label='Họ tên' title={member.guardian_name} />
         <CardProfile label='Email' title={member.guardian_email} />

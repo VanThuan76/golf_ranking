@@ -6,6 +6,7 @@ import BannerRank from '@/src/shared/components/business/rank/BannerRank';
 import TabsRank from '@/src/shared/components/business/rank/TabsRank';
 import { sectionBanner } from 'src/shared/mocks/home';
 import { GetServerSideProps } from 'next';
+import useTrans from '@/src/shared/hooks/useTrans';
 
 const ScrollRevealWrapper = dynamic(() => import('@/src/shared/components/customization/ScrollRevealWrapper'), {
   ssr: false,
@@ -16,6 +17,7 @@ type Props = {
   nationality: string;
 };
 function Rank({ name, vjgr_code, nationality }: Props) {
+  const {trans} = useTrans()
   const searchDefault = {
     name: name,
     vjgr_code: vjgr_code,
@@ -24,9 +26,9 @@ function Rank({ name, vjgr_code, nationality }: Props) {
   return (
     <React.Fragment>
       <Head>
-        <title>Trang chủ Golf Ranking</title>
-        <meta name='description' content='Trang chủ Golf Ranking' />
-        <meta name='keywords' content='Công nghệ thông tin, Giải pháp số' />
+        <title>{trans.rank.title}</title>
+        <meta name='description' content={trans.rank.title} />
+        <meta name='keywords' content='Golf Ranking' />
       </Head>
       <ScrollRevealWrapper>
         <BannerRank data={sectionBanner} />

@@ -10,6 +10,7 @@ import CountryFlag from '@/src/shared/components/customization/CountryFlag';
 import { URL_SYSTEMS } from 'src/shared/constants';
 import { IMember } from 'src/schemas/member.table.type';
 import { calculateAge } from '@/src/shared/utils/business/calculateAge';
+import useTrans from '@/src/shared/hooks/useTrans';
 
 type Props = {
   members: IMember[];
@@ -57,6 +58,7 @@ const CustomizeCell = ({
 
 export function TableRank({ members, tableConfig, getFieldValueOnSearchParam }: Props) {
   const router = useRouter();
+  const {trans} = useTrans()
   const [collapseStates, setCollapseStates] = useState<Record<string, boolean>>({});
   const TABLE_NAME = 'Ranking';
   const columnNews: ColumnDef<IMember>[] = [
@@ -66,10 +68,10 @@ export function TableRank({ members, tableConfig, getFieldValueOnSearchParam }: 
       cell(props) {
         return (
           <React.Fragment>
-            <div className='min-w-[50px] h-[20px] flex-row-between-center gap-2'>
+            <div className='min-w-[50px] h-[20px] flex-row-start gap-2'>
               {collapseStates[props.cell.row.id] ? <ChevronDown /> : <ChevronUp />}
               <p className='text-center'>
-                {props.cell.row.original.best_rank ? props.cell.row.original.best_rank : 'Không'}
+                {props.cell.row.original.best_rank ? props.cell.row.original.best_rank : trans.table.nothing}
               </p>
             </div>
 
@@ -77,7 +79,7 @@ export function TableRank({ members, tableConfig, getFieldValueOnSearchParam }: 
               <CustomizeCell
                 id={props.cell.row.id}
                 collapseStates={collapseStates}
-                title='Xếp hạng cao nhất'
+                title={trans.rank.highestRating}
                 value={props.cell.row.original.best_rank ? props.cell.row.original.best_rank : 0}
                 desc=''
               />
@@ -88,7 +90,7 @@ export function TableRank({ members, tableConfig, getFieldValueOnSearchParam }: 
       header: ({ column }) => (
         <DataTableColumnHeader
           column={column}
-          title='Xếp hạng'
+          title={trans.common.rating}
           defaultFilter={getFieldValueOnSearchParam('best_rank')}
         />
       ),
@@ -104,9 +106,9 @@ export function TableRank({ members, tableConfig, getFieldValueOnSearchParam }: 
               <CustomizeCell
                 id={props.cell.row.id}
                 collapseStates={collapseStates}
-                title='Tham gia'
+                title={trans.common.join}
                 value={props.cell.row.original.counting_tournament}
-                desc='giải đấu'
+                desc={trans.common.tournament}
               />
             )}
           </React.Fragment>
@@ -115,7 +117,7 @@ export function TableRank({ members, tableConfig, getFieldValueOnSearchParam }: 
       header: ({ column }) => (
         <DataTableColumnHeader
           column={column}
-          title='Mã VJGR'
+          title={trans.common.codeVJGR}
           defaultFilter={getFieldValueOnSearchParam('vjgr_code')}
         />
       ),
@@ -133,9 +135,9 @@ export function TableRank({ members, tableConfig, getFieldValueOnSearchParam }: 
               <CustomizeCell
                 id={props.cell.row.id}
                 collapseStates={collapseStates}
-                title='Vô địch'
+                title={trans.rank.champion}
                 value={props.cell.row.original.number_of_wins}
-                desc='lần'
+                desc={trans.common.bout}
               />
             )}
           </React.Fragment>
@@ -144,7 +146,7 @@ export function TableRank({ members, tableConfig, getFieldValueOnSearchParam }: 
       header: ({ column }) => (
         <DataTableColumnHeader
           column={column}
-          title={'Thành viên'}
+          title={trans.common.member}
           defaultFilter={getFieldValueOnSearchParam('vjgr_code')}
         />
       ),
@@ -160,8 +162,8 @@ export function TableRank({ members, tableConfig, getFieldValueOnSearchParam }: 
               <CustomizeCell
                 id={props.cell.row.id}
                 collapseStates={collapseStates}
-                title='Giới tính'
-                value={props.cell.row.original.gender}
+                title={trans.common.gender}
+                value={props.cell.row.original.gender === "Nam" ? trans.common.male: trans.common.female}
                 desc=''
               />
             )}
@@ -171,7 +173,7 @@ export function TableRank({ members, tableConfig, getFieldValueOnSearchParam }: 
       header: ({ column }) => (
         <DataTableColumnHeader
           column={column}
-          title='Độ tuổi'
+          title={trans.common.age}
           defaultFilter={getFieldValueOnSearchParam('date_of_birth')}
         />
       ),
@@ -190,7 +192,7 @@ export function TableRank({ members, tableConfig, getFieldValueOnSearchParam }: 
                 onClick={() => router.push(`${URL_SYSTEMS.RANK}/${props.cell.row.original.id}`)}
               >
                 <p className='absolute top-5 flex-row-center gap-1 rounded-lg opacity-70 hover:opacity-100 cursor-pointer'>
-                  Xem thêm
+                  {trans.common.seeMore}
                   <ArrowRight size={12} />
                 </p>
               </div>
@@ -198,7 +200,7 @@ export function TableRank({ members, tableConfig, getFieldValueOnSearchParam }: 
           </React.Fragment>
         );
       },
-      header: ({ column }) => <DataTableColumnHeader column={column} title='Tăng/giảm' />,
+      header: ({ column }) => <DataTableColumnHeader column={column} title={trans.common.upDow} />,
     },
     {
       id: 'points',
@@ -209,7 +211,7 @@ export function TableRank({ members, tableConfig, getFieldValueOnSearchParam }: 
       header: ({ column }) => (
         <DataTableColumnHeader
           column={column}
-          title='Điểm thưởng'
+          title={trans.common.rewardPoint}
           defaultFilter={getFieldValueOnSearchParam('points')}
         />
       ),

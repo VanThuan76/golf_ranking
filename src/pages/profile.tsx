@@ -2,20 +2,22 @@ import Head from 'next/head';
 import dynamic from 'next/dynamic';
 import React from 'react';
 import LayoutWebsite from 'src/shared/layouts/LayoutWebsite';
-import ProfileUser from '../shared/components/business/user/ProfileUser';
-import ProfileMember from '../shared/components/business/user/ProfileMember';
-import { useAppSelector } from '../shared/hooks/useRedux';
+import ProfileUser from '@/src/shared/components/business/user/ProfileUser';
+import ProfileMember from '@/src/shared/components/business/user/ProfileMember';
+import { useAppSelector } from '@/src/shared/hooks/useRedux';
+import useTrans from '@/src/shared/hooks/useTrans';
 
 
 const ScrollRevealWrapper = dynamic(() => import('../shared/components/customization/ScrollRevealWrapper'), { ssr: false });
 const DetailProfile = () => {
+  const {trans} = useTrans()
   const { user } = useAppSelector(state => state.appSlice);
   if(!user) return <></>
   return (
     <React.Fragment>
       <Head>
-        <title>Thông tin người dùng Golf Achievement</title>
-        <meta name='description' content='Thông tin người dùng Golf Achievement' />
+        <title>{trans.user.title}</title>
+        <meta name='description' content={trans.user.title} />
         <meta name='keywords' content='Golf Achievement' />
       </Head>
       <ScrollRevealWrapper>

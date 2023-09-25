@@ -13,6 +13,7 @@ import { URL_SYSTEMS } from 'src/shared/constants';
 import { IRegister } from 'src/schemas/auth.type';
 import FacebookSignButton from './FacebookSignButton';
 import GoogleSignButton from './GoogleSignButton';
+import useTrans from '@/src/shared/hooks/useTrans';
 
 type Props = {
   formSchema: z.Schema<IRegister>;
@@ -23,6 +24,7 @@ type Props = {
 };
 
 export function FormRegister({ formSchema, onSubmit, isLoading, defaultValue, className }: Props) {
+  const { trans } = useTrans();
   const [initialValues, setInitialValues] = useState<Partial<IRegister>>(defaultValue || {});
   const router = useRouter();
   const form = useForm<z.infer<typeof formSchema>>({
@@ -50,35 +52,44 @@ export function FormRegister({ formSchema, onSubmit, isLoading, defaultValue, cl
         className={`w-full space-y-8 ${className}`}
       >
         <div className='w-full grid grid-cols-1 md:grid-cols-2 justify-between items-center gap-2'>
-          <InputText form={form} fieldName='name' label='Họ và tên*' placeHolder='Nhập họ tên của bạn' />
-          <InputText form={form} fieldName='email' label='Email*' placeHolder='Nhập email của bạn' />
+          <InputText
+            form={form}
+            fieldName='name'
+            label={trans.auth.firstLastName}
+            placeHolder={trans.common.fillIn + ' ' + trans.auth.firstLastName}
+          />
+          <InputText form={form} fieldName='email' label='Email*' placeHolder={trans.common.fillIn + ' ' + 'email'} />
         </div>
         <div className='w-full grid grid-cols-1 md:grid-cols-2 justify-between items-center gap-2'>
           <InputPassword
             form={form}
             fieldName='password'
-            label='Mật khẩu*'
-            placeHolder='Nhập mật khẩu của bạn'
+            label={trans.auth.password}
+            placeHolder={trans.common.fillIn + ' ' + trans.auth.password}
             inputProps={{ type: 'password' }}
           />
           <InputPassword
             form={form}
             fieldName='password_confirmation'
-            label='Xác nhận mật khẩu*'
-            placeHolder='Nhập lại mật khẩu'
+            label={trans.auth.passwordConfirm}
+            placeHolder={trans.common.fillIn + ' ' + trans.auth.passwordConfirm}
             inputProps={{ type: 'password_confirmation' }}
           />
         </div>
         <div className='flex-col-center gap-2'>
           <Button className='w-full' type='submit'>
-            {isLoading && <Loader2 size={16} className='animate-spin' />}Đăng ký
+            {isLoading && <Loader2 size={16} className='animate-spin' />}
+            {trans.common.register}
           </Button>
           <p className='text-sm'>
-            Bạn đã có tài khoản thành viên? <strong className='cursor-pointer' onClick={() => router.push(URL_SYSTEMS.LOGIN)}>Đăng nhập</strong>
+            {trans.auth.descriptionRegister}{' '}
+            <strong className='cursor-pointer' onClick={() => router.push(URL_SYSTEMS.LOGIN)}>
+              {trans.common.login}
+            </strong>
           </p>
         </div>
         <div className='relative w-full pt-4 flex-row-center gap-2 border-slate-200 border-t-2'>
-          <p className='text-sm absolute -top-6 p-2 bg-white'>Hoặc đăng nhập với</p>
+          <p className='text-sm absolute -top-6 p-2 bg-white'>{trans.auth.hintLogin}</p>
           <FacebookSignButton />
           <GoogleSignButton />
         </div>

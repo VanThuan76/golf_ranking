@@ -7,6 +7,7 @@ export const APP_SAVE_KEY = {
     USER_ID: process.env.NEXT_PUBLIC_APP_NAME + ':user_id',
 }
 export const URL_SYSTEMS = {
+    HOME: "/",
     LOGIN: "/login",
     REGISTER: "/register",
     PROFILE: "/profile",
@@ -15,7 +16,8 @@ export const URL_SYSTEMS = {
     RANK: "/rank",
     TOURNAMENT: "/tournament",
     GROUP_TOURNAMENT: "/tournament/group",
-    DETAIL_TOURNAMENT: "/tournament/detail"
+    DETAIL_TOURNAMENT: "/tournament/detail",
+    TO_BE_UPDATE: "/update-soon"
 }
 export const SOCIAL_BUSINESS = {
     FACEBOOK: 'https://www.facebook.com/vietnamgolfassociation/?locale=vi_VN'

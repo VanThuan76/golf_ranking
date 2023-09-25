@@ -6,6 +6,9 @@ import { FormLogin } from './FormLogin';
 import { useLogin } from 'src/queries/auth/auth.queires';
 import SliderFull from '@/src/shared/components/customization/SliderFull';
 import IconLogo from '@/src/shared/components/icons/IconLogoDark';
+import Breadcrumb from '@/src/shared/components/customization/Breadcrumb';
+import useTrans from '@/src/shared/hooks/useTrans';
+import { URL_SYSTEMS } from '@/src/shared/constants';
 
 const formSchema = z.object({
   email: z
@@ -15,6 +18,7 @@ const formSchema = z.object({
 });
 
 const LoginModule = () => {
+  const {trans} = useTrans()
   const router = useRouter()
   const doLogin = useLogin(() => router.push('/'));
   function onSubmit(value: Partial<ILogin>) {
@@ -33,7 +37,8 @@ const LoginModule = () => {
       <div className='w-full col-span-1 mx-auto'>
         <div className='w-full flex-col-start space-y-6'>
           <IconLogo className='float-left' />
-          <div className='font-bold text-3xl w-full text-black'>Đăng nhập</div>
+          <Breadcrumb title={trans.auth.breadcrumbLogin} url={URL_SYSTEMS.HOME} />
+          <div className='font-bold text-3xl w-full text-black'>{trans.common.login}</div>
           <FormLogin formSchema={formSchema} onSubmit={onSubmit} />
         </div>
       </div>

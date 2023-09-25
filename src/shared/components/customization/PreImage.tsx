@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import Image, { ImageProps } from 'next/image';
+import { ImageProps } from 'next/image';
 import { useTheme } from 'next-themes';
 import React from 'react';
 

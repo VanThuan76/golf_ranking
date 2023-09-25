@@ -6,6 +6,7 @@ import CountryFlag from '@/src/shared/components/customization/CountryFlag';
 import DataTableColumnHeader from '@/src/shared/components/customization/table/DataTableColumnHeader';
 import DataTable from '@/src/shared/components/customization/table/DataTable';
 import { ITournamentDetail } from 'src/schemas/tournament-detail.table.type';
+import useTrans from '@/src/shared/hooks/useTrans';
 
 type Props = {
   tournamentDetail: ITournamentDetail[];
@@ -52,6 +53,7 @@ const CustomizeCell = ({
 };
 
 export function TableDetailTournament({ tournamentDetail, tableConfig }: Props) {
+  const {trans} = useTrans()
   const [collapseStates, setCollapseStates] = useState<Record<string, boolean>>({});
   const TABLE_NAME = 'Detail Tournament';
   const uniqueValues = new Set();
@@ -80,24 +82,24 @@ export function TableDetailTournament({ tournamentDetail, tableConfig }: Props) 
                 <CustomizeCell
                   id={props.cell.row.id}
                   collapseStates={collapseStates}
-                  title='Tham gia'
+                  title={trans.common.join}
                   value={props.cell.row.original.member.counting_tournament}
-                  desc='giải đấu'
+                  desc={trans.common.tournament}
                 />
               )}
               {collapseStates[props.cell.row.id] && i === 2 && (
                 <CustomizeCell
                   id={props.cell.row.id}
                   collapseStates={collapseStates}
-                  title='Vô địch'
+                  title={trans.rank.champion}
                   value={props.cell.row.original.member.number_of_wins}
-                  desc='lần'
+                  desc={trans.common.bout}
                 />
               )}
             </React.Fragment>
           );
         },
-        header: ({ column }) => <DataTableColumnHeader column={column} title={`Vòng ${i}`} />,
+        header: ({ column }) => <DataTableColumnHeader column={column} title={`${trans.tournament.round} ${i}`} />,
       });
     }
     return columnDefs;
@@ -113,14 +115,14 @@ export function TableDetailTournament({ tournamentDetail, tableConfig }: Props) 
             <div className='min-w-[50px] h-[20px] flex-row-between-center gap-2'>
               {collapseStates[props.cell.row.id] ? <ChevronDown /> : <ChevronUp />}
               <p className='text-center'>
-                {props.cell.row.original.member.best_rank ? props.cell.row.original.member.best_rank : 'Không'}
+                {props.cell.row.original.member.best_rank ? props.cell.row.original.member.best_rank : trans.table.nothing}
               </p>
             </div>
             {collapseStates[props.cell.row.id] && (
               <CustomizeCell
                 id={props.cell.row.id}
                 collapseStates={collapseStates}
-                title='Xếp hạng hiện tại'
+                title={trans.rank.currentRating}
                 value={props.cell.row.original.member.best_rank ? props.cell.row.original.member.best_rank : 0}
                 desc=''
               />
@@ -128,7 +130,7 @@ export function TableDetailTournament({ tournamentDetail, tableConfig }: Props) 
           </React.Fragment>
         );
       },
-      header: ({ column }) => <DataTableColumnHeader column={column} title='Xếp hạng' />,
+      header: ({ column }) => <DataTableColumnHeader column={column} title={trans.common.rating} />,
     },
     {
       id: 'member_name',
@@ -144,7 +146,7 @@ export function TableDetailTournament({ tournamentDetail, tableConfig }: Props) 
               <CustomizeCell
                 id={props.cell.row.id}
                 collapseStates={collapseStates}
-                title='Xếp hạng cao nhất'
+                title={trans.rank.highestRating}
                 value={props.cell.row.original.member.best_rank ? props.cell.row.original.member.best_rank : 0}
                 desc=''
               />
@@ -152,7 +154,7 @@ export function TableDetailTournament({ tournamentDetail, tableConfig }: Props) 
           </React.Fragment>
         );
       },
-      header: ({ column }) => <DataTableColumnHeader column={column} title='Thành viên' />,
+      header: ({ column }) => <DataTableColumnHeader column={column} title={trans.common.member} />,
     },
     ...roundColumns,
     {
@@ -169,7 +171,7 @@ export function TableDetailTournament({ tournamentDetail, tableConfig }: Props) 
       cell(props) {
         return <p className='text-center'>{props.cell.row.original.tournament_summary.point}</p>;
       },
-      header: ({ column }) => <DataTableColumnHeader column={column} title='Điểm thưởng' />,
+      header: ({ column }) => <DataTableColumnHeader column={column} title={trans.common.rewardPoint} />,
     },
   ];
 

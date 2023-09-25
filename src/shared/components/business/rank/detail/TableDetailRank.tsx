@@ -8,6 +8,7 @@ import { ITournamentSummary } from 'src/schemas/tournament-summary.table.type';
 import DataTableColumnHeader from '@/src/shared/components/customization/table/DataTableColumnHeader';
 import DataTable from '@/src/shared/components/customization/table/DataTable';
 import CountryFlag from '@/src/shared/components/customization/CountryFlag';
+import useTrans from '@/src/shared/hooks/useTrans';
 
 type Props = {
   tournamentSummary: ITournamentSummary[];
@@ -46,6 +47,7 @@ const CustomizeCell = ({
 };
 
 export function TableDetailRank({ tournamentSummary, tableConfig }: Props) {
+  const {trans} = useTrans()
   const router = useRouter();
   const [collapseStates, setCollapseStates] = useState<Record<string, boolean>>({});
   const TABLE_NAME = 'Detail Ranking';
@@ -56,11 +58,11 @@ export function TableDetailRank({ tournamentSummary, tableConfig }: Props) {
       cell(props) {
         const dataCustomizeCell = [
           {
-            title: 'Khu vực',
+            title: trans.common.area,
             value: props.cell.row.original.tournament.region,
           },
           {
-            title: 'Tỉnh/TP',
+            title: trans.common.provinceCity,
             value: props.cell.row.original.tournament.city,
           },
         ];
@@ -79,7 +81,7 @@ export function TableDetailRank({ tournamentSummary, tableConfig }: Props) {
       header: ({ column }) => (
         <DataTableColumnHeader
           column={column}
-          title='Thời gian'
+          title={trans.common.time}
         />
       ),
     },
@@ -98,7 +100,7 @@ export function TableDetailRank({ tournamentSummary, tableConfig }: Props) {
                 collapseStates={collapseStates}
                 data={[
                   {
-                    title: 'Loại giải đấu',
+                    title: trans.common.tournamentType,
                     value: props.cell.row.original.tournament.tournament_type.name,
                   },
                 ]}
@@ -110,7 +112,7 @@ export function TableDetailRank({ tournamentSummary, tableConfig }: Props) {
       header: ({ column }) => (
         <DataTableColumnHeader
           column={column}
-          title='Giải đấu'
+          title={trans.common.tournament}
         />
       ),
     },
@@ -127,7 +129,7 @@ export function TableDetailRank({ tournamentSummary, tableConfig }: Props) {
                 collapseStates={collapseStates}
                 data={[
                   {
-                    title: 'Thể thức',
+                    title: trans.common.formula,
                     value: props.cell.row.original.tournament.format
                   },
                 ]}
@@ -139,7 +141,7 @@ export function TableDetailRank({ tournamentSummary, tableConfig }: Props) {
       header: ({ column }) => (
         <DataTableColumnHeader
           column={column}
-          title='Xếp hạng'
+          title={trans.common.rating}
         />
       ),
     },
@@ -153,7 +155,7 @@ export function TableDetailRank({ tournamentSummary, tableConfig }: Props) {
             {collapseStates[props.cell.row.id] && (
               <div className='relative w-[100px] h-[50px] flex items-center justify-center' onClick={() => router.push(`${URL_SYSTEMS.DETAIL_TOURNAMENT}/${props.cell.row.id}`)}>
                 <p className='absolute flex-row-center gap-1 mt-8 rounded-lg opacity-70 hover:opacity-100 cursor-pointer text-center'>
-                  Xem thêm
+                  {trans.common.seeMore}
                   <ArrowRight size={12} />
                 </p>
               </div>
@@ -164,7 +166,7 @@ export function TableDetailRank({ tournamentSummary, tableConfig }: Props) {
       header: ({ column }) => (
         <DataTableColumnHeader
           column={column}
-          title='Điểm số'
+          title={trans.common.score}
           // defaultFilter={getFieldValueOnSearchParam('age')}
         />
       ),
@@ -178,7 +180,7 @@ export function TableDetailRank({ tournamentSummary, tableConfig }: Props) {
       header: ({ column }) => (
         <DataTableColumnHeader
           column={column}
-          title='Điểm thưởng'
+          title={trans.common.rewardPoint}
           // defaultFilter={getFieldValueOnSearchParam('point')}
         />
       ),

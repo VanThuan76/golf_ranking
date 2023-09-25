@@ -1,4 +1,5 @@
 import { PreImage } from '@/src/shared/components/customization/PreImage';
+import useTrans from '@/src/shared/hooks/useTrans';
 import { useRouter } from 'next/router';
 import { ITournament } from 'src/schemas/tournament.table.type';
 import { URL_SYSTEMS } from 'src/shared/constants';
@@ -9,6 +10,7 @@ interface Props {
   size?: number;
 }
 const IntroduceCardTournament = ({ data, className, size }: Props) => {
+  const {trans} = useTrans()
   const router = useRouter();
   return (
     <section id='IntroduceCardTournament' className={`relative w-full text-white rounded-lg shadow-lg ${className}`}>
@@ -21,12 +23,12 @@ const IntroduceCardTournament = ({ data, className, size }: Props) => {
         className='w-full h-full rounded-lg object-cover'
       />
       <div className='absolute bottom-0 w-full flex flex-col justify-center items-center gap-3 p-5'>
-        <h2 className='text-lg lg:text-xl'>{data.name}</h2>
+        <h2 className='text-lg lg:text-xl text-center'>{data.name}</h2>
         <button
           className='font-semibold py-2 px-4 border-2 border-white rounded-md cursor-pointer shadow-2xl hover:bg-slate-300 transition-all duration-300'
           onClick={() => router.push(`${URL_SYSTEMS.GROUP_TOURNAMENT}/${data.id}`)}
         >
-          Xem các giải đấu
+          {trans.tournament.watchTournaments}
         </button>
       </div>
     </section>

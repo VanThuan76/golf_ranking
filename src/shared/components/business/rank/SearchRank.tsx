@@ -3,6 +3,7 @@ import InputSelect from '@/src/shared/components/customization/form/InputSelect'
 import InputText from '@/src/shared/components/customization/form/InputText';
 import { Button } from '@/src/shared/components/ui/button';
 import { Form } from '@/src/shared/components/ui/form';
+import useTrans from '@/src/shared/hooks/useTrans';
 import { Filter } from '@/src/shared/utils/typeSearchParams';
 import { Search } from 'lucide-react';
 import { useForm } from 'react-hook-form';
@@ -41,6 +42,7 @@ type Props = {
 };
 
 const SearchRank = ({ members, searchDefault, onChangeSearchArrayParams }: Props) => {
+  const {trans} = useTrans()
   const uniqueNationalities = Array.from(new Set(members.map(member => member.nationality)));
   const transformedNationalitySearch = uniqueNationalities.map((member) => ({
     value: member,
@@ -74,20 +76,20 @@ const SearchRank = ({ members, searchDefault, onChangeSearchArrayParams }: Props
           className='w-full flex-col-between-start mt-5 p-5'
         >
           <div className='w-full flex-row-center gap-10'>
-            <InputText placeHolder='Nhập họ tên thành viên' fieldName='name' label='Thành viên' form={form}></InputText>
-            <InputText placeHolder='Nhập mã VJGR' fieldName='vjgr_code' label='Mã VJGR' form={form}></InputText>
+            <InputText placeHolder={trans.common.fillIn + " " + trans.common.member} fieldName='name' label={trans.common.member} form={form}></InputText>
+            <InputText placeHolder={trans.common.fillIn + " " + trans.common.codeVJGR} fieldName='vjgr_code' label={trans.common.codeVJGR} form={form}></InputText>
             <InputSelectCountry
               data={transformedNationalitySearch || []}
-              placeHolder='Tất cả'
-              fieldName='nationality'
-              label='Quốc tịch'
+              placeHolder={trans.common.all}
+              fieldName={trans.common.fillIn + " " + trans.common.nationality}
+              label={trans.common.nationality}
               form={form}
             ></InputSelectCountry>
           </div>
           <div className='block mt-2 ml-auto'>
             <Button className='bg-[var(--main-color)]' type='submit'>
               <Search className='mr-2 h-4 w-4' />
-              Tìm kiếm
+              {trans.common.search}
             </Button>
           </div>
         </form>

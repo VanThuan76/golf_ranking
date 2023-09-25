@@ -10,23 +10,25 @@ import LayoutWebsite from 'src/shared/layouts/LayoutWebsite';
 import TableDetailRank from '@/src/shared/components/business/rank/detail/TableDetailRank';
 import Breadcrumb from '@/src/shared/components/customization/Breadcrumb';
 import { URL_SYSTEMS } from 'src/shared/constants';
+import useTrans from '@/src/shared/hooks/useTrans';
 
 const ScrollRevealWrapper = dynamic(() => import('@/src/shared/components/customization/ScrollRevealWrapper'), { ssr: false });
 type Props = {
   member: IBaseResponse<IMember>;
 };
 const DetailRanking = ({ member }: Props) => {
+  const {trans} = useTrans()
   const { query } = useRouter();
   const { data: tournamentSummary, tableConfig, getFieldValueOnSearchParam } = useGetListTournamentSummary(query && Number(query.id));
   if (!member || !tournamentSummary) return <React.Fragment></React.Fragment>;
   return (
     <React.Fragment>
       <Head>
-        <title>Bảng xếp hạng chi tiết Golf Achievement</title>
-        <meta name='description' content='Bảng xếp hạng chi tiết Golf Achievement' />
-        <meta name='keywords' content='Golf Achievement Công nghệ thông tin, Giải pháp số' />
+        <title>{trans.rank.titleDetail}</title>
+        <meta name='description' content={trans.rank.titleDetail} />
+        <meta name='keywords' content='Golf Achievement' />
       </Head>
-      <Breadcrumb title={`Quay lại Bảng xếp hạng`} url={URL_SYSTEMS.RANK} />
+      <Breadcrumb title={trans.rank.breadcrumb} url={URL_SYSTEMS.RANK} />
       <ScrollRevealWrapper>
         <InformationCardDetailRank data={member.data} />
       </ScrollRevealWrapper>

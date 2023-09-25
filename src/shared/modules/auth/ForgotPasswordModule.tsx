@@ -7,6 +7,9 @@ import { FormForgotPassword } from './FormForgotPassword';
 import { FormResetPassword } from './FormResetPassword';
 import { useVerifyEmail } from '@/src/queries/user.queries';
 import { useState } from 'react';
+import useTrans from '@/src/shared/hooks/useTrans';
+import Breadcrumb from '@/src/shared/components/customization/Breadcrumb';
+import { URL_SYSTEMS } from '@/src/shared/constants';
 
 const formForgotPasswordSchema = z.object({
   email: z.string({ required_error: 'Vui lòng điền tên đăng nhập' }).min(1, { message: 'Vui lòng điền tên đăng nhập' }),
@@ -23,6 +26,7 @@ export const formResetPasswordSchema = z.object({
     .min(1, { message: 'Vui lòng nhập mật khẩu mới của bạn' }),
 });
 const ForgotPasswordModule = () => {
+  const {trans} = useTrans()
   const [isVerified, setIsVerified] = useState(false);
   const doVerifyEmail = useVerifyEmail();
   function onSubmit(value: Partial<{ email: string }>) {
@@ -40,7 +44,8 @@ const ForgotPasswordModule = () => {
       <div className='w-full col-span-1 mx-auto'>
         <div className='w-full flex-col-start space-y-6'>
           <IconLogo className='float-left' />
-          <div className='font-bold text-3xl w-full text-black'>Quên mật khẩu</div>
+          <Breadcrumb title={trans.auth.breadcrumbForgotPassword} url={URL_SYSTEMS.LOGIN} />
+          <div className='font-bold text-3xl w-full text-black'>{trans.auth.titleForgotPassword}</div>
           {isVerified ? (
             <FormResetPassword formSchema={formResetPasswordSchema} onSubmit={onSubmit} />
           ) : (

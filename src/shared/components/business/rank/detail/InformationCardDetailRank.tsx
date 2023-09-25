@@ -1,5 +1,6 @@
 import CountryFlag from '@/src/shared/components/customization/CountryFlag';
 import { PreImage } from '@/src/shared/components/customization/PreImage';
+import useTrans from '@/src/shared/hooks/useTrans';
 import { calculateAge } from '@/src/shared/utils/business/calculateAge';
 import { Dot, Tag } from 'lucide-react';
 import { IMember } from 'src/schemas/member.table.type';
@@ -20,6 +21,7 @@ const CustomizeCard = ({ title, value, desc }: { title: string; value: string | 
   );
 };
 export function InformationCardDetailRank({ data }: Props) {
+  const {trans} = useTrans()
   return (
     <section
       id='InformationCardDetailRank'
@@ -36,22 +38,22 @@ export function InformationCardDetailRank({ data }: Props) {
             <p className='py-1 px-2 rounded-md border-[var(--main-color)] border-2'>{data.handicap_vga}</p>
             <div className='flex-row-center gap-1'>
               <Tag size={16} />
-              <p>{data.gender}</p>
+              <p>{data.gender === "Nam" ? trans.common.male: trans.common.female}</p>
               <Dot size={24} />
               <p>U{calculateAge(data.date_of_birth)}</p>
             </div>
           </div>
         </div>
         <div className='flex-col-center gap-2'>
-          <p>Điểm thưởng</p>
+          <p>{trans.common.rewardPoint}</p>
           <p className='font-bold text-2xl text-center'>{data.points}</p>
         </div>
       </div>
       <div className='w-full md:w-[90%] grid grid-cols-2 md:grid-cols-4 z-30 gap-1 md:gap-5'>
-        <CustomizeCard title='Xếp hạng hiện tại' value={data.current_rank || 0} desc='' />
-        <CustomizeCard title='Xếp hạng cao nhất' value={data.best_rank || 0} desc='' />
-        <CustomizeCard title='Tham gia' value={data.counting_tournament} desc='giải đấu' />
-        <CustomizeCard title='Vô địch' value={data.number_of_wins} desc='' />
+        <CustomizeCard title={trans.rank.currentRating} value={data.current_rank || 0} desc='' />
+        <CustomizeCard title={trans.rank.highestRating} value={data.best_rank || 0} desc='' />
+        <CustomizeCard title={trans.common.join} value={data.counting_tournament} desc={trans.common.tournament} />
+        <CustomizeCard title={trans.rank.champion} value={data.number_of_wins} desc='' />
       </div>
       <div className='absolute top-0 left-0 w-full object-center rounded-lg'>
         <PreImage

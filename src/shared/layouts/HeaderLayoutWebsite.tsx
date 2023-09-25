@@ -1,10 +1,10 @@
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import React, { useEffect, useState } from 'react';
-import { ChevronDown, LogOut, Menu } from 'lucide-react';
+import { Menu } from 'lucide-react';
 
 import { Sheet, SheetContent, SheetTrigger } from '@/src/shared/components/ui/sheet';
-import { menu } from '../mocks/header';
+import { menuPath } from '@/src/shared/mocks/header';
 import IconCrown from '@/src/shared/components/icons/menu/IconCrown';
 import IconTrophy from '@/src/shared/components/icons/menu/IconTrophy';
 import { Button } from '@/src/shared/components/ui/button';
@@ -12,12 +12,18 @@ import { useRouter } from 'next/router';
 import ThemeModeToggle from '@/src/shared/components/customization/ToggleThemeMode';
 import IconLogoLight from '@/src/shared/components/icons/IconLogoLight';
 import AuthHeader from '@/src/shared/components/customization/AuthHeader';
+import IconNews from '@/src/shared/components/icons/menu/IconNews';
+import useTrans from '@/src/shared/hooks/useTrans';
+import UseRouter from '@/src/shared/utils/function/UseRouter';
+import { URL_SYSTEMS } from '@/src/shared/constants';
+import SwitchLanguageMode from '../components/customization/switchLanguageMode';
 interface Props {
   isLogin: boolean;
   isMember: boolean;
 }
 const HeaderLayoutWebsite = ({ isLogin, isMember }: Props) => {
   const router = useRouter();
+  const { trans } = useTrans();
   const [isScrolled, setIsScrolled] = useState(false);
   useEffect(() => {
     const handleScroll = () => {
@@ -49,12 +55,18 @@ const HeaderLayoutWebsite = ({ isLogin, isMember }: Props) => {
     >
       <div className='absolute left-5 flex-row-center gap-2'>
         <ul className='ml-10 hidden lg:flex justify-center items-center gap-10 dark:text-white'>
-          {menu.map((item, idx) => (
+          {menuPath.map((item, idx) => (
             <Link href={`/${item.path}`} key={idx}>
               <div className='relative w-full'>
                 <motion.div className='w-full flex-row-between-center gap-2'>
-                  {item.path === 'rank' ? <IconCrown /> : <IconTrophy />}
-                  <li>{item.title}</li>
+                  {item.path === 'rank' ? <IconCrown /> : item.path === 'tournament' ? <IconTrophy /> : <IconNews />}
+                  <li>
+                    {item.path === 'rank'
+                      ? trans.menu.rank
+                      : item.path === 'tournament'
+                      ? trans.menu.tournament
+                      : trans.menu.news}
+                  </li>
                 </motion.div>
                 {router.asPath.split('/')[1] === item.path ? (
                   <motion.div
@@ -105,20 +117,30 @@ const HeaderLayoutWebsite = ({ isLogin, isMember }: Props) => {
               onClick={() => router.push('/member/register')}
               className='bg-white text-black cursor-pointer hidden lg:block hover:bg-slate-300'
             >
-              Đăng ký thành viên
+              {trans.common.registerMember}
             </Button>
           )}
           {isLogin ? (
             <AuthHeader />
           ) : (
-            <button
-              onClick={() => router.push('/login')}
-              className='dark:text-white font-bold py-2 px-4 rounded cursor-pointer hidden lg:block'
-            >
-              Đăng nhập
-            </button>
+            <div className='flex gap-2'>
+              <UseRouter url={URL_SYSTEMS.TO_BE_UPDATE}>
+                <button className='border border-bg-white dark:text-white font-bold py-2 px-4 rounded-full cursor-pointer hidden lg:block'>
+                  Livescore
+                </button>
+              </UseRouter>
+              <UseRouter url={URL_SYSTEMS.LOGIN}>
+                <button className='dark:text-white font-bold py-2 px-4 cursor-pointer hidden lg:block'>
+                  {trans.common.login}
+                </button>
+              </UseRouter>
+              <UseRouter url={URL_SYSTEMS.REGISTER}>
+                <Button className='hidden lg:block bg-white text-[#1B3864]'>{trans.common.register}</Button>
+              </UseRouter>
+            </div>
           )}
           {/* ///Options Menu */}
+          <SwitchLanguageMode className='hidden md:block' />
           <ThemeModeToggle className='hidden md:block' />
           {/* ///Hamberger Menu */}
           <div className='lg:hidden xl:hidden'>
@@ -131,11 +153,23 @@ const HeaderLayoutWebsite = ({ isLogin, isMember }: Props) => {
               <SheetContent className='w-[220px]' side={'left'}>
                 <div className='w-full h-full flex-col-between-start'>
                   <div className='w-full h-full flex-col-start gap-4'>
-                    {menu.map((item, idx) => (
+                    {menuPath.map((item, idx) => (
                       <Link href={`/${item.path}`} key={idx}>
                         <div className='flex-row-between-center gap-2'>
-                          {item.path === 'rank' ? <IconCrown /> : <IconTrophy />}
-                          <li className='list-none'>{item.title}</li>
+                          {item.path === 'rank' ? (
+                            <IconCrown />
+                          ) : item.path === 'tournament' ? (
+                            <IconTrophy />
+                          ) : (
+                            <IconNews />
+                          )}
+                          <li>
+                            {item.path === 'rank'
+                              ? trans.menu.rank
+                              : item.path === 'tournament'
+                              ? trans.menu.tournament
+                              : trans.menu.news}
+                          </li>
                         </div>
                       </Link>
                     ))}
@@ -148,13 +182,13 @@ const HeaderLayoutWebsite = ({ isLogin, isMember }: Props) => {
                         onClick={() => router.push('/login')}
                         className='mb-5 w-full bg-white text-black cursor-pointer hover:bg-slate-300'
                       >
-                        Đăng nhập
+                        {trans.common.login}
                       </Button>
                       <Button
                         onClick={() => router.push('/member/register')}
                         className='w-full bg-white text-black cursor-pointer hover:bg-slate-300'
                       >
-                        Đăng ký thành viên
+                        {trans.common.registerMember}
                       </Button>
                     </React.Fragment>
                   )}

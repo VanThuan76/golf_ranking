@@ -3,6 +3,7 @@ import { Table } from '@tanstack/react-table';
 
 import { Button } from '@/src/shared/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/src/shared/components/ui/select';
+import useTrans from '@/src/shared/hooks/useTrans';
 
 interface DataTablePaginationProps<TData> {
   table: Table<TData>;
@@ -15,6 +16,7 @@ export default function DataTablePagination<TData>({
   onChangeFunc,
   isClientPagination,
 }: DataTablePaginationProps<TData>) {
+  const { trans } = useTrans();
   if (isClientPagination) {
     return (
       <div className='flex items-center justify-end space-x-2 py-4'>
@@ -31,7 +33,7 @@ export default function DataTablePagination<TData>({
     <div className=' flex items-center justify-between px-2 ml-auto'>
       <div className='flex items-center space-x-6 lg:space-x-8'>
         <div className='flex items-center space-x-2'>
-          <p className='text-sm font-medium'>Số lượng mỗi trang</p>
+          <p className='text-sm font-medium'>{trans.table.quantityPerPage}</p>
           <Select
             value={`${table.getState().pagination.pageSize}`}
             onValueChange={value => {
@@ -54,7 +56,8 @@ export default function DataTablePagination<TData>({
           </Select>
         </div>
         <div className='flex w-[150px] items-center justify-center text-sm font-medium'>
-          Trang {table.getState().pagination.pageIndex + 1} của {table.getPageCount()} trang
+          {trans.table.page} {table.getState().pagination.pageIndex + 1} {trans.table.of} {table.getPageCount()}{' '}
+          {trans.table.page}
         </div>
         <div className='flex items-center space-x-2'>
           <Button
