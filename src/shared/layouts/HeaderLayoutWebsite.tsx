@@ -112,6 +112,11 @@ const HeaderLayoutWebsite = ({ isLogin, isMember }: Props) => {
         </div>
         <div className='flex-row-center gap-12'>
           {/* ///Auth Menu */}
+          <UseRouter url={URL_SYSTEMS.TO_BE_UPDATE}>
+            <button className='border border-bg-white dark:text-white font-bold py-2 px-4 rounded-full cursor-pointer hidden lg:block'>
+              Livescore
+            </button>
+          </UseRouter>
           {!isMember && (
             <Button
               onClick={() => router.push('/member/register')}
@@ -124,11 +129,6 @@ const HeaderLayoutWebsite = ({ isLogin, isMember }: Props) => {
             <AuthHeader />
           ) : (
             <div className='flex gap-2'>
-              <UseRouter url={URL_SYSTEMS.TO_BE_UPDATE}>
-                <button className='border border-bg-white dark:text-white font-bold py-2 px-4 rounded-full cursor-pointer hidden lg:block'>
-                  Livescore
-                </button>
-              </UseRouter>
               <UseRouter url={URL_SYSTEMS.LOGIN}>
                 <button className='dark:text-white font-bold py-2 px-4 cursor-pointer hidden lg:block'>
                   {trans.common.login}
