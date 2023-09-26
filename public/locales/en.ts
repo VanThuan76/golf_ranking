@@ -96,6 +96,11 @@ const EnglishScript = {
         round: "Round",
         championAthlete: "Champion athlete"
     },
+    news:{
+        title: "News",
+        breadcrumb: "Return to List news",
+        titleLastNews: "NEW POSTS"
+    },
     user:{
         title: "Golf Achievement User Information",
         userInfo: "User information",

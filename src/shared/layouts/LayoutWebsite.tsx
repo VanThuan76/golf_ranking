@@ -14,7 +14,7 @@ const LayoutWebsite = ({ children }: Props) => {
   return (
     <React.Fragment>
       <HeaderLayoutWebsite isLogin={isLogin ? true : false} isMember={isMember} />
-      <main className='w-full min-h-screen dark:bg-[#141523] pb-4 md:pb-8 lg:pb-16 xl:pb-24 px-4 md:px-24 lg:px-32 xl:px-40'>
+      <main className='w-full min-h-screen dark:bg-[#141523] pb-4 md:pb-8 lg:pb-16 px-4 md:px-24'>
         {children}
       </main>
       <FooterLayoutWebsite />

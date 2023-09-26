@@ -17,6 +17,7 @@ export const URL_SYSTEMS = {
     TOURNAMENT: "/tournament",
     GROUP_TOURNAMENT: "/tournament/group",
     DETAIL_TOURNAMENT: "/tournament/detail",
+    NEWS: "/news",
     TO_BE_UPDATE: "/update-soon"
 }
 export const SOCIAL_BUSINESS = {

@@ -6,6 +6,6 @@ export const menuPath = [
         path: "tournament"
     },
     {
-        path: "update-soon"
+        path: "news"
     }
 ]

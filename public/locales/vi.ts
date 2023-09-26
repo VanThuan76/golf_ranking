@@ -96,6 +96,11 @@ const VnScript = {
         round: "Vòng",
         championAthlete: "Vận động viên vô địch"
     },
+    news:{
+        title: "Tin tức",
+        breadcrumb: "Quay lại Danh sách tin tức",
+        titleLastNews: "BÀI VIẾT MỚI"
+    },
     user:{
         title: "Thông tin người dùng Golf Achievement",
         userInfo: "Thông tin tài khoản",

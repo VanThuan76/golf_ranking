@@ -110,7 +110,7 @@ const HeaderLayoutWebsite = ({ isLogin, isMember }: Props) => {
             </li>
           </ul>
         </div>
-        <div className='flex-row-center gap-12'>
+        <div className='flex-row-center gap-4'>
           {/* ///Auth Menu */}
           <UseRouter url={URL_SYSTEMS.TO_BE_UPDATE}>
             <button className='border border-bg-white dark:text-white font-bold py-2 px-4 rounded-full cursor-pointer hidden lg:block'>
