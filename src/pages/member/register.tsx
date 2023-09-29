@@ -86,7 +86,7 @@ const RegisterMember = () => {
         <div className='hidden md:block max-w-[450px] col-span-1 mx-auto bg-transparent rounded-lg'>
           <SliderFull slides={bannerLogin} />
         </div>
-        <div className='w-full min-h-[700px] col-span-1 mx-auto'>
+        <div className='mb-4 w-full min-h-[700px] col-span-1 mx-auto'>
           <div className='w-full h-full flex-col-between-start space-y-6'>
             <IconLogoDark className='float-left' />
             <div className='font-semibold text-2xl w-full text-black'>Đăng ký thành viên</div>

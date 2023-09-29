@@ -12,6 +12,7 @@ import { SearchGroupTournament } from './SearchGroupTournament';
 import { IGroupTournamentSearch, ITournament } from 'src/schemas/tournament.table.type';
 import { IBaseResponseWithCount } from 'src/schemas/baseResponse.type';
 import useTrans from '@/src/shared/hooks/useTrans';
+import { convertStringDay } from '@/src/shared/utils/business/convertStringDate';
 
 type Props = {
   searchDefault: IGroupTournamentSearch;
@@ -83,10 +84,10 @@ export function TableGroupTournament({
         ];
         return (
           <React.Fragment>
-            <div className='min-w-[50px] h-[20px] flex-row-around-center'>
+            <div className='min-w-[200px] h-[20px] flex-row-around-center'>
               {collapseStates[props.cell.row.id] ? <ChevronDown /> : <ChevronUp />}
               <p className='text-center'>
-                {props.cell.row.original.from_date} - {props.cell.row.original.to_date}
+                {convertStringDay(props.cell.row.original.from_date)} - {convertStringDay(props.cell.row.original.to_date)}
               </p>
             </div>
             {collapseStates[props.cell.row.id] && (
@@ -141,14 +142,14 @@ export function TableGroupTournament({
         ];
         return (
           <React.Fragment>
-            <div className='relative min-w-[150px] h-[20px] flex-row-center gap-2'>
+            <div className='relative min-w-[150px] h-[20px] flex-row-start gap-2'>
               {props.cell.row.original.member && (
                 <CountryFlag countryCode={props.cell.row.original.member.nationality} />
               )}
               <p className='text-center'>{props.cell.row.original.member?.name ?? trans.table.nothing}</p>
               {props.cell.row.original.member && (
                 <p
-                  className='absolute left-18 mt-10 text-[12px] flex-row-center gap-1 rounded-lg opacity-70 hover:opacity-100 cursor-pointer'
+                  className='absolute left-1/2 -translate-x-2/3 top-1/2 translate-y-1/2 text-[12px] flex-row-center gap-1 rounded-lg opacity-70 hover:opacity-100 cursor-pointer'
                   onClick={() => router.push(`${URL_SYSTEMS.RANK}/${props.cell.row.original.member.id}`)}
                 >
                   {trans.common.seeMore}

@@ -5,6 +5,6 @@ export function convertStringDate(date: string) {
     return formattedDate;
 }
 export function convertStringDay(date: string) {
-    const formattedDate = dayjs(date).format("YYYY-MM-DD");
+    const formattedDate = dayjs(date).format("DD/MM/YYYY");
     return formattedDate;
 }

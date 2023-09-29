@@ -30,10 +30,10 @@ export default function DataTablePagination<TData>({
     );
   }
   return (
-    <div className=' flex items-center justify-between px-2 ml-auto'>
-      <div className='flex items-center space-x-6 lg:space-x-8'>
-        <div className='flex items-center space-x-2'>
-          <p className='text-sm font-medium'>{trans.table.quantityPerPage}</p>
+    <div className='w-full mx-auto flex items-end justify-end px-2 ml-auto'>
+      <div className='grid grid-cols-3 justify-center items-center space-x-6 lg:space-x-8'>
+        <div className='col-span-2 md:col-span-1 flex items-center space-x-2'>
+          <p className='w-full text-sm font-medium'>{trans.table.quantityPerPage}</p>
           <Select
             value={`${table.getState().pagination.pageSize}`}
             onValueChange={value => {
@@ -55,7 +55,7 @@ export default function DataTablePagination<TData>({
             </SelectContent>
           </Select>
         </div>
-        <div className='flex w-[150px] items-center justify-center text-sm font-medium'>
+        <div className='hidden md:flex w-[150px] items-center justify-center text-sm font-medium'>
           {trans.table.page} {table.getState().pagination.pageIndex + 1} {trans.table.of} {table.getPageCount()}{' '}
           {trans.table.page}
         </div>

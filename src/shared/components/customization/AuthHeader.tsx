@@ -17,7 +17,9 @@ import { signOut } from 'next-auth/react';
 import { deleteCookie } from 'cookies-next';
 import { IResetPassword } from '@/src/schemas/user.table.type';
 import { useResetPassword } from '@/src/queries/user.queries';
-import { formResetPasswordSchema } from '../../modules/auth/ForgotPasswordModule';
+import { formResetPasswordSchema } from '@/src/shared/modules/auth/ForgotPasswordModule';
+import useTrans from '@/src/shared/hooks/useTrans';
+import { Button } from '../ui/button';
 
 type Props = {
   className?: string;
@@ -50,8 +52,9 @@ const RowAuthHeader = ({
 
 const AuthHeader = ({ className }: Props) => {
   const { user } = useAppSelector(state => state.appSlice);
+  const { trans } = useTrans();
   const router = useRouter();
-  const doResetPassword = useResetPassword(() => router.push("/profile"));
+  const doResetPassword = useResetPassword(() => router.push('/profile'));
   const handlerLogout = () => {
     router.push('/login');
     signOut({ redirect: false });
@@ -68,14 +71,25 @@ const AuthHeader = ({ className }: Props) => {
               {user.member.vjgr_code && <p className='pr-4 border-r-2 border-r-white'>{user.member.vjgr_code}</p>}
               <div className='flex-row-end gap-4'>
                 <div className='flex-col-end gap-2'>
-                  <p>Thành viên</p>
+                  <p>{trans.common.member}</p>
                   <p>{user.member.name}</p>
                 </div>
                 <ChevronDown />
               </div>
             </React.Fragment>
           ) : (
-            <User2Icon size={18} />
+            <div className='w-full flex-col-start gap-5'>
+              <div className='w-full flex-row-start gap-2'>
+                <User2Icon size={18} />
+                <p className='block md:hidden'>{trans.common.account}</p>
+              </div>
+              <Button
+                onClick={() => router.push('/member/register')}
+                className='bg-white text-black cursor-pointer hover:bg-slate-300 block md:hidden'
+              >
+                {trans.common.registerMember}
+              </Button>
+            </div>
           )}
         </div>
       </DropdownMenuTrigger>
@@ -85,7 +99,7 @@ const AuthHeader = ({ className }: Props) => {
         </DropdownMenuItem>
         <div className='relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50'>
           <TriggerDialogForm
-            className='min-w-[1080px]'
+            className='w-full'
             titleDialog='Thay đổi mật khẩu'
             trigger={
               <RowAuthHeader

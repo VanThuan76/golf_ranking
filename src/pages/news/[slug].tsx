@@ -22,7 +22,7 @@ const DetailNews = ({ data }: Props) => {
   return (
     <section id='DetailNews' className='relative w-full'>
       <Breadcrumb title={trans.news.breadcrumb} url={URL_SYSTEMS.NEWS} className='mb-5' />
-      <div className='w-full grid grid-cols-1 md:grid-cols-7 justify-start items-start gap-8'>
+      <div className='w-full grid grid-cols-1 lg:grid-cols-7 justify-start items-start gap-8'>
         <div className='md:col-span-4 w-full flex flex-col justify-start items-start gap-8'>
           <h1 className='text-lg md:text-2xl font-semibold'>{data.title}</h1>
           <div className='mt-5 flex justify-start items-start gap-3 self-end'>
@@ -37,7 +37,7 @@ const DetailNews = ({ data }: Props) => {
           </div>
           <div dangerouslySetInnerHTML={{ __html: htmlContent }}></div>
         </div>
-        <div className='md:col-span-3 w-full flex flex-col justify-start items-start gap-8'>
+        <div className='md:col-span-3 w-full min-h-[500px] flex flex-col justify-start items-start gap-8'>
           <h1 className='text-base md:text-xl font-semibold'>{trans.news.titleLastNews}</h1>
           <ListLastNews data={news?.content.filter(article => article.slug !== data.slug) as INewsSearch[]} />
         </div>

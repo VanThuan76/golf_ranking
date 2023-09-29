@@ -15,13 +15,13 @@ const ProfileUser = ({ user }: Props) => {
       className='relative w-full mt-4 p-4 flex-col-between-start overflow-hidden'
     >
       <h1 className='font-semibold text-2xl'>{trans.user.userInfo}</h1>
-      <div className='w-full p-12 flex-col-start gap-5 md:flex-row md:justify-between shadow-lg rounded-lg'>
+      <div className='w-full p-6 md:p-12 flex-col-start gap-5 md:flex-row md:justify-between shadow-lg rounded-lg'>
         <div className='flex-col-start'>
-          <p className='text-xs font-thin'>{trans.user.fullName}</p>
+          <p className='text-xs font-medium md:text-base'>{trans.user.fullName}</p>
           <h3>{user.name}</h3>
         </div>
         <div className='flex-col-start'>
-          <p className='text-xs font-thin'>Email</p>
+          <p className='text-xs font-medium md:text-base'>Email</p>
           <h3>{user.email}</h3>
         </div>
       </div>

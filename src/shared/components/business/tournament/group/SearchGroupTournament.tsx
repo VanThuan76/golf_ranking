@@ -3,7 +3,7 @@ import InputText from '@/src/shared/components/customization/form/InputText';
 import InputDatePicker from '@/src/shared/components/customization/form/InputDatePicker';
 import { Button } from '@/src/shared/components/ui/button';
 import { Form } from '@/src/shared/components/ui/form';
-import { Search } from 'lucide-react';
+import { Search, X } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { PreImage } from '@/src/shared/components/customization/PreImage';
 import { useGetListCommonCode } from 'src/queries/common-code.queires';
@@ -11,6 +11,8 @@ import { useGetListTournamentType } from 'src/queries/tournament-type.queries';
 import { IGroupTournamentSearch } from 'src/schemas/tournament.table.type';
 import { Filter } from '@/src/shared/utils/typeSearchParams';
 import useTrans from '@/src/shared/hooks/useTrans';
+import useBreakpoint from '@/src/shared/hooks/useBreakpoint';
+import { useState } from 'react';
 
 type Props = {
   searchDefault: IGroupTournamentSearch;
@@ -24,6 +26,8 @@ export function SearchGroupTournament({
   titleGroupTournament,
   bannerGroupTournament,
 }: Props) {
+  const currentBreakpoint = useBreakpoint();
+  const [trigger, setTrigger] = useState(false);
   const { trans } = useTrans();
   const form = useForm({
     defaultValues: searchDefault,
@@ -48,17 +52,21 @@ export function SearchGroupTournament({
   return (
     <section
       id='SearchGroupTournament'
-      className='relative w-full max-h-[340px] mt-4 flex-col-between-start rounded-lg overflow-hidden'
+      className='relative w-full md:max-h-[340px] mt-4 flex-col-between-start rounded-lg overflow-hidden'
     >
-      <div className='absolute top-0 left-0 bg-transparent w-full h-full p-12 flex-col-around-start gap-5 z-30'>
-        <h1 className='text-3xl text-white font-semibold'>{titleGroupTournament}</h1>
+      <div
+        className={`${
+          trigger ? 'flex' : 'hidden'
+        } md:flex absolute top-0 left-0 bg-transparent w-full h-full p-4 md:p-12 flex-col-around-start gap-5 z-30`}
+      >
+        <h1 className='text-xl md:text-3xl text-white font-semibold'>{titleGroupTournament}</h1>
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
             onError={e => {
               console.log(e);
             }}
-            className='bg-white w-full p-4 flex-col-between-start rounded-lg z-30'
+            className='relative bg-white w-full p-4 flex-col-between-start rounded-lg z-30'
           >
             <div className='w-full grid grid-cols-1 md:grid-cols-4 gap-5'>
               <InputText
@@ -66,7 +74,7 @@ export function SearchGroupTournament({
                 fieldName='name'
                 label={trans.common.tournament}
                 form={form}
-                className='col-span-2'
+                className='md:col-span-2'
               ></InputText>
               <InputSelect
                 options={[
@@ -99,7 +107,7 @@ export function SearchGroupTournament({
                 fieldName='tournament_type_id'
                 label={trans.common.tournamentType}
                 form={form}
-                className='col-span-2'
+                className='md:col-span-2'
               ></InputSelect>
               <InputDatePicker
                 form={form}
@@ -120,16 +128,30 @@ export function SearchGroupTournament({
                 {trans.common.search}
               </Button>
             </div>
+            <X className='md:hidden absolute top-2 right-2 cursor-pointer' onClick={() => setTrigger(!trigger)}/>
           </form>
         </Form>
       </div>
+      <div
+        className={`${
+          trigger ? 'hidden' : 'grid'
+        } grid-cols-1 gap-2 md:hidden absolute top-0 left-0 bg-transparent w-full h-full p-4 z-30`}
+      >
+        <h1 className='text-xl text-white font-semibold'>{titleGroupTournament}</h1>
+        <div className='ml-auto'>
+          <Button className='bg-[var(--main-color)]' type='button' onClick={() => setTrigger(!trigger)}>
+            <Search className='mr-2 h-4 w-4' />
+            {trans.common.search}
+          </Button>
+        </div>
+      </div>
       <PreImage
-        width={1150}
-        height={650}
+        width={currentBreakpoint === 'sm' ? 500 : 1980}
+        height={trigger || currentBreakpoint !== 'sm' ? 650 : 100}
         alt='TournamentDetail'
         src={bannerGroupTournament}
         layer={true}
-        className='w-full object-center rounded-lg'
+        className='w-full h-full object-cover object-top rounded-lg'
       />
     </section>
   );

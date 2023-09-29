@@ -48,7 +48,6 @@ const SearchRank = ({ members, searchDefault, onChangeSearchArrayParams }: Props
     value: member,
     label: member,
   }));
-  
   const form = useForm({
     defaultValues: searchDefault,
   });
@@ -66,17 +65,17 @@ const SearchRank = ({ members, searchDefault, onChangeSearchArrayParams }: Props
   };
 
   return (
-    <div className='max-w-[950px] absolute inset-x-0 mx-auto top-96 bg-[#fff] shadow-lg rounded-lg'>
+    <div className='max-w-[950px] absolute inset-x-0 mx-auto top-72 md:top-96 bg-[#fff] shadow-lg rounded-lg'>
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
           onError={e => {
             console.log(e);
           }}
-          className='w-full flex-col-between-start mt-5 p-5'
+          className='w-full flex-col-between-start mt-2 md:mt-5 p-2 md:p-5'
         >
-          <div className='w-full flex-row-center gap-10'>
-            <InputText placeHolder={trans.common.fillIn + " " + trans.common.member} fieldName='name' label={trans.common.member} form={form}></InputText>
+          <div className='w-full grid grid-cols-2 md:grid-cols-3 gap-5 md:gap-10 text-xs md:text-base'>
+            <InputText className='col-span-2 md:col-span-1' placeHolder={trans.common.fillIn + " " + trans.common.member} fieldName='name' label={trans.common.member} form={form}></InputText>
             <InputText placeHolder={trans.common.fillIn + " " + trans.common.codeVJGR} fieldName='vjgr_code' label={trans.common.codeVJGR} form={form}></InputText>
             <InputSelectCountry
               data={transformedNationalitySearch || []}
@@ -86,7 +85,7 @@ const SearchRank = ({ members, searchDefault, onChangeSearchArrayParams }: Props
               form={form}
             ></InputSelectCountry>
           </div>
-          <div className='block mt-2 ml-auto'>
+          <div className='block mt-4 ml-auto'>
             <Button className='bg-[var(--main-color)]' type='submit'>
               <Search className='mr-2 h-4 w-4' />
               {trans.common.search}

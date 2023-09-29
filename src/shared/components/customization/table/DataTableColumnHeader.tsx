@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Column } from '@tanstack/react-table';
-import { ArrowDownIcon, ArrowUpIcon, EyeIcon, SearchIcon, Settings2Icon } from 'lucide-react';
+import { ArrowDownIcon, ArrowUpIcon, SearchIcon, Settings2Icon } from 'lucide-react';
 import classNames from 'classnames';
 
 import { Popover, PopoverContent, PopoverTrigger } from '@/src/shared/components/ui/popover';
@@ -34,7 +34,7 @@ const DataTableColumnHeader = <TData, TValue>({
           <Button
             variant='ghost'
             size='sm'
-            className={classNames('-ml-3 h-8 data-[state=open]:bg-accent w-full flex justify-center', {
+            className={classNames('-ml-3 h-8 data-[state=open]:bg-accent min-w-[200px] flex justify-center', {
               'bg-primary/10': !!defaultFilter,
             })}
           >

@@ -20,17 +20,17 @@ const ListNews = ({ className, data }: Props) => {
         {data.map((article, idx) => {
           const htmlDescription = article.description;
           return (
-            <div key={idx} className={`w-full grid grid-cols-1 md:grid-cols-2 justify-between items-start rounded-lg gap-4 ${isHover === article && "bg-slate-200"}`}>
+            <div key={idx} className={`w-full grid grid-cols-1 md:grid-cols-2 justify-between items-start rounded-lg gap-2 md:gap-4 ${isHover === article && "bg-slate-200"}`}>
               <PreImage
                 src={article.image as string}
                 height={300}
-                width={400}
+                width={800}
                 layer={true}
                 alt={article.title}
-                className='w-full h-full rounded-lg object-cover'
+                className='w-full h-full rounded-l-lg object-cover object-bottom'
               />
               <div
-                className='w-full h-full py-5 flex flex-col justify-start items-start gap-2 cursor-pointer'
+                className='w-full h-full px-3 md:px-5 flex-col-start gap-2 cursor-pointer'
                 onClick={() => router.push(`/news/${article.slug}`)}
                 onMouseEnter={() => setIsHover(article)}
                 onMouseLeave={() => setIsHover(undefined)}

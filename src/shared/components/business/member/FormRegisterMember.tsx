@@ -108,7 +108,7 @@ export function FormRegisterMember({ formSchema, onSubmit, isLoading, defaultVal
           </div>
         </div>
         {/* <InputCheckBox title="Tôi đồng ý với Điều kiện & điều khoản thành viên" form={form} fieldName='guardian_phone' /> */}
-        <div className='w-full grid grid-cols-3 gap-12'>
+        <div className='w-full grid grid-cols-3 gap-4 md:gap-12'>
           <UseRouter url='/'>
             <Button type='button' className='w-full col-span-1'>
               Bỏ qua

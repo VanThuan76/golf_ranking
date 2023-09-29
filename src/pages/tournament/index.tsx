@@ -4,9 +4,11 @@ import LayoutWebsite from 'src/shared/layouts/LayoutWebsite';
 import IntroduceCardTournament from '@/src/shared/components/business/tournament/IntroduceCardTournament';
 import useTrans from '@/src/shared/hooks/useTrans';
 import { TournamentGroupData } from '@/src/shared/mocks/tournament';
+import useBreakpoint from '@/src/shared/hooks/useBreakpoint';
 export function Tournament() {
   const { trans } = useTrans();
   const tournamentGroupDataTrans = TournamentGroupData()
+  const currentBreakpoint = useBreakpoint();
   return (
     <React.Fragment>
       <Head>
@@ -15,7 +17,7 @@ export function Tournament() {
         <meta name='keywords' content='Golf Ranking' />
       </Head>
       <div className='mt-10 w-full grid grid-cols-1 md:grid-cols-2 gap-5'>
-        <IntroduceCardTournament className='max-h-[500px]' size={340} data={tournamentGroupDataTrans[0]} />
+        <IntroduceCardTournament className='md:max-h-[500px]' size={currentBreakpoint === "sm" ? 160 : 340} data={tournamentGroupDataTrans[0]} />
         <div className='flex-col-start gap-5'>
           {tournamentGroupDataTrans.slice(1, 3).map((item, idx) => (
             <IntroduceCardTournament key={idx} data={item} />

@@ -68,7 +68,7 @@ export function TableDetailRank({ tournamentSummary, tableConfig }: Props) {
         ];
         return (
           <React.Fragment>
-            <div className='min-w-[50px] h-[20px] flex-row-around-center'>
+            <div className='min-w-[200px] h-[20px] flex-row-around-center'>
               {collapseStates[props.cell.row.id] ? <ChevronDown /> : <ChevronUp />}
               <p className='text-center'>{props.cell.row.original.tournament.from_date} - {props.cell.row.original.tournament.to_date}</p>
             </div>

@@ -1,9 +1,9 @@
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import React, { useEffect, useState } from 'react';
-import { Menu } from 'lucide-react';
+import { Menu, Radio } from 'lucide-react';
 
-import { Sheet, SheetContent, SheetTrigger } from '@/src/shared/components/ui/sheet';
+import { Sheet, SheetClose, SheetContent, SheetTrigger } from '@/src/shared/components/ui/sheet';
 import { menuPath } from '@/src/shared/mocks/header';
 import IconCrown from '@/src/shared/components/icons/menu/IconCrown';
 import IconTrophy from '@/src/shared/components/icons/menu/IconTrophy';
@@ -83,34 +83,7 @@ const HeaderLayoutWebsite = ({ isLogin, isMember }: Props) => {
         <IconLogoLight color='#fff' onClick={() => router.push('/')} />
       </div>
       <div className='absolute right-5 flex-row-center gap-2'>
-        <div
-          id='dropdown'
-          className='z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700'
-        >
-          <ul className='py-2 text-sm text-gray-700 dark:text-gray-200' aria-labelledby='dropdownDefaultButton'>
-            <li>
-              <a href='#' className='block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white'>
-                Dashboard
-              </a>
-            </li>
-            <li>
-              <a href='#' className='block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white'>
-                Settings
-              </a>
-            </li>
-            <li>
-              <a href='#' className='block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white'>
-                Earnings
-              </a>
-            </li>
-            <li>
-              <a href='#' className='block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white'>
-                Sign out
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div className='flex-row-center gap-4'>
+        <div className='w-full flex-row-center gap-4'>
           {/* ///Auth Menu */}
           <UseRouter url={URL_SYSTEMS.TO_BE_UPDATE}>
             <button className='border border-bg-white dark:text-white font-bold py-2 px-4 rounded-full cursor-pointer hidden lg:block'>
@@ -128,7 +101,7 @@ const HeaderLayoutWebsite = ({ isLogin, isMember }: Props) => {
           {isLogin ? (
             <AuthHeader />
           ) : (
-            <div className='flex gap-2'>
+            <div className='w-full flex gap-2'>
               <UseRouter url={URL_SYSTEMS.LOGIN}>
                 <button className='dark:text-white font-bold py-2 px-4 cursor-pointer hidden lg:block'>
                   {trans.common.login}
@@ -143,19 +116,17 @@ const HeaderLayoutWebsite = ({ isLogin, isMember }: Props) => {
           <SwitchLanguageMode className='hidden md:block' />
           <ThemeModeToggle className='hidden md:block' />
           {/* ///Hamberger Menu */}
-          <div className='lg:hidden xl:hidden'>
+          <div className='lg:hidden'>
             <Sheet>
               <SheetTrigger asChild>
-                <div>
-                  <Menu />
-                </div>
+                <Menu className='cursor-pointer' />
               </SheetTrigger>
-              <SheetContent className='w-[220px]' side={'left'}>
+              <SheetContent className='w-[220px] bg-[#1B3864] text-white' side={'left'}>
                 <div className='w-full h-full flex-col-between-start'>
                   <div className='w-full h-full flex-col-start gap-4'>
                     {menuPath.map((item, idx) => (
                       <Link href={`/${item.path}`} key={idx}>
-                        <div className='flex-row-between-center gap-2'>
+                        <SheetClose className='flex-row-between-center gap-2'>
                           {item.path === 'rank' ? (
                             <IconCrown />
                           ) : item.path === 'tournament' ? (
@@ -163,34 +134,46 @@ const HeaderLayoutWebsite = ({ isLogin, isMember }: Props) => {
                           ) : (
                             <IconNews />
                           )}
-                          <li>
+                          <div>
                             {item.path === 'rank'
                               ? trans.menu.rank
                               : item.path === 'tournament'
                               ? trans.menu.tournament
                               : trans.menu.news}
-                          </li>
-                        </div>
+                          </div>
+                        </SheetClose>
                       </Link>
                     ))}
+                    <Link href='/update-soon'>
+                      <SheetClose className='flex-row-between-center gap-2'>
+                        <Radio />
+                        <div>Livescore</div>
+                      </SheetClose>
+                    </Link>
                   </div>
+                  {!isMember && (
+                    <Button
+                      onClick={() => router.push('/member/register')}
+                      className='bg-white text-black cursor-pointer hidden lg:block hover:bg-slate-300'
+                    >
+                      {trans.common.registerMember}
+                    </Button>
+                  )}
                   {isLogin ? (
-                    <AuthHeader className='flex-col-start !block' />
+                    <AuthHeader className='!block' />
                   ) : (
-                    <React.Fragment>
-                      <Button
-                        onClick={() => router.push('/login')}
-                        className='mb-5 w-full bg-white text-black cursor-pointer hover:bg-slate-300'
-                      >
-                        {trans.common.login}
-                      </Button>
-                      <Button
-                        onClick={() => router.push('/member/register')}
-                        className='w-full bg-white text-black cursor-pointer hover:bg-slate-300'
-                      >
-                        {trans.common.registerMember}
-                      </Button>
-                    </React.Fragment>
+                    <div className='w-full flex-col-center gap-4'>
+                      <UseRouter url={URL_SYSTEMS.LOGIN}>
+                        <Button className='w-full bg-white text-black cursor-pointer hover:bg-slate-300'>
+                          {trans.common.login}
+                        </Button>
+                      </UseRouter>
+                      <UseRouter url={URL_SYSTEMS.REGISTER}>
+                        <Button className='w-full bg-white text-black cursor-pointer hover:bg-slate-300'>
+                          {trans.common.register}
+                        </Button>
+                      </UseRouter>
+                    </div>
                   )}
                 </div>
               </SheetContent>
