@@ -1,22 +1,16 @@
-import Link from 'next/link';
 import { motion } from 'framer-motion';
 import React, { useEffect, useState } from 'react';
-import { Menu, Radio } from 'lucide-react';
-
-import { Sheet, SheetClose, SheetContent, SheetTrigger } from '@/src/shared/components/ui/sheet';
 import { menuPath } from '@/src/shared/mocks/header';
-import IconCrown from '@/src/shared/components/icons/menu/IconCrown';
-import IconTrophy from '@/src/shared/components/icons/menu/IconTrophy';
 import { Button } from '@/src/shared/components/ui/button';
 import { useRouter } from 'next/router';
-import ThemeModeToggle from '@/src/shared/components/customization/ToggleThemeMode';
 import IconLogoLight from '@/src/shared/components/icons/IconLogoLight';
 import AuthHeader from '@/src/shared/components/customization/AuthHeader';
-import IconNews from '@/src/shared/components/icons/menu/IconNews';
 import useTrans from '@/src/shared/hooks/useTrans';
 import UseRouter from '@/src/shared/utils/function/UseRouter';
 import { URL_SYSTEMS } from '@/src/shared/constants';
-import SwitchLanguageMode from '../components/customization/switchLanguageMode';
+import SwitchLanguageMode from '@/src/shared/components/customization/switchLanguageMode';
+import ListMenu from '@/src/shared/components/business/layout/header/ListMenu';
+import HambergerMenu from '@/src/shared/components/business/layout/header/HambergerMenu';
 interface Props {
   isLogin: boolean;
   isMember: boolean;
@@ -54,42 +48,21 @@ const HeaderLayoutWebsite = ({ isLogin, isMember }: Props) => {
       }`}
     >
       <div className='absolute left-5 flex-row-center gap-2'>
-        <ul className='ml-10 hidden lg:flex justify-center items-center gap-10 dark:text-white'>
-          {menuPath.map((item, idx) => (
-            <Link href={`/${item.path}`} key={idx}>
-              <div className='relative w-full'>
-                <motion.div className='w-full flex-row-between-center gap-2'>
-                  {item.path === 'rank' ? <IconCrown /> : item.path === 'tournament' ? <IconTrophy /> : <IconNews />}
-                  <li>
-                    {item.path === 'rank'
-                      ? trans.menu.rank
-                      : item.path === 'tournament'
-                      ? trans.menu.tournament
-                      : trans.menu.news}
-                  </li>
-                </motion.div>
-                {router.asPath.split('/')[1] === item.path ? (
-                  <motion.div
-                    className='absolute bottom-[-20px] left-0 right-0 h-[4px] bg-white rounded-[8px] z-0'
-                    layoutId='underline'
-                  />
-                ) : null}
-              </div>
-            </Link>
-          ))}
-        </ul>
+        <div className='ml-10 hidden lg:flex justify-center items-center gap-10 dark:text-white'>
+          <ListMenu menuPath={menuPath} />
+        </div>
       </div>
       <div className='w-full flex-row-center gap-5 cursor-pointer'>
         <IconLogoLight color='#fff' onClick={() => router.push('/')} />
       </div>
       <div className='absolute right-5 flex-row-center gap-2'>
         <div className='w-full flex-row-center gap-4'>
-          {/* ///Auth Menu */}
           <UseRouter url={URL_SYSTEMS.TO_BE_UPDATE}>
             <button className='border border-bg-white dark:text-white font-bold py-2 px-4 rounded-full cursor-pointer hidden lg:block'>
               Livescore
             </button>
           </UseRouter>
+          {/* ///Auth Menu */}
           {!isMember && (
             <Button
               onClick={() => router.push('/member/register')}
@@ -108,77 +81,15 @@ const HeaderLayoutWebsite = ({ isLogin, isMember }: Props) => {
                 </button>
               </UseRouter>
               <UseRouter url={URL_SYSTEMS.REGISTER}>
-                <Button className='hidden lg:block bg-white text-[#1B3864]'>{trans.common.register}</Button>
+                <Button className='hidden lg:block bg-white text-[#1B3864] hover:bg-slate-300'>{trans.common.register}</Button>
               </UseRouter>
             </div>
           )}
           {/* ///Options Menu */}
           <SwitchLanguageMode className='hidden md:block' />
-          <ThemeModeToggle className='hidden md:block' />
+          {/* <ThemeModeToggle className='hidden md:block' /> */}
           {/* ///Hamberger Menu */}
-          <div className='lg:hidden'>
-            <Sheet>
-              <SheetTrigger asChild>
-                <Menu className='cursor-pointer' />
-              </SheetTrigger>
-              <SheetContent className='w-[220px] bg-[#1B3864] text-white' side={'left'}>
-                <div className='w-full h-full flex-col-between-start'>
-                  <div className='w-full h-full flex-col-start gap-4'>
-                    {menuPath.map((item, idx) => (
-                      <Link href={`/${item.path}`} key={idx}>
-                        <SheetClose className='flex-row-between-center gap-2'>
-                          {item.path === 'rank' ? (
-                            <IconCrown />
-                          ) : item.path === 'tournament' ? (
-                            <IconTrophy />
-                          ) : (
-                            <IconNews />
-                          )}
-                          <div>
-                            {item.path === 'rank'
-                              ? trans.menu.rank
-                              : item.path === 'tournament'
-                              ? trans.menu.tournament
-                              : trans.menu.news}
-                          </div>
-                        </SheetClose>
-                      </Link>
-                    ))}
-                    <Link href='/update-soon'>
-                      <SheetClose className='flex-row-between-center gap-2'>
-                        <Radio />
-                        <div>Livescore</div>
-                      </SheetClose>
-                    </Link>
-                  </div>
-                  {!isMember && (
-                    <Button
-                      onClick={() => router.push('/member/register')}
-                      className='bg-white text-black cursor-pointer hidden lg:block hover:bg-slate-300'
-                    >
-                      {trans.common.registerMember}
-                    </Button>
-                  )}
-                  {isLogin ? (
-                    <AuthHeader className='!block' />
-                  ) : (
-                    <div className='w-full flex-col-center gap-4'>
-                      <UseRouter url={URL_SYSTEMS.LOGIN}>
-                        <Button className='w-full bg-white text-black cursor-pointer hover:bg-slate-300'>
-                          {trans.common.login}
-                        </Button>
-                      </UseRouter>
-                      <UseRouter url={URL_SYSTEMS.REGISTER}>
-                        <Button className='w-full bg-white text-black cursor-pointer hover:bg-slate-300'>
-                          {trans.common.register}
-                        </Button>
-                      </UseRouter>
-                    </div>
-                  )}
-                </div>
-              </SheetContent>
-            </Sheet>
-          </div>
+          <HambergerMenu isLogin={isLogin} isMember={isMember} />
         </div>
       </div>
     </motion.section>

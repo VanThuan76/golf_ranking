@@ -13,6 +13,7 @@ import { Filter } from '@/src/shared/utils/typeSearchParams';
 import useTrans from '@/src/shared/hooks/useTrans';
 import useBreakpoint from '@/src/shared/hooks/useBreakpoint';
 import { useState } from 'react';
+import { useGetListNationality } from '@/src/queries/member.queries';
 
 type Props = {
   searchDefault: IGroupTournamentSearch;
@@ -34,6 +35,7 @@ export function SearchGroupTournament({
   });
   const { data: commonCode } = useGetListCommonCode();
   const { data: tournamentType } = useGetListTournamentType();
+  const { data: nationalities } = useGetListNationality();
   const onSubmit = async (data: IGroupTournamentSearch) => {
     try {
       const filters: Filter[] = [
@@ -49,6 +51,14 @@ export function SearchGroupTournament({
       console.log(error);
     }
   };
+  const defaultOption = [{ value: '', label: 'Tất cả' }];
+  const transformedNationalitySearch = [
+    ...defaultOption,
+    ...(nationalities || []).map((nationality) => ({
+      value: nationality,
+      label: nationality,
+    })),
+  ];
   return (
     <section
       id='SearchGroupTournament'
@@ -77,10 +87,7 @@ export function SearchGroupTournament({
                 className='md:col-span-2'
               ></InputText>
               <InputSelect
-                options={[
-                  { value: 1, label: 'VN' },
-                  { value: 2, label: 'UK' },
-                ]}
+                options={transformedNationalitySearch || []}
                 placeHolder={trans.common.all}
                 fieldName='nationality'
                 label={trans.common.nationality}

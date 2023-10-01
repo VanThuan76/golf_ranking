@@ -24,7 +24,6 @@ const TabsRank = ({ searchDefault }: Props) => {
   return (
     <section id='TabsRank' className='w-full'>
       <SearchRank
-        members={members?.content || []}
         searchDefault={searchDefault}
         onChangeSearchArrayParams={onChangeSearchArrayParams}
       />

@@ -2,7 +2,7 @@ import React from 'react';
 import FooterLayoutWebsite from './FooterLayoutWebsite';
 import HeaderLayoutWebsite from './HeaderLayoutWebsite';
 import { useAppSelector } from '@/src/shared/hooks/useRedux';
-import { useGetUserByEmail } from 'src/queries/user.queries';
+import { useGetUserByEmail, useGetUserById } from 'src/queries/user.queries';
 interface Props {
   children: React.ReactNode;
 }
@@ -11,6 +11,7 @@ const LayoutWebsite = ({ children }: Props) => {
   const isLogin = user?.user !== undefined;
   const isMember = user?.member !== null;
   useGetUserByEmail()
+  useGetUserById()
   return (
     <React.Fragment>
       <HeaderLayoutWebsite isLogin={isLogin ? true : false} isMember={isMember} />

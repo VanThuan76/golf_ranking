@@ -3,7 +3,7 @@ import { Filter } from "../shared/utils/typeSearchParams"
 import { axiosInstanceNoAuth } from "src/https.config"
 import { IBaseResponse, IBaseResponseWithCount } from "src/schemas/baseResponse.type"
 import { IMember, IMemberRegister } from "src/schemas/member.table.type"
-import { useMutation, useQueryClient } from "@tanstack/react-query"
+import { useMutation, useQuery, useQueryClient, UseQueryOptions } from "@tanstack/react-query"
 import { useToast } from "../shared/components/ui/use-toast"
 
 const QUERY_KEY = "MemberQuery"
@@ -17,6 +17,16 @@ export const useGetListMemberBySearch = (defaultFilter?: Filter[]) => {
             filters: defaultFilter,
             sorts: [{ field: "updated_at", direction: "DESC" }]
         }
+    })
+}
+export const useGetListNationality = (options?: Partial<UseQueryOptions>) => {
+    return useQuery({
+        queryKey: [QUERY_KEY, 'get-all'],
+        queryFn: () => axiosInstanceNoAuth.get<IBaseResponse<string[]>>('/nationality-members'),
+        select(data) {
+            return data.data
+        },
+        enabled: options?.enabled
     })
 }
 export const useRegisterMember = (onSuccessHandle?: () => void) => {

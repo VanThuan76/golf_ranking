@@ -1,4 +1,4 @@
-import { useGetListMemberBySearch } from '@/src/queries/member.queries';
+import { useGetListNationality } from '@/src/queries/member.queries';
 import InputSelect from '@/src/shared/components/customization/form/InputSelect';
 import InputText from '@/src/shared/components/customization/form/InputText';
 import { Button } from '@/src/shared/components/ui/button';
@@ -7,7 +7,7 @@ import useTrans from '@/src/shared/hooks/useTrans';
 import { Filter } from '@/src/shared/utils/typeSearchParams';
 import { Search } from 'lucide-react';
 import { useForm } from 'react-hook-form';
-import { IMember, IMemberSearch } from 'src/schemas/member.table.type';
+import { IMemberSearch } from 'src/schemas/member.table.type';
 
 type InputSelectProps = {
   fieldName: string;
@@ -15,7 +15,7 @@ type InputSelectProps = {
   label?: string;
   placeHolder?: string;
   userId?: React.Key;
-  data: {value: string, label: string}[]
+  data: { value: string; label: string }[];
   handleOnChange?: (value: any) => void;
 };
 const InputSelectCountry = (props: InputSelectProps) => {
@@ -32,7 +32,6 @@ const InputSelectCountry = (props: InputSelectProps) => {
 };
 
 type Props = {
-  members: IMember[]
   searchDefault: {
     name: string;
     vjgr_code: string;
@@ -41,24 +40,28 @@ type Props = {
   onChangeSearchArrayParams: any;
 };
 
-const SearchRank = ({ members, searchDefault, onChangeSearchArrayParams }: Props) => {
-  const {trans} = useTrans()
-  const uniqueNationalities = Array.from(new Set(members.map(member => member.nationality)));
-  const transformedNationalitySearch = uniqueNationalities.map((member) => ({
-    value: member,
-    label: member,
-  }));
+const SearchRank = ({ searchDefault, onChangeSearchArrayParams }: Props) => {
+  const { trans } = useTrans();
+  const { data: nationalities } = useGetListNationality();
+  const defaultOption = [{ value: '', label: 'Tất cả' }];
+  const transformedNationalitySearch = [
+    ...defaultOption,
+    ...(nationalities || []).map((nationality) => ({
+      value: nationality,
+      label: nationality,
+    })),
+  ];
   const form = useForm({
     defaultValues: searchDefault,
   });
   const onSubmit = async (data: IMemberSearch) => {
     try {
       const filters: Filter[] = [
-        { field: "name", value: data.name},
-        { field: "vjgr_code", value: data.vjgr_code},
-        { field: "nationality", value: data.nationality}
-      ]
-      onChangeSearchArrayParams(filters)
+        { field: 'name', value: data.name },
+        { field: 'vjgr_code', value: data.vjgr_code },
+        { field: 'nationality', value: data.nationality },
+      ];
+      onChangeSearchArrayParams(filters);
     } catch (error) {
       console.log(error);
     }
@@ -75,12 +78,23 @@ const SearchRank = ({ members, searchDefault, onChangeSearchArrayParams }: Props
           className='w-full flex-col-between-start mt-2 md:mt-5 p-2 md:p-5'
         >
           <div className='w-full grid grid-cols-2 md:grid-cols-3 gap-5 md:gap-10 text-xs md:text-base'>
-            <InputText className='col-span-2 md:col-span-1' placeHolder={trans.common.fillIn + " " + trans.common.member} fieldName='name' label={trans.common.member} form={form}></InputText>
-            <InputText placeHolder={trans.common.fillIn + " " + trans.common.codeVJGR} fieldName='vjgr_code' label={trans.common.codeVJGR} form={form}></InputText>
+            <InputText
+              className='col-span-2 md:col-span-1'
+              placeHolder={trans.common.fillIn + ' ' + trans.common.member}
+              fieldName='name'
+              label={trans.common.member}
+              form={form}
+            ></InputText>
+            <InputText
+              placeHolder={trans.common.fillIn + ' ' + trans.common.codeVJGR}
+              fieldName='vjgr_code'
+              label={trans.common.codeVJGR}
+              form={form}
+            ></InputText>
             <InputSelectCountry
               data={transformedNationalitySearch || []}
               placeHolder={trans.common.all}
-              fieldName={trans.common.fillIn + " " + trans.common.nationality}
+              fieldName='nationality'
               label={trans.common.nationality}
               form={form}
             ></InputSelectCountry>

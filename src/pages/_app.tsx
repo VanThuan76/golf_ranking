@@ -49,7 +49,7 @@ const ConfigLayout = ({
           <Jelly color='#016390' />
         </div>
       )}
-      <NextThemesProvider attribute='class' defaultTheme='system' enableSystem>
+      <NextThemesProvider attribute='class' defaultTheme='light' enableSystem>
         {getLayout(children)}
         <Toaster />
       </NextThemesProvider>

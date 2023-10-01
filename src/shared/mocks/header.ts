@@ -9,3 +9,6 @@ export const menuPath = [
         path: "news"
     }
 ]
+export type IMenuPath = {
+    path: string
+}
