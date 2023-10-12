@@ -11,7 +11,6 @@ import { useRouter } from 'next/router';
 import { APP_SAVE_KEY, URL_SYSTEMS } from 'src/shared/constants';
 import TriggerDialogForm from './dialog/TriggerDialogForm';
 import { FormResetPassword } from '@/src/shared/modules/auth/FormResetPassword';
-import { z } from 'zod';
 import { ConfirmDialog } from './ConfirmDialog';
 import { signOut } from 'next-auth/react';
 import { deleteCookie } from 'cookies-next';
@@ -20,6 +19,8 @@ import { useResetPassword } from '@/src/queries/user.queries';
 import { formResetPasswordSchema } from '@/src/shared/modules/auth/ForgotPasswordModule';
 import useTrans from '@/src/shared/hooks/useTrans';
 import { Button } from '../ui/button';
+import { useDispatch } from 'react-redux';
+import { logout } from "src/shared/stores/appSlice";
 
 type Props = {
   className?: string;
@@ -51,12 +52,14 @@ const RowAuthHeader = ({
 };
 
 const AuthHeader = ({ className }: Props) => {
+  const dispatch = useDispatch()
   const { user } = useAppSelector(state => state.appSlice);
   const { trans } = useTrans();
   const router = useRouter();
   const doResetPassword = useResetPassword(() => router.push('/profile'));
   const handlerLogout = () => {
     router.push('/login');
+    dispatch(logout())
     signOut({ redirect: false });
     deleteCookie(APP_SAVE_KEY.TOKEN_KEY);
     deleteCookie(APP_SAVE_KEY.LOGIN_STATUS);

@@ -11,7 +11,7 @@ type Props = {
   className?: string
 };
 
-export default function InputText({ fieldName, form, label, placeHolder,className }: Props) {
+export default function InputText({ fieldName, form, label, placeHolder,className}: Props) {
   const value = form.watch(fieldName);
   return (
     <FormField
@@ -21,7 +21,7 @@ export default function InputText({ fieldName, form, label, placeHolder,classNam
         <FormItem className={`text-start w-full ${className}`}>
           {label && <FormLabel>{label}</FormLabel>}
           <FormControl>
-            <Input placeholder={placeHolder} {...field} value={value || ''}/>
+            <Input placeholder={placeHolder} {...field} value={value || ''} />
           </FormControl>
           <FormMessage />
         </FormItem>

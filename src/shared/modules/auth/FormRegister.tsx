@@ -41,7 +41,7 @@ export function FormRegister({ formSchema, onSubmit, isLoading, defaultValue, cl
         });
       }
     }
-  }, [defaultValue, form]);
+  }, [defaultValue, form]);1
   return (
     <Form {...form}>
       <form
@@ -58,7 +58,12 @@ export function FormRegister({ formSchema, onSubmit, isLoading, defaultValue, cl
             label={trans.auth.firstLastName}
             placeHolder={trans.common.fillIn + ' ' + trans.auth.firstLastName}
           />
-          <InputText form={form} fieldName='email' label='Email*' placeHolder={trans.common.fillIn + ' ' + 'email'} />
+          <InputText
+            form={form}
+            fieldName='email'
+            label='Email'
+            placeHolder={trans.common.fillIn + ' ' + 'email'}
+          />
         </div>
         <div className='w-full grid grid-cols-1 md:grid-cols-2 justify-between items-center gap-2'>
           <InputPassword

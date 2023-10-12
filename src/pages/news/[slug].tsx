@@ -35,7 +35,7 @@ const DetailNews = ({ data }: Props) => {
               <p className='font-normal'>{convertStringDay(data.created_at)}</p>
             </div>
           </div>
-          <div dangerouslySetInnerHTML={{ __html: htmlContent }}></div>
+          <div className='max-w-[100vw]' dangerouslySetInnerHTML={{ __html: htmlContent }}></div>
         </div>
         <div className='md:col-span-3 w-full min-h-[500px] flex flex-col justify-start items-start gap-8'>
           <h1 className='text-base md:text-xl font-semibold'>{trans.news.titleLastNews}</h1>

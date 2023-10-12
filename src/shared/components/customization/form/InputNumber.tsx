@@ -21,7 +21,7 @@ export default function InputNumber({ fieldName, form, label, placeHolder }: Pro
                 <FormItem>
                     {label && <FormLabel>{label}</FormLabel>}
                     <FormControl>
-                        <Input placeholder={placeHolder} {...field} type='number' value={value || ''}/>
+                        <Input placeholder={placeHolder} {...field} value={value || ''}/>
                     </FormControl>
                     <FormMessage />
                 </FormItem>

@@ -9,12 +9,32 @@ import { IRegister } from 'src/schemas/auth.type';
 import useTrans from '@/src/shared/hooks/useTrans';
 import Breadcrumb from '@/src/shared/components/customization/Breadcrumb';
 import { URL_SYSTEMS } from '@/src/shared/constants';
+import { axiosInstanceNoAuth } from '@/src/https.config';
+import { IBaseResponse } from '@/src/schemas/baseResponse.type';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 const formSchema = z.object({
   name: z
     .string({ required_error: 'Vui lòng nhập họ tên của bạn' })
     .min(1, { message: 'Vui lòng nhập họ tên của bạn' }),
-  email: z.string({ required_error: 'Vui lòng nhập email của bạn' }).min(1, { message: 'Vui lòng nhập email của bạn' }),
+  email: z
+    .string({ required_error: 'Vui lòng nhập email của bạn' })
+    .min(1, { message: 'Vui lòng nhập email của bạn' })
+    .email('Vui lòng điền đúng email')
+    .refine(
+      async email => {
+        try {
+          const checkEmail = await axiosInstanceNoAuth.post<IBaseResponse<[]>>('/check-email-exists', {
+            email,
+          });
+          return checkEmail && true
+        } catch (error) {
+          return false
+        }
+      },
+      { message: 'Email đã tồn tại trong hệ thống.' },
+    ),
   password: z.string({ required_error: 'Vui lòng nhập mật khẩu' }).min(1, { message: 'Vui lòng nhập mật khẩu' }),
   password_confirmation: z
     .string({ required_error: 'Vui lòng nhập lại mật khẩu' })
@@ -22,20 +42,32 @@ const formSchema = z.object({
 });
 
 const RegisterModule = () => {
-  const {trans} = useTrans()
-  const router = useRouter()
+  const { trans } = useTrans();
+  const router = useRouter();
   const doRegister = useRegister(() => router.push('/member/register'));
+  const defaultValue: IRegister = {
+    name: '',
+    email: '',
+    password: '',
+    password_confirmation: '',
+  };
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: defaultValue,
+  });
   function onSubmit(value: Partial<IRegister>) {
-    if (value.name && value.email && value.password && value.password_confirmation) {
-      const bodyRequest = {
-        name: value.name,
-        email: value.email,
-        password: value.password,
-        password_confirmation: value.password_confirmation,
-      };
-      doRegister.mutate(bodyRequest);
-    } else {
-      console.error('Thiếu giá trị trong form đăng ký');
+    {
+      if (value.name && value.email && value.password && value.password_confirmation) {
+        const bodyRequest = {
+          name: value.name,
+          email: value.email,
+          password: value.password,
+          password_confirmation: value.password_confirmation,
+        };
+        doRegister.mutate(bodyRequest);
+      } else {
+        console.error('Thiếu giá trị trong form đăng ký');
+      }
     }
   }
   return (
@@ -48,7 +80,7 @@ const RegisterModule = () => {
           <IconLogo className='float-left' />
           <Breadcrumb title={trans.auth.breadcrumbLogin} url={URL_SYSTEMS.HOME} />
           <div className='font-semibold text-2xl w-full text-black'>{trans.auth.titleRegister}</div>
-          <FormRegister formSchema={formSchema} onSubmit={onSubmit} />
+          <FormRegister formSchema={formSchema} onSubmit={onSubmit} defaultValue={defaultValue} />
         </div>
       </div>
     </div>

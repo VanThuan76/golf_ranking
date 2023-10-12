@@ -42,7 +42,8 @@ const EnglishScript = {
         notFound: "Not Found",
         titleUpdateSoon: "The feature are updating",
         vietnamese: "VietNamese",
-        english: "EngLish"
+        english: "EngLish",
+        skip: "Skip"
     },
     error:{
         title404: "This Page Does Not Exist",
@@ -58,17 +59,17 @@ const EnglishScript = {
     auth: {
         breadcrumbLogin: "Return home",
         breadcrumbForgotPassword: "Return login",
-        password: "Password*",
-        passwordConfirm: "Confirm password*",
+        password: "Password",
+        passwordConfirm: "Confirm password",
         titleForgotPassword: "Forgot password",
         forgotPassword: "Forgot password?",
         descriptionLogin: "You don't have a member account yet?",
         hintLogin: "Or login with",
         titleRegister: "Register an account",
         descriptionRegister: "Already have a member account?",
-        firstLastName: "First and last name*",
-        currentPassword: "Current password*",
-        newPassword: 'New password*'
+        firstLastName: "First and last name",
+        currentPassword: "Current password",
+        newPassword: 'New password'
     },
     rank:{
         title: "Home Golf Ranking",
@@ -115,6 +116,9 @@ const EnglishScript = {
         quantityPerPage: "Quantity per page",
         page: "page",
         of: "of"
+    },
+    formRegisterMember:{
+        description: "Register as a member to participate in tournaments and rankings",
     },
     footer: {
        aboutUs: "About us",

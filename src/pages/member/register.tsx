@@ -11,12 +11,17 @@ import { useRouter } from 'next/router';
 import { useAppSelector } from '@/src/shared/hooks/useRedux';
 import React, { useEffect } from 'react';
 import { convertStringDate } from '@/src/shared/utils/business/convertStringDate';
+import { getCookie } from 'cookies-next';
+import { APP_SAVE_KEY } from '@/src/shared/constants';
+import useTrans from '@/src/shared/hooks/useTrans';
 
 const formSchema = z.object({
   name: z
     .string({ required_error: 'Vui lòng nhập họ tên của bạn' })
     .min(1, { message: 'Vui lòng nhập họ tên của bạn' }),
   gender: z.number({ required_error: 'Vui lòng chọn giới tính' }),
+  email: z.string(),
+  handicap_vga: z.string(),
   date_of_birth: z.date({ required_error: 'Vui lòng nhập ngày sinh của bạn' }),
   nationality: z
     .string({ required_error: 'Vui lòng nhập quốc gia của bạn' })
@@ -39,13 +44,32 @@ const formSchema = z.object({
 });
 
 const RegisterMember = () => {
-  const { isRegister, user } = useAppSelector(state => state.appSlice);
+  const { trans } = useTrans();
+  const { user } = useAppSelector(state => state.appSlice);
+  const name = user?.user?.name as string;
+  const email = user?.user?.email as string;
+  const userId = getCookie(APP_SAVE_KEY.USER_ID);
   const router = useRouter();
   const doRegisterMember = useRegisterMember(() => router.push('/'));
+  const defaultValues: IMemberRegister = {
+    name: name,
+    handicap_vga: '',
+    gender: NaN,
+    date_of_birth: '',
+    nationality: 'VI',
+    email: email,
+    phone_number: '',
+    guardian_name: '',
+    relationship: '',
+    guardian_email: '',
+    guardian_phone: '',
+  };
   function onSubmit(value: Partial<IMemberRegister>) {
     if (
       value.name &&
       value.gender &&
+      value.gender &&
+      value.handicap_vga &&
       value.date_of_birth &&
       value.nationality &&
       value.phone_number &&
@@ -56,13 +80,13 @@ const RegisterMember = () => {
     ) {
       const dateOfBirth = convertStringDate(value.date_of_birth as unknown as string);
       const bodyRequest = {
-        user_id: user?.user.id,
+        user_id: user?.user && user.user.id !== null ? user?.user.id : Number(userId),
         name: value.name,
-        handicap_vga: value.handicap_vga || '',
+        handicap_vga: value.handicap_vga,
         gender: value.gender,
         date_of_birth: dateOfBirth,
         nationality: value.nationality,
-        email: value.email || '',
+        email: value.email,
         phone_number: value.phone_number,
         guardian_name: value.guardian_name,
         relationship: value.relationship,
@@ -89,9 +113,9 @@ const RegisterMember = () => {
         <div className='mb-4 w-full min-h-[700px] col-span-1 mx-auto'>
           <div className='w-full h-full flex-col-between-start space-y-6'>
             <IconLogoDark className='float-left' />
-            <div className='font-semibold text-2xl w-full text-black'>Đăng ký thành viên</div>
-            <p>Đăng ký thành viên để tham gia giải đấu và bảng xếp hạng</p>
-            <FormRegisterMember formSchema={formSchema} onSubmit={onSubmit} />
+            <div className='font-semibold text-2xl w-full text-black'>{trans.common.registerMember}</div>
+            <p>{trans.formRegisterMember.description}</p>
+            <FormRegisterMember formSchema={formSchema} onSubmit={onSubmit} defaultValue={defaultValues} />
           </div>
         </div>
       </div>

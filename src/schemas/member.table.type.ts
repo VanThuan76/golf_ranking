@@ -45,6 +45,4 @@ export interface IMemberRegister {
   relationship: string;
   guardian_email: string;
   guardian_phone: string;
-  updated_at?: string;
-  created_at?: string
 }

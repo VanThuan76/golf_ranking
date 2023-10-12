@@ -42,7 +42,8 @@ const VnScript = {
         notFound: "Không tìm thấy",
         titleUpdateSoon: "Tính năng đang phát triển",
         vietnamese: "Tiếng Việt",
-        english: "Tiếng Anh"
+        english: "Tiếng Anh",
+        skip: "Bỏ qua"
     },
     error:{
         title404: "Trang này không tồn tại",
@@ -58,17 +59,17 @@ const VnScript = {
     auth: {
         breadcrumbLogin: "Quay lại trang chủ",
         breadcrumbForgotPassword: "Quay lại đăng nhập",
-        password: "Mật khẩu*",
-        passwordConfirm: "Xác nhận mật khẩu*",
+        password: "Mật khẩu",
+        passwordConfirm: "Xác nhận mật khẩu",
         titleForgotPassword: "Quên mật khẩu",
         forgotPassword: "Quên mật khẩu?",
         descriptionLogin: "Bạn chưa có tài khoản thành viên?",
         hintLogin: "Hoặc đăng nhập với",
         titleRegister: "Đăng ký tài khoản",
         descriptionRegister: "Bạn đã có tài khoản thành viên?",
-        firstLastName: "Họ và tên*",
-        currentPassword: "Mật khẩu hiện tại*",
-        newPassword: 'Mật khẩu mới*'
+        firstLastName: "Họ và tên",
+        currentPassword: "Mật khẩu hiện tại",
+        newPassword: 'Mật khẩu mới'
     },
     rank:{
         title: "Trang chủ Golf Ranking",
@@ -115,6 +116,10 @@ const VnScript = {
         quantityPerPage: "Số lượng mỗi trang",
         page: "trang",
         of: "của"
+    },
+    formRegisterMember:{
+        description: "Đăng ký thành viên để tham gia giải đấu và bảng xếp hạng",
+
     },
     footer: {
        aboutUs: "Về chúng tôi",

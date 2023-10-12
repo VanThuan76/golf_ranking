@@ -39,7 +39,7 @@ export const useRegisterMember = (onSuccessHandle?: () => void) => {
             if (onSuccessHandle) onSuccessHandle()
             toast({
                 variant: 'success',
-                title: "Đăng ký thành viên thành công",
+                title: "Đăng ký thành viên thành công. Vui lòng chờ Ban tổ chức phê duyệt.",
             })
         },
         onError: (err: any) => {

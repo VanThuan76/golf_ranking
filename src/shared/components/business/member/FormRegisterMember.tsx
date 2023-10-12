@@ -13,6 +13,9 @@ import InputDatePicker from '@/src/shared/components/customization/form/InputDat
 import InputNumber from '@/src/shared/components/customization/form/InputNumber';
 import InputText from '@/src/shared/components/customization/form/InputText';
 import UseRouter from '@/src/shared/utils/function/UseRouter';
+import useTrans from '@/src/shared/hooks/useTrans';
+import { useAppSelector } from '@/src/shared/hooks/useRedux';
+import appSlice from '@/src/shared/stores/appSlice';
 
 type Props = {
   formSchema: z.Schema<IMemberRegister>;
@@ -23,6 +26,7 @@ type Props = {
 };
 
 export function FormRegisterMember({ formSchema, onSubmit, isLoading, defaultValue, className }: Props) {
+  const {trans} = useTrans()
   const { data: commonCode } = useGetListCommonCode();
   const [initialValues, setInitialValues] = useState<Partial<IMemberRegister>>(defaultValue || {});
   const form = useForm<z.infer<typeof formSchema>>({
@@ -55,7 +59,7 @@ export function FormRegisterMember({ formSchema, onSubmit, isLoading, defaultVal
             <InputText
               form={form}
               fieldName='handicap_vga'
-              label='Handicap VGA'
+              label='Handicap VGA*'
               placeHolder='Nhập Handicap VGA của bạn'
             />
           </div>
@@ -68,7 +72,6 @@ export function FormRegisterMember({ formSchema, onSubmit, isLoading, defaultVal
                       .map(item => ({ value: item.value, label: item.description_vi }))
                   : []
               }
-              placeHolder='Cả 2'
               fieldName='gender'
               label='Giới tính*'
               form={form}
@@ -111,11 +114,11 @@ export function FormRegisterMember({ formSchema, onSubmit, isLoading, defaultVal
         <div className='w-full grid grid-cols-3 gap-4 md:gap-12'>
           <UseRouter url='/'>
             <Button type='button' className='w-full col-span-1'>
-              Bỏ qua
+              {trans.common.skip}
             </Button>
           </UseRouter>
           <Button className='w-full col-span-2' type='submit'>
-            {isLoading && <Loader2 size={16} className='animate-spin' />}Đăng ký
+            {isLoading && <Loader2 size={16} className='animate-spin' />}{trans.common.register}
           </Button>
         </div>
       </form>
