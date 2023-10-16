@@ -28,7 +28,7 @@ const DataTableColumnHeader = <TData, TValue>({
   }
   const itemClassName = 'p-2 rounded-md flex gap-2 items-center hover:bg-foreground/5 cursor-pointer';
   return (
-    <div className={cn('flex items-center space-x-2', className)}>
+    <div className={cn('flex items-center justify-center space-x-2', className)}>
       <Popover>
         <PopoverTrigger asChild>
           <Button

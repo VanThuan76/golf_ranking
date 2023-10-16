@@ -147,7 +147,6 @@ export function TableRank({ members, tableConfig, getFieldValueOnSearchParam }: 
         <DataTableColumnHeader
           column={column}
           title={trans.common.member}
-          defaultFilter={getFieldValueOnSearchParam('vjgr_code')}
         />
       ),
     },
