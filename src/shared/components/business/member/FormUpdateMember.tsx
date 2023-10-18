@@ -21,7 +21,7 @@ type Props = {
   className?: string;
 };
 
-export function FormRegisterMember({ formSchema, onSubmit, isLoading, defaultValue, className }: Props) {
+export function FormUpdateMember({ formSchema, onSubmit, isLoading, defaultValue, className }: Props) {
   const { trans } = useTrans();
   const defaultGender = [
     {
@@ -114,7 +114,7 @@ export function FormRegisterMember({ formSchema, onSubmit, isLoading, defaultVal
           </UseRouter>
           <Button className='w-full col-span-2' type='submit'>
             {isLoading && <Loader2 size={16} className='animate-spin' />}
-            {trans.common.register}
+            {trans.common.edit}
           </Button>
         </div>
       </form>

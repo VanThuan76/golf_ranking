@@ -3,6 +3,7 @@ const VnScript = {
         login: "Đăng nhập",
         register: "Đăng ký",
         registerMember: "Đăng ký thành viên",
+        updateMember: "Cập nhật thành viên",
         search: "Tìm kiếm",
         member: "Thành viên",
         account: "Tài khoản",
@@ -43,7 +44,8 @@ const VnScript = {
         titleUpdateSoon: "Tính năng đang phát triển",
         vietnamese: "Tiếng Việt",
         english: "Tiếng Anh",
-        skip: "Bỏ qua"
+        skip: "Bỏ qua",
+        edit: "Chỉnh sửa"
     },
     error:{
         title404: "Trang này không tồn tại",
@@ -119,7 +121,9 @@ const VnScript = {
     },
     formRegisterMember:{
         description: "Đăng ký thành viên để tham gia giải đấu và bảng xếp hạng",
-
+    },
+    formUpdateMember:{
+        description: "Cập nhật thành viên để ban tổ chức phê duyệt",
     },
     footer: {
        aboutUs: "Về chúng tôi",

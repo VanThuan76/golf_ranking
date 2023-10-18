@@ -3,6 +3,7 @@ const EnglishScript = {
         login: "Login",
         register: "Register",
         registerMember: "Register Member",
+        updateMember: "Update Member",
         search: "Search",
         member: "Member",
         account: "Account",
@@ -43,7 +44,8 @@ const EnglishScript = {
         titleUpdateSoon: "The feature are updating",
         vietnamese: "VietNamese",
         english: "EngLish",
-        skip: "Skip"
+        skip: "Skip",
+        edit: "Edit"
     },
     error:{
         title404: "This Page Does Not Exist",
@@ -119,6 +121,9 @@ const EnglishScript = {
     },
     formRegisterMember:{
         description: "Register as a member to participate in tournaments and rankings",
+    },
+    formUpdateMember:{
+        description: "Update members for approval by the organizing committee",
     },
     footer: {
        aboutUs: "About us",

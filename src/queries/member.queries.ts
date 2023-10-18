@@ -43,11 +43,37 @@ export const useRegisterMember = (onSuccessHandle?: () => void) => {
             })
         },
         onError: (err: any) => {
-            console.log(err)
+            const errorMessages = err?.response?.data.errors
+            const firstKey = Object.keys(errorMessages)[0];
+            const firstValue = errorMessages[firstKey][0];
             toast({
                 variant: 'destructive',
-                title: err?.data?.data || "Đăng ký thành viên thất bại",
+                title: firstValue || "Đăng ký thành viên thất bại",
+            });
+        }
+    })
+}
+export const useUpdateMember = (memberId: number, onSuccessHandle?: () => void) => {
+    const queryClient = useQueryClient()
+    const { toast } = useToast()
+    return useMutation({
+        mutationFn: (body: IMemberRegister) => axiosInstanceNoAuth.put<IBaseResponse<IMemberRegister>>(`/update-member/${memberId}`, body),
+        onSuccess: () => {
+            queryClient.invalidateQueries({ queryKey: [QUERY_KEY] })
+            if (onSuccessHandle) onSuccessHandle()
+            toast({
+                variant: 'success',
+                title: "Cập nhật thành viên thành công. Vui lòng chờ Ban tổ chức phê duyệt.",
             })
+        },
+        onError: (err: any) => {
+            const errorMessages = err?.response?.data.errors
+            const firstKey = Object.keys(errorMessages)[0];
+            const firstValue = errorMessages[firstKey][0];
+            toast({
+                variant: 'destructive',
+                title: firstValue || "Cập nhật thành viên thất bại",
+            });
         }
     })
 }

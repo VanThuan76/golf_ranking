@@ -9,6 +9,7 @@ import { FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/src/
 import { Popover, PopoverContent, PopoverTrigger } from '@/src/shared/components/ui/popover';
 import { Button } from '@/src/shared/components/ui/button';
 import { Calendar, CalendarProps } from '@/src/shared/components/ui/calendar';
+import React from 'react';
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
@@ -50,6 +51,7 @@ export default function InputDatePicker({ fieldName, form, label, placeHolder, c
             <PopoverContent className='w-auto p-0' align='start'>
               <Calendar
                 mode='single'
+                captionLayout="dropdown-buttons"
                 selected={dayjs(field.value).toDate()}
                 //@ts-ignore
                 onSelect={e => {
@@ -59,6 +61,8 @@ export default function InputDatePicker({ fieldName, form, label, placeHolder, c
                   field.onChange(e);
                 }}
                 initialFocus
+                fromYear={1930}
+                toYear={2030}
                 {...calendarProps}
               />
             </PopoverContent>
