@@ -8,6 +8,8 @@ interface Props {
 
 const SliderFull = ({ slides }: Props) => {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [autoSlide, setAutoSlide] = useState(true);
+  const [timeID, setTimeID] = useState<number>(0);
 
   const prevSlide = () => {
     setCurrentSlide(prev => (prev === 0 ? slides.length - 1 : prev - 1));
@@ -18,23 +20,47 @@ const SliderFull = ({ slides }: Props) => {
   const handleDotClick = (index: number) => {
     setCurrentSlide(index);
   };
+  const AutoPlayStop = () => {
+    if (timeID > 0) {
+      clearTimeout(timeID);
+      setAutoSlide(false);
+    }
+  };
+
+  const AutoPlayStart = () => {
+    if (!autoSlide) {
+      setAutoSlide(true);
+    }
+  };
 
   useEffect(() => {
-    const handleKeyDown = (event: any) => {
-      if (event.key === 'ArrowRight') {
-        nextSlide();
-      } else if (event.key === 'ArrowLeft') {
-        prevSlide();
-      }
-    };
-    document.body.addEventListener('keydown', handleKeyDown);
-    return () => {
-      document.body.removeEventListener('keydown', handleKeyDown);
-    };
-  }, []);
+    if (autoSlide) {
+      setAutoSlide(false);
+      setTimeID(
+        window.setTimeout(() => {
+          nextSlide();
+          setAutoSlide(true);
+        }, 5000)
+      );
+    }
+  }, [autoSlide]);
+
+  // useEffect(() => {
+  //   const handleKeyDown = (event: any) => {
+  //     if (event.key === 'ArrowRight') {
+  //       nextSlide();
+  //     } else if (event.key === 'ArrowLeft') {
+  //       prevSlide();
+  //     }
+  //   };
+  //   document.body.addEventListener('keydown', handleKeyDown);
+  //   return () => {
+  //     document.body.removeEventListener('keydown', handleKeyDown);
+  //   };
+  // }, []);
 
   return (
-    <div className='slider-container overflow-hidden'>
+    <div className='slider-container overflow-hidden' onMouseEnter={AutoPlayStop} onMouseLeave={AutoPlayStart}>
       <div className='relative slider'>
         <motion.div
           className='slider-track flex-row-start'
