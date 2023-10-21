@@ -70,9 +70,9 @@ export function FormRegisterMember({ formSchema, onSubmit, isLoading, defaultVal
             />
           </div>
           <div className='w-full grid grid-cols-1 md:grid-cols-3 justify-between items-center gap-2'>
-            <InputSelect options={defaultGender} fieldName='gender' label='Giới tính*' form={form}></InputSelect>
+            <InputSelect options={defaultGender} fieldName='gender' label='Giới tính*' form={form} placeHolder='Giới tính của bạn'></InputSelect>
             <InputDatePicker form={form} fieldName='date_of_birth' label='Ngày sinh*' placeHolder='Ngày sinh của bạn' />
-            <InputText form={form} fieldName='nationality' label='Mã quốc tịch*' placeHolder='Ví dụ: VN' />
+          <InputText form={form} fieldName='nationality' label='Quốc tịch*' placeHolder='Ví dụ: VN' />
           </div>
           <div className='w-full grid grid-cols-1 md:grid-cols-2 justify-between items-center gap-2'>
             <InputText form={form} fieldName='email' label='Email' placeHolder='Nhập email của bạn' />
