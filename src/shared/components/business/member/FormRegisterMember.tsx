@@ -13,6 +13,7 @@ import InputText from '@/src/shared/components/customization/form/InputText';
 import UseRouter from '@/src/shared/utils/function/UseRouter';
 import useTrans from '@/src/shared/hooks/useTrans';
 import { useGetListCommonCode } from '@/src/queries/common-code.queires';
+import { useAppSelector } from '@/src/shared/hooks/useRedux';
 
 type Props = {
   formSchema: z.Schema<IMemberRegister>;
@@ -35,6 +36,11 @@ export function FormRegisterMember({ formSchema, onSubmit, isLoading, defaultVal
       label: 'Nữ',
     },
   ];
+  const user = useAppSelector(state => state.appSlice.user)
+  var isDisabled = false
+  if(user){
+    isDisabled = true
+  }
   const [initialValues, setInitialValues] = useState<Partial<IMemberRegister>>(defaultValue || {});
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -80,17 +86,17 @@ export function FormRegisterMember({ formSchema, onSubmit, isLoading, defaultVal
                   commonCode
                     ? commonCode
                         .filter(item => item.type === 'nationality')
-                        .map(item => ({ value: item.id, label: item.description_vi }))
+                        .map(item => ({ value: item.description_vi, label: item.description_vi }))
                     : []
                 }
-                placeHolder={trans.common.all}
-                fieldName='nationality'
+                placeHolder="Chọn quốc tịch"
+                fieldName='national'
                 label={trans.common.nationality}
                 form={form}
           ></InputSelect>
           </div>
           <div className='w-full grid grid-cols-1 md:grid-cols-2 justify-between items-center gap-2'>
-            <InputText form={form} fieldName='email' label='Email' placeHolder='Nhập email của bạn' />
+            <InputText form={form} fieldName='email' label='Email' placeHolder='Nhập email của bạn' disabled={isDisabled}/>
             <InputNumber
               form={form}
               fieldName='phone_number'
