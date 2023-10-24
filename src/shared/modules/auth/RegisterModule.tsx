@@ -11,35 +11,38 @@ import Breadcrumb from '@/src/shared/components/customization/Breadcrumb';
 import { URL_SYSTEMS } from '@/src/shared/constants';
 import { axiosInstanceNoAuth } from '@/src/https.config';
 import { IBaseResponse } from '@/src/schemas/baseResponse.type';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
 
-const formSchema = z.object({
-  name: z
-    .string({ required_error: 'Vui lòng nhập họ tên của bạn' })
-    .min(1, { message: 'Vui lòng nhập họ tên của bạn' }),
-  email: z
-    .string({ required_error: 'Vui lòng nhập email của bạn' })
-    .min(1, { message: 'Vui lòng nhập email của bạn' })
-    .email('Vui lòng điền đúng email')
-    .refine(
-      async email => {
-        try {
-          const checkEmail = await axiosInstanceNoAuth.post<IBaseResponse<[]>>('/check-email-exists', {
-            email,
-          });
-          return checkEmail && true
-        } catch (error) {
-          return false
-        }
-      },
-      { message: 'Email đã tồn tại trong hệ thống.' },
-    ),
-  password: z.string({ required_error: 'Vui lòng nhập mật khẩu' }).min(1, { message: 'Vui lòng nhập mật khẩu' }),
-  password_confirmation: z
-    .string({ required_error: 'Vui lòng nhập lại mật khẩu' })
-    .min(1, { message: 'Vui lòng nhập lại mật khẩu' }),
-});
+const formSchema = z
+  .object({
+    name: z
+      .string({ required_error: 'Vui lòng nhập họ tên của bạn' })
+      .min(1, { message: 'Vui lòng nhập họ tên của bạn' }),
+    email: z
+      .string({ required_error: 'Vui lòng nhập email của bạn' })
+      .min(1, { message: 'Vui lòng nhập email của bạn' })
+      .email('Vui lòng điền đúng email')
+      .refine(
+        async email => {
+          try {
+            const checkEmail = await axiosInstanceNoAuth.post<IBaseResponse<[]>>('/check-email-exists', {
+              email,
+            });
+            return checkEmail && true;
+          } catch (error) {
+            return false;
+          }
+        },
+        { message: 'Email đã tồn tại trong hệ thống.' },
+      ),
+    password: z.string({ required_error: 'Vui lòng nhập mật khẩu' }).min(1, { message: 'Vui lòng nhập mật khẩu' }),
+    password_confirmation: z
+      .string({ required_error: 'Vui lòng nhập lại mật khẩu' })
+      .min(1, { message: 'Vui lòng nhập lại mật khẩu' }),
+  })
+  .refine((data: any) => data.password === data.password_confirmation, {
+    message: 'Mật khẩu xác nhận không khớp',
+    path: ["password_confirmation"],
+  });
 
 const RegisterModule = () => {
   const { trans } = useTrans();
@@ -51,10 +54,6 @@ const RegisterModule = () => {
     password: '',
     password_confirmation: '',
   };
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
-    defaultValues: defaultValue,
-  });
   function onSubmit(value: Partial<IRegister>) {
     {
       if (value.name && value.email && value.password && value.password_confirmation) {

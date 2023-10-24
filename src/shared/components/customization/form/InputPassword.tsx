@@ -28,7 +28,6 @@ export default function InputPassword({ fieldName, form, label, placeHolder, inp
                             </div>
                         </div>
                     </FormControl>
-
                     <FormMessage />
                 </FormItem>
             )}
