@@ -78,7 +78,7 @@ export function FormRegister({ formSchema, onSubmit, isLoading, defaultValue, cl
             fieldName='password_confirmation'
             label={trans.auth.passwordConfirm}
             placeHolder={trans.common.fillIn + ' ' + trans.auth.passwordConfirm}
-            inputProps={{ type: 'password_confirmation' }}
+            inputProps={{ type: 'password' }}
           />
         </div>
         <div className='flex-col-center gap-2'>
