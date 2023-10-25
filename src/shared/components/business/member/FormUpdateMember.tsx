@@ -80,7 +80,7 @@ export function FormUpdateMember({ formSchema, onSubmit, isLoading, defaultValue
                   commonCode
                     ? commonCode
                         .filter(item => item.type === 'nationality')
-                        .map(item => ({ value: item.id, label: item.description_vi }))
+                        .map(item => ({ value: item.description_vi, label: item.description_vi }))
                     : []
                 }
                 placeHolder={trans.common.all}
