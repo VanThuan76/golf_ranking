@@ -14,6 +14,8 @@ import { convertStringDate } from '@/src/shared/utils/business/convertStringDate
 import { getCookie } from 'cookies-next';
 import { APP_SAVE_KEY } from '@/src/shared/constants';
 import useTrans from '@/src/shared/hooks/useTrans';
+import { axiosInstanceNoAuth } from '@/src/https.config';
+import { IBaseResponse } from '@/src/schemas/baseResponse.type';
 
 const formSchema = z.object({
   name: z
@@ -21,7 +23,22 @@ const formSchema = z.object({
     .min(1, { message: 'Vui lòng nhập họ tên của bạn' }),
   gender: z.number({ required_error: 'Vui lòng chọn giới tính' }),
   email: z.string(),
-  handicap_vga: z.string({ required_error: 'Vui lòng nhập Handicap VGA' }).min(1, { message: 'Vui lòng nhập Handicap VGA' }),
+  handicap_vga: z
+    .string({ required_error: 'Vui lòng nhập Handicap VGA' })
+    .min(1, { message: 'Vui lòng nhập Handicap VGA' })
+    .refine(
+      async handicapVga => {
+        try {
+          const checkEmail = await axiosInstanceNoAuth.post<IBaseResponse<[]>>('/check-handicap-vga-exists', {
+            handicapVga,
+          });
+          return checkEmail && true;
+        } catch (error) {
+          return false;
+        }
+      },
+      { message: 'Handicap Vga đã tồn tại trong hệ thống.' },
+    ),
   date_of_birth: z.date({ required_error: 'Vui lòng nhập ngày sinh của bạn' }),
   nationality: z
     .string({ required_error: 'Vui lòng nhập quốc gia của bạn' })
