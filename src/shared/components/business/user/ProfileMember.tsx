@@ -32,9 +32,10 @@ const ProfileMember = ({ member }: Props) => {
         <CardProfile label='Quốc tịch' title={member.nationality} />
         <CardProfile label='Giới tính' title={member.gender} />
         <CardProfile label='Ngày sinh' title={member.date_of_birth} />
-        {
-        // member.status === "Không hoạt động" && 
         <CardProfile label='Trạng thái' title={member.status} />
+        {
+        member.status === "Từ chối" && 
+        <CardProfile label='Lý do từ chối' title={member.reason} />
         }
       </div>
       <h1 className='font-semibold text-2xl mt-4'>{trans.user.guardianInfor}</h1>

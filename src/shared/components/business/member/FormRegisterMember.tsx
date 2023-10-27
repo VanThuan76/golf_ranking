@@ -56,7 +56,7 @@ export function FormRegisterMember({ formSchema, onSubmit, isLoading, defaultVal
         });
       }
     }
-  }, [defaultValue, form]);
+  }, [form]);
 
   return (
     <Form {...form}>
