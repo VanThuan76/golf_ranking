@@ -34,7 +34,7 @@ const ProfileMember = ({ member }: Props) => {
         <CardProfile label='Ngày sinh' title={member.date_of_birth} />
         {
         // member.status === "Không hoạt động" && 
-        <CardProfile label='Trạng thái' title={member.status === "Không hoạt động" && "Chờ phê duyệt"} />
+        <CardProfile label='Trạng thái' title={member.status} />
         }
       </div>
       <h1 className='font-semibold text-2xl mt-4'>{trans.user.guardianInfor}</h1>
