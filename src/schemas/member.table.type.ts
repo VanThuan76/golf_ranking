@@ -25,6 +25,7 @@ export interface IMember  {
   created_at: string;
   updated_at: string;
   group: IGroup;
+  reason: string;
 }
 export interface IMemberSearch {
   name?: string;
