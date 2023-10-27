@@ -9,7 +9,6 @@ interface Props {
 
 const ProfileMember = ({ member }: Props) => {
   const {trans} = useTrans()
-  console.log(member)
   if (!member) return <></>;
   const CardProfile = ({ title, label }: { title: any; label: string }) => {
     return (
