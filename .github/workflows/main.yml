@@ -50,10 +50,11 @@ jobs:
       - name: Start or restart PM2 process
         run: |
           # Kill the previous PM2 process, if any
-          pm2 delete golf_ranking || true
+          pm2 kill
           # Start the Next.js app with PM2
           pm2 start npm --name "golf_ranking" -- start
-          shell: /bin/bash -e {0}
+          pm2 startup
+          pm2 save
           working-directory: /var/www/golf_ranking_fe
           
       - name: Wait for PM2 to start
