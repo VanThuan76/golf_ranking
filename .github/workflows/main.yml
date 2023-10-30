@@ -48,12 +48,7 @@ jobs:
         run: npm run build
 
       - name: Start or restart PM2 process
-        run: |
-          # Kill the previous PM2 process, if any
-          pm2 kill
-          # Start the Next.js app with PM2
-          pm2 start npm --name "golf_ranking" -- start
-          working-directory: /var/www/golf_ranking_fe
+        run: pm2 start pm2.json
           
       - name: Wait for PM2 to start
         run: pm2 logs golf_ranking --lines 100
