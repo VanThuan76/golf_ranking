@@ -123,15 +123,29 @@ const UpdateMember = ({ member }: Props) => {
 };
 
 export async function getStaticProps({ params }: any) {
-  const { id } = params;
-  const responseMember = await fetch(`${process.env.NEXT_PUBLIC_PRODUCT_API_URL}/members/${id}`);
-  const member = await responseMember.json();
-  return {
-    props: {
-      member,
-    },
-  };
+  try {
+    const { id } = params;
+    const responseMember = await fetch(`${process.env.NEXT_PUBLIC_PRODUCT_API_URL}/members/${id}`);
+    if (!responseMember.ok) {
+      throw new Error('Failed to fetch member data');
+    }
+    const member = await responseMember.json();
+    return {
+      props: {
+        member,
+      },
+    };
+  } catch (error) {
+    console.error('Error fetching member data:', error);
+    return {
+      props: {
+        member: null,
+        error: 'Failed to fetch member data',
+      },
+    };
+  }
 }
+
 export async function getStaticPaths() {
   return {
     paths: [],

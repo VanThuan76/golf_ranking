@@ -13,7 +13,8 @@
     "build:test": "env-cmd -f .env.test yarn build",
     "build:production": "env-cmd -f .env.production yarn build",
     "start": "NODE_ENV=production node server.mjs",
-    "lint": "next lint"
+    "lint": "next lint",
+    "pm2": "pm2 start pm2.json"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.2.0",
