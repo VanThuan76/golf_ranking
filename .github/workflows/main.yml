@@ -53,8 +53,9 @@ jobs:
           pm2 delete golf_ranking || true
           # Start the Next.js app with PM2
           pm2 start npm --name "golf_ranking" -- start
-        working-directory: /bin/bash
-
+          shell: /bin/bash -e {0}
+          working-directory: /var/www/golf_ranking_fe
+          
       - name: Wait for PM2 to start
         run: pm2 logs golf_ranking --lines 100
         
