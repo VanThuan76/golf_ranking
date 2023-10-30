@@ -49,7 +49,10 @@ jobs:
 
       - name: Start or restart PM2 process
         run: |
-          pm2 restart golf_ranking
+          pm2 kill
+          pm2 start npm --name "golf_ranking" -- start
+          pm2 startup
+          pm2 save
           
       - name: Wait for PM2 to start
         run: pm2 logs golf_ranking --lines 100
