@@ -48,7 +48,8 @@ jobs:
         run: npm run build
 
       - name: Start or restart PM2 process
-        run: pm2 start pm2.json
+        run: |
+          pm2 restart golf_ranking
           
       - name: Wait for PM2 to start
         run: pm2 logs golf_ranking --lines 100
