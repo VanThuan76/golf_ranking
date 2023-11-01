@@ -125,7 +125,7 @@ const UpdateMember = ({ member }: Props) => {
 export async function getStaticProps({ params }: any) {
   try {
     const { id } = params;
-    const responseMember = await fetch(`${process.env.NEXT_PUBLIC_PRODUCT_API_URL}/members/${id}`);
+    const responseMember = await fetch(`https://vjgr.com.vn:8443/api/members/${id}`);
     if (!responseMember.ok) {
       throw new Error('Failed to fetch member data');
     }

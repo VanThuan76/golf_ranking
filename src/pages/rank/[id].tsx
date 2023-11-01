@@ -44,7 +44,7 @@ const DetailRanking = ({ member }: Props) => {
 
 export async function getStaticProps({ params }: any) {
   const { id } = params;
-  const responseMember = await fetch(`${process.env.NEXT_PUBLIC_PRODUCT_API_URL}/members/${id}`);
+  const responseMember = await fetch(`https://vjgr.com.vn:8443/api/members/${id}`);
   const member = await responseMember.json();
   return {
     props: {
