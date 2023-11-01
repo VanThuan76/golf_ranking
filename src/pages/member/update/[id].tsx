@@ -48,7 +48,7 @@ const formSchema = z.object({
 });
 
 type Props = {
-  member: IBaseResponse<IMember>;
+  member: IMember;
 };
 
 const UpdateMember = ({ member }: Props) => {
@@ -56,19 +56,19 @@ const UpdateMember = ({ member }: Props) => {
   const { user } = useAppSelector(state => state.appSlice);
   const userId = getCookie(APP_SAVE_KEY.USER_ID);
   const router = useRouter();
-  const doUpdateMember = useUpdateMember(member.data.id, () => router.push('/profile'));
+  const doUpdateMember = useUpdateMember(member && member.id, () => router.push('/profile'));
   const defaultValues: IMemberRegister = {
-    name: member.data.name,
-    handicap_vga: member.data.handicap_vga,
-    gender: member.data.gender === 'Nam' ? 2 : 1,
-    date_of_birth: member.data.date_of_birth,
-    nationality: member.data.nationality,
-    email: member.data.email,
-    phone_number: member.data.phone_number,
-    guardian_name: member.data.guardian_name,
-    relationship: member.data.relationship,
-    guardian_email: member.data.guardian_email,
-    guardian_phone: String(member.data.guardian_phone) || '',
+    name: member?.name,
+    handicap_vga: member?.handicap_vga,
+    gender: member?.gender === 'Nam' ? 2 : 1,
+    date_of_birth: member?.date_of_birth,
+    nationality: member?.nationality,
+    email: member?.email,
+    phone_number: member?.phone_number,
+    guardian_name: member?.guardian_name,
+    relationship: member?.relationship,
+    guardian_email: member?.guardian_email,
+    guardian_phone: String(member?.guardian_phone) || '',
   };
   function onSubmit(value: Partial<IMemberRegister>) {
     if (
@@ -133,7 +133,8 @@ export const getStaticProps: GetStaticProps = async ctx => {
       if (!responseMember.ok) {
         throw new Error('Failed to fetch member data');
       }
-      const member = await responseMember.json();
+      const data = await responseMember.json();
+      const member: IMember = data.data;
       return {
         props: {
           member,
