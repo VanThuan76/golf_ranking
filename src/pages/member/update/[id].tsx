@@ -15,6 +15,7 @@ import { APP_SAVE_KEY } from '@/src/shared/constants';
 import useTrans from '@/src/shared/hooks/useTrans';
 import { IBaseResponse } from '@/src/schemas/baseResponse.type';
 import { FormUpdateMember } from '@/src/shared/components/business/member/FormUpdateMember';
+import { GetStaticPaths, GetStaticProps } from 'next/types';
 
 const formSchema = z.object({
   name: z
@@ -57,9 +58,9 @@ const UpdateMember = ({ member }: Props) => {
   const router = useRouter();
   const doUpdateMember = useUpdateMember(member.data.id, () => router.push('/profile'));
   const defaultValues: IMemberRegister = {
-    name:  member.data.name,
+    name: member.data.name,
     handicap_vga: member.data.handicap_vga,
-    gender: member.data.gender === "Nam" ? 2 : 1,
+    gender: member.data.gender === 'Nam' ? 2 : 1,
     date_of_birth: member.data.date_of_birth,
     nationality: member.data.nationality,
     email: member.data.email,
@@ -121,36 +122,42 @@ const UpdateMember = ({ member }: Props) => {
     </React.Fragment>
   );
 };
-
-export async function getStaticProps({ params }: any) {
-  try {
-    const { id } = params;
-    const responseMember = await fetch(`https://vjgr.com.vn:8443/api/members/${id}`);
-    if (!responseMember.ok) {
-      throw new Error('Failed to fetch member data');
-    }
-    const member = await responseMember.json();
-    return {
-      props: {
-        member,
-      },
-    };
-  } catch (error) {
-    console.error('Error fetching member data:', error);
-    return {
-      props: {
-        member: null,
-        error: 'Failed to fetch member data',
-      },
-    };
-  }
-}
-
-export async function getStaticPaths() {
-  return {
-    paths: [],
-    fallback: false,
-  };
-}
 UpdateMember.getLayout = (children: React.ReactNode) => <BlankLayout>{children}</BlankLayout>;
 export default UpdateMember;
+
+export const getStaticProps: GetStaticProps = async ctx => {
+  const id = ctx.params?.id;
+  if (id) {
+    try {
+      const responseMember = await fetch(`${process.env.NEXT_PUBLIC_PRODUCT_API_URL}/members/${id}`);
+      if (!responseMember.ok) {
+        throw new Error('Failed to fetch member data');
+      }
+      const member = await responseMember.json();
+      return {
+        props: {
+          member,
+        },
+      };
+    } catch (error) {
+      return {
+        props: {
+          member: null,
+          error: 'Failed to fetch member data',
+        },
+      };
+    }
+  } else {
+    return {
+      props: {},
+      notFound: true,
+    };
+  }
+};
+
+export const getStaticPaths: GetStaticPaths = async _ctx => {
+  return {
+    paths: [],
+    fallback: true,
+  };
+};

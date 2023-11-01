@@ -11,16 +11,23 @@ import TableDetailRank from '@/src/shared/components/business/rank/detail/TableD
 import Breadcrumb from '@/src/shared/components/customization/Breadcrumb';
 import { URL_SYSTEMS } from 'src/shared/constants';
 import useTrans from '@/src/shared/hooks/useTrans';
+import { GetStaticPaths, GetStaticProps } from 'next/types';
 
-const ScrollRevealWrapper = dynamic(() => import('@/src/shared/components/customization/ScrollRevealWrapper'), { ssr: false });
+const ScrollRevealWrapper = dynamic(() => import('@/src/shared/components/customization/ScrollRevealWrapper'), {
+  ssr: false,
+});
 type Props = {
   member: IBaseResponse<IMember>;
 };
 const DetailRanking = ({ member }: Props) => {
-  const {trans} = useTrans()
+  const { trans } = useTrans();
   const { query } = useRouter();
-  const { data: tournamentSummary, tableConfig, getFieldValueOnSearchParam } = useGetListTournamentSummary(query && Number(query.id));
-  if (!member || !tournamentSummary) return <React.Fragment></React.Fragment>;
+  const {
+    data: tournamentSummary,
+    tableConfig,
+    getFieldValueOnSearchParam,
+  } = useGetListTournamentSummary(query && Number(query.id));
+  if (!member) return <React.Fragment></React.Fragment>;
   return (
     <React.Fragment>
       <Head>
@@ -33,30 +40,45 @@ const DetailRanking = ({ member }: Props) => {
         <InformationCardDetailRank data={member.data} />
       </ScrollRevealWrapper>
       <ScrollRevealWrapper>
-        <TableDetailRank
-          tournamentSummary={tournamentSummary?.content || []}
-          tableConfig={tableConfig}
-        />
+        {tournamentSummary && (
+          <TableDetailRank tournamentSummary={tournamentSummary?.content || []} tableConfig={tableConfig} />
+        )}
       </ScrollRevealWrapper>
     </React.Fragment>
   );
 };
-
-export async function getStaticProps({ params }: any) {
-  const { id } = params;
-  const responseMember = await fetch(`https://vjgr.com.vn:8443/api/members/${id}`);
-  const member = await responseMember.json();
-  return {
-    props: {
-      member,
-    },
-  };
-}
-export async function getStaticPaths() {
-  return {
-    paths: [],
-    fallback: false,
-  };
-}
 DetailRanking.getLayout = (children: React.ReactNode) => <LayoutWebsite>{children}</LayoutWebsite>;
 export default DetailRanking;
+
+export const getStaticProps: GetStaticProps = async ctx => {
+  const id = ctx.params?.id;
+  if (id) {
+    try {
+      const responseMember = await fetch(`${process.env.NEXT_PUBLIC_PRODUCT_API_URL}/members/${id}`);
+      const member = await responseMember.json();
+      return {
+        props: {
+          member,
+        },
+      };
+    } catch (error) {
+      return {
+        props: {
+          member: null,
+          error: 'Failed to fetch member data',
+        },
+      };
+    }
+  } else {
+    return {
+      props: {},
+      notFound: true,
+    };
+  }
+};
+export const getStaticPaths: GetStaticPaths = async _ctx => {
+  return {
+    paths: [],
+    fallback: true,
+  };
+};
