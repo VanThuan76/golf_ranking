@@ -13,7 +13,7 @@ export const useGetListNewsBySearch = (defaultFilter?: Filter[]) => {
         apiFn: (params) => axiosInstanceNoAuth.post<IBaseResponseWithCount<INewsSearch[]>>('/news/search', { ...params }),
         defaultParams: {
             page: 0,
-            size: 10,
+            size: 15,
             filters: defaultFilter,
             sorts: [{ field: "updated_at", direction: "DESC" }]
         }

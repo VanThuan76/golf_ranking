@@ -11,7 +11,7 @@ export const useGetListTournamentDetail = (defaultFilter?: Filter[]) => {
         apiFn: (params) => axiosInstanceNoAuth.post<IBaseResponseWithCount<ITournamentDetail[]>>('/tournament-detail', {...params}),
         defaultParams: {
             page: 0,
-            size: 10,
+            size: 15,
             filters: defaultFilter,
             sorts: [{ field: "member_id", direction: "ASC" }, { field: "round_number", direction: "ASC" }]
         }

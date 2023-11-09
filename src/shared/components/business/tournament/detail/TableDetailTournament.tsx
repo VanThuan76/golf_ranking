@@ -67,7 +67,7 @@ export function TableDetailTournament({ tournamentDetail, tableConfig }: Props) 
   const calculateRoundColumn = () => {
     const columnDefs: ColumnDef<ITournamentDetail>[] = [];
     if(tournamentDetail.length <= 0) return columnDefs
-    for (let i = 1; i < tournamentDetail[0].tournament.number_round; i++) {
+    for (let i = 1; i <= tournamentDetail[0].tournament.number_round; i++) {
       columnDefs.push({
         id: `round-${i}`,
         accessorKey: `round-${i}`,

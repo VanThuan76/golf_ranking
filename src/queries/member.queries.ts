@@ -13,7 +13,7 @@ export const useGetListMemberBySearch = (defaultFilter?: Filter[]) => {
         apiFn: (params) => axiosInstanceNoAuth.post<IBaseResponseWithCount<IMember[]>>('/members/search', { ...params }),
         defaultParams: {
             page: 0,
-            size: 10,
+            size: 15,
             filters: defaultFilter,
             sorts: [{ field: "updated_at", direction: "DESC" }]
         }

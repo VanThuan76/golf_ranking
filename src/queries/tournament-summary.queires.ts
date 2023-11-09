@@ -14,7 +14,7 @@ export const useGetListTournamentSummary = (memberId: number, defaultFilter?: Fi
         }),
         defaultParams: {
             page: 0,
-            size: 10,
+            size: 15,
             filters: defaultFilter,
             sorts: [{ field: "updated_at", direction: "DESC" }]
         }
