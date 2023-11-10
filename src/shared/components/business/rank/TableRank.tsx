@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { ColumnDef } from '@tanstack/react-table';
 import { useRouter } from 'next/router';
-import { ArrowRight, ArrowUp, ChevronDown, ChevronUp } from 'lucide-react';
+import { ArrowDown, ArrowRight, ArrowUp, ChevronDown, ChevronUp } from 'lucide-react';
 
 import DataTableColumnHeader from '@/src/shared/components/customization/table/DataTableColumnHeader';
 import DataTable from '@/src/shared/components/customization/table/DataTable';
@@ -58,7 +58,7 @@ const CustomizeCell = ({
 
 export function TableRank({ members, tableConfig, getFieldValueOnSearchParam }: Props) {
   const router = useRouter();
-  const {trans} = useTrans()
+  const { trans } = useTrans();
   const [collapseStates, setCollapseStates] = useState<Record<string, boolean>>({});
   const TABLE_NAME = 'Ranking';
   const columnNews: ColumnDef<IMember>[] = [
@@ -143,12 +143,7 @@ export function TableRank({ members, tableConfig, getFieldValueOnSearchParam }: 
           </React.Fragment>
         );
       },
-      header: ({ column }) => (
-        <DataTableColumnHeader
-          column={column}
-          title={trans.common.member}
-        />
-      ),
+      header: ({ column }) => <DataTableColumnHeader column={column} title={trans.common.member} />,
     },
     {
       id: 'date_of_birth',
@@ -156,13 +151,23 @@ export function TableRank({ members, tableConfig, getFieldValueOnSearchParam }: 
       cell(props) {
         return (
           <React.Fragment>
-            <p className='text-center'>{calculateAge(props.cell.row.original.date_of_birth)}</p>
+            <p className='text-center'>
+              {calculateAge(props.cell.row.original.date_of_birth) === 0
+                ? ''
+                : calculateAge(props.cell.row.original.date_of_birth)}
+            </p>
             {collapseStates[props.cell.row.id] && (
               <CustomizeCell
                 id={props.cell.row.id}
                 collapseStates={collapseStates}
                 title={trans.common.gender}
-                value={props.cell.row.original.gender === "Nam" ? trans.common.male: trans.common.female}
+                value={
+                  props.cell.row.original.gender === 'Nam'
+                    ? trans.common.male
+                    : props.cell.row.original.gender === 'Nữ'
+                    ? trans.common.female
+                    : ''
+                }
                 desc=''
               />
             )}
@@ -183,7 +188,13 @@ export function TableRank({ members, tableConfig, getFieldValueOnSearchParam }: 
         return (
           <React.Fragment>
             <div className='flex-row-center'>
-              <ArrowUp color='#35B155' className='text-center' />
+              {Number(props.cell.row.original.rank_change) < 0 ? (
+                <ArrowDown color='#BE3144' className='text-center' />
+              ) : Number(props.cell.row.original.rank_change) > 0 ? (
+                <ArrowUp color='#35B155' className='text-center' />
+              ) : (
+                <p>-</p>
+              )}
             </div>
             {collapseStates[props.cell.row.id] && (
               <div
