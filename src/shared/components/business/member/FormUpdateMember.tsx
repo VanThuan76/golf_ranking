@@ -24,7 +24,7 @@ type Props = {
 
 export function FormUpdateMember({ formSchema, onSubmit, isLoading, defaultValue, className }: Props) {
   const { trans } = useTrans();
-  const {data: commonCode} = useGetListCommonCode()
+  const { data: commonCode } = useGetListCommonCode();
   const defaultGender = [
     {
       value: 2,
@@ -66,28 +66,35 @@ export function FormUpdateMember({ formSchema, onSubmit, isLoading, defaultValue
             <InputText form={form} fieldName='name' label='Họ và tên*' placeHolder='Nhập họ tên của bạn' />
             <InputText
               form={form}
+              fieldName='vjgr_code'
+              label='Mã VJGR*'
+              placeHolder='Nhập mã VJGR của bạn'
+            />
+          </div>
+          <div className='w-full grid grid-cols-1 md:grid-cols-2 justify-between items-center gap-2'>
+            <InputSelect options={defaultGender} fieldName='gender' label='Giới tính*' form={form}></InputSelect>
+            <InputDatePicker form={form} fieldName='date_of_birth' label='Ngày sinh*' placeHolder='Ngày sinh của bạn' />
+          </div>
+          <div className='w-full grid grid-cols-1 md:grid-cols-2 justify-between items-center gap-2'>
+            <InputText
+              form={form}
               fieldName='handicap_vga'
               label='Handicap VGA*'
               placeHolder='Nhập Handicap VGA của bạn'
             />
-          </div>
-          <div className='w-full grid grid-cols-1 md:grid-cols-3 justify-between items-center gap-2'>
-            <InputSelect options={defaultGender} fieldName='gender' label='Giới tính*' form={form}></InputSelect>
-            <InputDatePicker form={form} fieldName='date_of_birth' label='Ngày sinh*' placeHolder='Ngày sinh của bạn' />
-            {/* <InputText form={form} fieldName='nationality' label='Mã quốc tịch*' placeHolder='Ví dụ: VN' /> */}
             <InputSelect
-                options={
-                  commonCode
-                    ? commonCode
-                        .filter(item => item.type === 'nationality')
-                        .map(item => ({ value: item.description_vi, label: item.description_vi }))
-                    : []
-                }
-                placeHolder={trans.common.all}
-                fieldName='nationality'
-                label={trans.common.nationality}
-                form={form}
-          ></InputSelect>
+              options={
+                commonCode
+                  ? commonCode
+                      .filter(item => item.type === 'nationality')
+                      .map(item => ({ value: item.description_vi, label: item.description_vi }))
+                  : []
+              }
+              placeHolder={trans.common.all}
+              fieldName='nationality'
+              label={trans.common.nationality}
+              form={form}
+            ></InputSelect>
           </div>
           <div className='w-full grid grid-cols-1 md:grid-cols-2 justify-between items-center gap-2'>
             <InputText form={form} fieldName='email' label='Email' placeHolder='Nhập email của bạn' />

@@ -21,6 +21,22 @@ const formSchema = z.object({
   name: z
     .string({ required_error: 'Vui lòng nhập họ tên của bạn' })
     .min(1, { message: 'Vui lòng nhập họ tên của bạn' }),
+  vjgr_code: z
+    .string({ required_error: 'Vui lòng nhập mã VJGR' })
+    .min(1, { message: 'Vui lòng nhập mã VJGR' })
+    .refine(
+      async vjgrCode => {
+        try {
+          const checkVjgrCode = await axiosInstanceNoAuth.post<IBaseResponse<[]>>('/check-vjgr-code-exists', {
+            vjgrCode,
+          });
+          return checkVjgrCode && true;
+        } catch (error) {
+          return false;
+        }
+      },
+      { message: 'Mã VJGR không tồn tại' },
+  ),
   gender: z.number({ required_error: 'Vui lòng chọn giới tính' }),
   email: z.string(),
   handicap_vga: z
@@ -37,7 +53,7 @@ const formSchema = z.object({
           return false;
         }
       },
-      { message: 'Handicap Vga đã tồn tại trong hệ thống.' },
+      { message: 'Mã Handicap VGA đã được đăng ký.' },
     ),
   date_of_birth: z.date({ required_error: 'Vui lòng nhập ngày sinh của bạn' }),
   nationality: z
@@ -70,6 +86,7 @@ const RegisterMember = () => {
   const doRegisterMember = useRegisterMember(() => router.push('/'));
   const defaultValues: IMemberRegister = {
     name: name,
+    vjgr_code: '',
     handicap_vga: '',
     gender: NaN,
     date_of_birth: '',
@@ -84,9 +101,9 @@ const RegisterMember = () => {
   function onSubmit(value: Partial<IMemberRegister>) {
     if (
       value.name &&
+      value.vjgr_code &&
       value.gender &&
       value.gender &&
-      value.handicap_vga &&
       value.date_of_birth &&
       value.nationality &&
       value.phone_number &&
@@ -99,6 +116,7 @@ const RegisterMember = () => {
       const bodyRequest = {
         user_id: user?.user && user.user.id !== null ? user?.user.id : Number(userId),
         name: value.name,
+        vjgr_code: value.vjgr_code,
         handicap_vga: value.handicap_vga,
         gender: value.gender - 1, //Fix logic
         date_of_birth: dateOfBirth,

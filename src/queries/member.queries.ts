@@ -33,7 +33,7 @@ export const useRegisterMember = (onSuccessHandle?: () => void) => {
     const queryClient = useQueryClient()
     const { toast } = useToast()
     return useMutation({
-        mutationFn: (body: IMemberRegister) => axiosInstanceNoAuth.post<IBaseResponse<IMemberRegister>>('/register-member', body),
+        mutationFn: (body: IMemberRegister) => axiosInstanceNoAuth.post<IBaseResponse<IMemberRegister>>('/first-register-member', body),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: [QUERY_KEY] })
             if (onSuccessHandle) onSuccessHandle()
@@ -57,7 +57,7 @@ export const useUpdateMember = (memberId: number, onSuccessHandle?: () => void) 
     const queryClient = useQueryClient()
     const { toast } = useToast()
     return useMutation({
-        mutationFn: (body: IMemberRegister) => axiosInstanceNoAuth.put<IBaseResponse<IMemberRegister>>(`/update-member/${memberId}`, body),
+        mutationFn: (body: IMemberRegister) => axiosInstanceNoAuth.put<IBaseResponse<IMemberRegister>>(`/first-update-register-member/${memberId}`, body),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: [QUERY_KEY] })
             if (onSuccessHandle) onSuccessHandle()

@@ -13,7 +13,6 @@ import { convertStringDate } from '@/src/shared/utils/business/convertStringDate
 import { getCookie } from 'cookies-next';
 import { APP_SAVE_KEY } from '@/src/shared/constants';
 import useTrans from '@/src/shared/hooks/useTrans';
-import { IBaseResponse } from '@/src/schemas/baseResponse.type';
 import { FormUpdateMember } from '@/src/shared/components/business/member/FormUpdateMember';
 import { GetStaticPaths, GetStaticProps } from 'next/types';
 
@@ -21,6 +20,9 @@ const formSchema = z.object({
   name: z
     .string({ required_error: 'Vui lòng nhập họ tên của bạn' })
     .min(1, { message: 'Vui lòng nhập họ tên của bạn' }),
+  vjgr_code: z
+    .string({ required_error: 'Vui lòng nhập mã VJGR' })
+    .min(1, { message: 'Vui lòng nhập mã VJGR' }),
   gender: z.number({ required_error: 'Vui lòng chọn giới tính' }),
   email: z.string(),
   handicap_vga: z
@@ -59,6 +61,7 @@ const UpdateMember = ({ member }: Props) => {
   const doUpdateMember = useUpdateMember(member && member.id, () => router.push('/profile'));
   const defaultValues: IMemberRegister = {
     name: member?.name,
+    vjgr_code: member?.vjgr_code,
     handicap_vga: member?.handicap_vga,
     gender: member?.gender === 'Nam' ? 2 : 1,
     date_of_birth: member?.date_of_birth,
@@ -75,7 +78,7 @@ const UpdateMember = ({ member }: Props) => {
       value.name &&
       value.gender &&
       value.gender &&
-      value.handicap_vga &&
+      value.vjgr_code &&
       value.date_of_birth &&
       value.nationality &&
       value.phone_number &&
@@ -88,6 +91,7 @@ const UpdateMember = ({ member }: Props) => {
       const bodyRequest = {
         user_id: user?.user && user.user.id !== null ? user?.user.id : Number(userId),
         name: value.name,
+        vjgr_code: value.vjgr_code,
         handicap_vga: value.handicap_vga,
         gender: value.gender - 1, //Fix logic
         date_of_birth: dateOfBirth,

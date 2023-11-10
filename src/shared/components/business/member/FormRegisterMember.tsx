@@ -24,7 +24,7 @@ type Props = {
 };
 
 export function FormRegisterMember({ formSchema, onSubmit, isLoading, defaultValue, className }: Props) {
-  const {data: commonCode} = useGetListCommonCode()
+  const { data: commonCode } = useGetListCommonCode();
   const { trans } = useTrans();
   const defaultGender = [
     {
@@ -36,10 +36,10 @@ export function FormRegisterMember({ formSchema, onSubmit, isLoading, defaultVal
       label: 'Nữ',
     },
   ];
-  const user = useAppSelector(state => state.appSlice.user)
-  var isDisabled = false
-  if(user){
-    isDisabled = true
+  const user = useAppSelector(state => state.appSlice.user);
+  var isDisabled = false;
+  if (user) {
+    isDisabled = true;
   }
   const [initialValues, setInitialValues] = useState<Partial<IMemberRegister>>(defaultValue || {});
   const form = useForm<z.infer<typeof formSchema>>({
@@ -72,31 +72,50 @@ export function FormRegisterMember({ formSchema, onSubmit, isLoading, defaultVal
             <InputText form={form} fieldName='name' label='Họ và tên*' placeHolder='Nhập họ tên của bạn' />
             <InputText
               form={form}
+              fieldName='vjgr_code'
+              label='Mã VJGR*'
+              placeHolder='Nhập mã VJGR của bạn'
+            />
+          </div>
+          <div className='w-full grid grid-cols-1 md:grid-cols-2 justify-between items-center gap-2'>
+            <InputSelect
+              options={defaultGender}
+              fieldName='gender'
+              label='Giới tính*'
+              form={form}
+              placeHolder='Giới tính của bạn'
+            ></InputSelect>
+            <InputDatePicker form={form} fieldName='date_of_birth' label='Ngày sinh*' placeHolder='Ngày sinh của bạn' />
+          </div>
+          <div className='w-full grid grid-cols-1 md:grid-cols-2 justify-between items-center gap-2'>
+            <InputSelect
+              options={
+                commonCode
+                  ? commonCode
+                      .filter(item => item.type === 'nationality')
+                      .map(item => ({ value: item.description_vi, label: item.description_vi }))
+                  : []
+              }
+              placeHolder='Chọn quốc tịch'
+              fieldName='national'
+              label={trans.common.nationality}
+              form={form}
+            ></InputSelect>
+            <InputText
+              form={form}
               fieldName='handicap_vga'
-              label='Handicap VGA*'
+              label='Handicap VGA'
               placeHolder='Nhập Handicap VGA của bạn'
             />
           </div>
-          <div className='w-full grid grid-cols-1 md:grid-cols-3 justify-between items-center gap-2'>
-            <InputSelect options={defaultGender} fieldName='gender' label='Giới tính*' form={form} placeHolder='Giới tính của bạn'></InputSelect>
-            <InputDatePicker form={form} fieldName='date_of_birth' label='Ngày sinh*' placeHolder='Ngày sinh của bạn' />
-          {/* <InputText form={form} fieldName='nationality' label='Quốc tịch*' placeHolder='Ví dụ: VN' /> */}
-          <InputSelect
-                options={
-                  commonCode
-                    ? commonCode
-                        .filter(item => item.type === 'nationality')
-                        .map(item => ({ value: item.description_vi, label: item.description_vi }))
-                    : []
-                }
-                placeHolder="Chọn quốc tịch"
-                fieldName='national'
-                label={trans.common.nationality}
-                form={form}
-          ></InputSelect>
-          </div>
           <div className='w-full grid grid-cols-1 md:grid-cols-2 justify-between items-center gap-2'>
-            <InputText form={form} fieldName='email' label='Email' placeHolder='Nhập email của bạn' disabled={isDisabled}/>
+            <InputText
+              form={form}
+              fieldName='email'
+              label='Email'
+              placeHolder='Nhập email của bạn'
+              disabled={isDisabled}
+            />
             <InputNumber
               form={form}
               fieldName='phone_number'
