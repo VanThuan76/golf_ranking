@@ -63,15 +63,15 @@ export function TableRank({ members, tableConfig, getFieldValueOnSearchParam }: 
   const TABLE_NAME = 'Ranking';
   const columnNews: ColumnDef<IMember>[] = [
     {
-      id: 'best_rank',
-      accessorKey: 'best_rank',
+      id: 'current_rank',
+      accessorKey: 'current_rank',
       cell(props) {
         return (
           <React.Fragment>
             <div className='min-w-[50px] h-[20px] flex-row-start gap-2'>
               {collapseStates[props.cell.row.id] ? <ChevronDown /> : <ChevronUp />}
               <p className='text-center'>
-                {props.cell.row.original.best_rank ? props.cell.row.original.best_rank : trans.table.nothing}
+                {props.cell.row.original.current_rank ? props.cell.row.original.current_rank : trans.table.nothing}
               </p>
             </div>
 
@@ -80,7 +80,7 @@ export function TableRank({ members, tableConfig, getFieldValueOnSearchParam }: 
                 id={props.cell.row.id}
                 collapseStates={collapseStates}
                 title={trans.rank.highestRating}
-                value={props.cell.row.original.best_rank ? props.cell.row.original.best_rank : 0}
+                value={props.cell.row.original.current_rank ? props.cell.row.original.current_rank : 0}
                 desc=''
               />
             )}
@@ -91,7 +91,7 @@ export function TableRank({ members, tableConfig, getFieldValueOnSearchParam }: 
         <DataTableColumnHeader
           column={column}
           title={trans.common.rating}
-          defaultFilter={getFieldValueOnSearchParam('best_rank')}
+          defaultFilter={getFieldValueOnSearchParam('current_rank')}
         />
       ),
     },
@@ -188,6 +188,7 @@ export function TableRank({ members, tableConfig, getFieldValueOnSearchParam }: 
         return (
           <React.Fragment>
             <div className='flex-row-center'>
+              {props.cell.row.original.rank_change !== 0 && <p className="pr-2">{props.cell.row.original.rank_change}</p>}
               {Number(props.cell.row.original.rank_change) < 0 ? (
                 <ArrowDown color='#BE3144' className='text-center' />
               ) : Number(props.cell.row.original.rank_change) > 0 ? (

@@ -14,6 +14,7 @@ const VnScript = {
         rating: "Xếp hạng",
         male: "Nam",
         female: "Nữ",
+        total: "Tổng",
         age: "Độ tuổi",
         upDow: "Tăng/giảm",
         rewardPoint: "Điểm thưởng",

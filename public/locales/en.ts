@@ -14,6 +14,7 @@ const EnglishScript = {
         rating: "Rating",
         male: "Male",
         female: "Female", 
+        total: "Total",
         age: "Age",
         upDow: "Up/dow",
         rewardPoint: "Reward point",

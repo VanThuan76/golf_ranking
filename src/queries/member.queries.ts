@@ -15,7 +15,7 @@ export const useGetListMemberBySearch = (defaultFilter?: Filter[]) => {
             page: 0,
             size: 15,
             filters: defaultFilter,
-            sorts: [{ field: "updated_at", direction: "DESC" }]
+            sorts: [{ field: "current_rank", direction: "ASC" }]
         }
     })
 }
