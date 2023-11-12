@@ -25,8 +25,8 @@ const DetailRanking = ({ member }: Props) => {
   const {
     data: tournamentSummary,
     tableConfig,
-    getFieldValueOnSearchParam,
   } = useGetListTournamentSummary(query && Number(query.id));
+
   if (!member) return <React.Fragment></React.Fragment>;
   return (
     <React.Fragment>

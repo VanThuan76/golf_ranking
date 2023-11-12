@@ -2,7 +2,7 @@ import CountryFlag from '@/src/shared/components/customization/CountryFlag';
 import { PreImage } from '@/src/shared/components/customization/PreImage';
 import useTrans from '@/src/shared/hooks/useTrans';
 import { calculateAge } from '@/src/shared/utils/business/calculateAge';
-import { ChevronDown, Dot, Tag } from 'lucide-react';
+import { ArrowDown, ArrowUp, ChevronDown, Dot, Tag } from 'lucide-react';
 import { useState } from 'react';
 import { IMember } from 'src/schemas/member.table.type';
 import { imageRankDetail } from 'src/shared/mocks/rank';
@@ -10,13 +10,24 @@ import { imageRankDetail } from 'src/shared/mocks/rank';
 interface Props {
   data: IMember;
 }
-const CustomizeCard = ({ title, value, desc }: { title: string; value: string | number; desc: string }) => {
+const CustomizeCard = ({
+  title,
+  value,
+  desc,
+  component,
+}: {
+  title: string;
+  value: string | number;
+  desc: string;
+  component?: React.ReactNode;
+}) => {
   return (
     <div className='mt-2 p-2 flex-col-start rounded-lg border-[var(--main-color)] border-2'>
       <h2 className='text-sm md:text-lg font-bold'>{title}</h2>
       <div className='flex-row-end'>
         <p className='text-lg md:text-xl lg:text-2xl'>{value}</p>
         <p className='text-xs ml-1'>{desc}</p>
+        {component}
       </div>
     </div>
   );
@@ -29,21 +40,23 @@ export function InformationCardDetailRank({ data }: Props) {
       id='InformationCardDetailRank'
       className='relative w-full mt-4 p-4 flex-col-between-start rounded-lg overflow-hidden'
     >
-      <div className='w-full grid grid-cols-1 md:grid-cols-2 justify-between items-center gap-5 z-30'>
-        <div className='flex-col-start gap-2'>
+      <div className='w-full grid grid-cols-1 md:grid-cols-3 justify-between items-center gap-5 z-30'>
+        <div className='w-full flex-col-start gap-2'>
           <div className='flex-row-center gap-2'>
             <CountryFlag countryCode={data.nationality} />
             <h1 className='text-2xl text-center font-semibold'>{data.name}</h1>
           </div>
-          <div className='flex-row-center gap-2 text-xs md:text-base'>
-            <p className='py-1 px-2 rounded-md border-[var(--main-color)] border-2'>{data.vjgr_code}</p>
+        </div>
+        <div className='flex justify-start items-center gap-2 text-xs md:text-base'>
+          <p className='py-1 px-2 rounded-md border-[var(--main-color)] border-2'>{data.vjgr_code}</p>
+          {data.handicap_vga && (
             <p className='py-1 px-2 rounded-md border-[var(--main-color)] border-2'>{data.handicap_vga}</p>
-            <div className='flex-row-center gap-1'>
-              <Tag size={16} />
-              <p>{data.gender === 'Nam' ? trans.common.male : trans.common.female}</p>
-              <Dot size={24} />
-              <p>U{calculateAge(data.date_of_birth)}</p>
-            </div>
+          )}
+          <div className='flex-row-center gap-1'>
+            <Tag size={16} />
+            <p>{data.gender === 'Nam' ? trans.common.male : trans.common.female}</p>
+            <Dot size={24} />
+            {calculateAge(data.date_of_birth) !== 0 && <p>U{calculateAge(data.date_of_birth)}</p>}
           </div>
         </div>
         <div className='flex-row-between-center text-xs md:text-base'>
@@ -66,7 +79,23 @@ export function InformationCardDetailRank({ data }: Props) {
           trigger ? 'grid' : 'hidden'
         } w-full md:w-[90%] md:grid grid-cols-2 lg:grid-cols-4 z-30 gap-1 md:gap-5 transition-all ease-in-out duration-75`}
       >
-        <CustomizeCard title={trans.rank.currentRating} value={data.current_rank || 0} desc='' />
+        <CustomizeCard
+          title={trans.rank.currentRating}
+          value={data.current_rank || 0}
+          desc=''
+          component={
+            <div className='flex-row-center ml-2'>
+              {Number(data.rank_change) < 0 ? (
+                <ArrowDown color='#BE3144' className='text-center' />
+              ) : Number(data.rank_change) > 0 ? (
+                <ArrowUp color='#35B155' className='text-center' />
+              ) : (
+                <p>-</p>
+              )}
+              {data.rank_change !== 0 && <p className='pr-2'>{data.rank_change}</p>}
+            </div>
+          }
+        />
         <CustomizeCard title={trans.rank.highestRating} value={data.best_rank || 0} desc='' />
         <CustomizeCard title={trans.common.join} value={data.counting_tournament} desc={trans.common.tournament} />
         <CustomizeCard title={trans.rank.champion} value={data.number_of_wins} desc='' />

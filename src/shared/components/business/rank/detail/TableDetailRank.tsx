@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { ColumnDef } from '@tanstack/react-table';
 import { useRouter } from 'next/router';
@@ -9,6 +9,9 @@ import DataTableColumnHeader from '@/src/shared/components/customization/table/D
 import DataTable from '@/src/shared/components/customization/table/DataTable';
 import CountryFlag from '@/src/shared/components/customization/CountryFlag';
 import useTrans from '@/src/shared/hooks/useTrans';
+import { ITournamentDetail } from '@/src/schemas/tournament-detail.table.type';
+import { Filter } from '@/src/shared/utils/typeSearchParams';
+import { useGetListTournamentDetail } from '@/src/queries/tournament-detail.queires';
 
 type Props = {
   tournamentSummary: ITournamentSummary[];
@@ -31,7 +34,7 @@ const CustomizeCell = ({
   return (
     <motion.div
       key={id}
-      className='w-full mt-4 p-4 flex-row-around-center '
+      className='w-full mt-4 p-4 flex-row-around-center'
       initial='hidden'
       animate='visible'
       variants={collapseStates[id] ? containerVariants : {}}
@@ -45,12 +48,50 @@ const CustomizeCell = ({
     </motion.div>
   );
 };
+const CustomizeTournamentDetail = ({ tournament_id, tournamentSummary }: {tournament_id: number, tournamentSummary:ITournamentSummary}) => {
+  const { trans } = useTrans();
+  const filterDetailTournament = [
+    {
+      field: 'tournament_id',
+      value: tournament_id,
+    },
+    {
+      field: 'member_id',
+      value: tournamentSummary?.member?.id || '',
+    },
+  ]
+  const { data: tournamentDetail } = useGetListTournamentDetail(filterDetailTournament);
+  if (!tournamentDetail) return;
+  for (let i = 1; i <= tournamentDetail?.content[0].tournament.number_round; i++) {
+    const scoreByRound = tournamentDetail?.content.map(item => item.score).filter(item => String(item) !== '');
+    const toParByRound = tournamentDetail?.content.map(item => item.to_par).filter(item => String(item) !== '');
+      return (
+        <div className='flex-row-start gap-4'>
+          {scoreByRound.map((item, idx) => {
+            return (
+              <div key={idx} className='w-full mt-4 flex flex-col justify-start items-start gap-2'>
+                <p>
+                  {trans.tournament.round} {idx + 1}
+                </p>
+                <p className='font-semibold'>{item}</p>
+              </div>
+            );
+          })}
+          <div className='w-full mt-4 flex flex-col justify-start items-start gap-2'>
+            <p>To par</p>
+            <p className='font-semibold'>{toParByRound[i - 1]}</p>
+          </div>
+        </div>
+      );
+  }
+}
 
 export function TableDetailRank({ tournamentSummary, tableConfig }: Props) {
-  const {trans} = useTrans()
+  const { trans } = useTrans();
   const router = useRouter();
   const [collapseStates, setCollapseStates] = useState<Record<string, boolean>>({});
   const TABLE_NAME = 'Detail Ranking';
+
   const columnNews: ColumnDef<ITournamentSummary>[] = [
     {
       id: 'time',
@@ -70,7 +111,9 @@ export function TableDetailRank({ tournamentSummary, tableConfig }: Props) {
           <React.Fragment>
             <div className='min-w-[200px] h-[20px] flex-row-around-center'>
               {collapseStates[props.cell.row.id] ? <ChevronDown /> : <ChevronUp />}
-              <p className='text-center'>{props.cell.row.original.tournament.from_date} - {props.cell.row.original.tournament.to_date}</p>
+              <p className='text-center'>
+                {props.cell.row.original.tournament.from_date} - {props.cell.row.original.tournament.to_date}
+              </p>
             </div>
             {collapseStates[props.cell.row.id] && (
               <CustomizeCell id={props.cell.row.id} collapseStates={collapseStates} data={dataCustomizeCell} />
@@ -78,12 +121,7 @@ export function TableDetailRank({ tournamentSummary, tableConfig }: Props) {
           </React.Fragment>
         );
       },
-      header: ({ column }) => (
-        <DataTableColumnHeader
-          column={column}
-          title={trans.common.time}
-        />
-      ),
+      header: ({ column }) => <DataTableColumnHeader column={column} title={trans.common.time} />,
     },
     {
       id: 'tournament_name',
@@ -109,20 +147,15 @@ export function TableDetailRank({ tournamentSummary, tableConfig }: Props) {
           </React.Fragment>
         );
       },
-      header: ({ column }) => (
-        <DataTableColumnHeader
-          column={column}
-          title={trans.common.tournament}
-        />
-      ),
+      header: ({ column }) => <DataTableColumnHeader column={column} title={trans.common.tournament} />,
     },
     {
-      id: 'member_best_rank',
-      accessorKey: 'member_best_rank',
+      id: 'finish',
+      accessorKey: 'finish',
       cell(props) {
         return (
           <React.Fragment>
-            <p className='text-center'>{props.cell.row.original.member.best_rank ? props.cell.row.original.member.best_rank : 0 }</p>
+            <p className='text-center'>{props.cell.row.original.finish ? props.cell.row.original.finish : 0}</p>
             {collapseStates[props.cell.row.id] && (
               <CustomizeCell
                 id={props.cell.row.id}
@@ -130,7 +163,7 @@ export function TableDetailRank({ tournamentSummary, tableConfig }: Props) {
                 data={[
                   {
                     title: trans.common.formula,
-                    value: props.cell.row.original.tournament.format
+                    value: props.cell.row.original.tournament.format,
                   },
                 ]}
               />
@@ -138,28 +171,17 @@ export function TableDetailRank({ tournamentSummary, tableConfig }: Props) {
           </React.Fragment>
         );
       },
-      header: ({ column }) => (
-        <DataTableColumnHeader
-          column={column}
-          title={trans.common.rating}
-        />
-      ),
+      header: ({ column }) => <DataTableColumnHeader column={column} title={trans.common.rating} />,
     },
     {
       id: 'total_score',
       accessorKey: 'total_score',
       cell(props) {
+        //Todo
         return (
           <React.Fragment>
             <p className='text-center'>{props.cell.row.original.total_score}</p>
-            {collapseStates[props.cell.row.id] && (
-              <div className='relative w-[100px] h-[50px] flex items-center justify-center' onClick={() => router.push(`${URL_SYSTEMS.DETAIL_TOURNAMENT}/${props.cell.row.id}`)}>
-                <p className='absolute flex-row-center gap-1 mt-8 rounded-lg opacity-70 hover:opacity-100 cursor-pointer text-center'>
-                  {trans.common.seeMore}
-                  <ArrowRight size={12} />
-                </p>
-              </div>
-            )}
+            {collapseStates[props.cell.row.id] && <>{CustomizeTournamentDetail}</>}
           </React.Fragment>
         );
       },
@@ -175,7 +197,22 @@ export function TableDetailRank({ tournamentSummary, tableConfig }: Props) {
       id: 'point',
       accessorKey: 'point',
       cell(props) {
-        return <p className='text-center'>{props.cell.row.original.point}</p>;
+        return (
+          <React.Fragment>
+            <p className='text-center'>{props.cell.row.original.point}</p>
+            {collapseStates[props.cell.row.id] && (
+              <div
+                className='relative h-[50px] flex items-center justify-center'
+                onClick={() => router.push(`${URL_SYSTEMS.DETAIL_TOURNAMENT}/${props.cell.row.original.tournament.id}`)}
+              >
+                <p className='absolute flex-row-center gap-1 mt-8 rounded-lg opacity-70 hover:opacity-100 cursor-pointer text-center'>
+                  {trans.common.seeMore}
+                  <ArrowRight size={12} />
+                </p>
+              </div>
+            )}
+          </React.Fragment>
+        );
       },
       header: ({ column }) => (
         <DataTableColumnHeader
