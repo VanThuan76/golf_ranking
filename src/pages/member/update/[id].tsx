@@ -15,6 +15,8 @@ import { APP_SAVE_KEY } from '@/src/shared/constants';
 import useTrans from '@/src/shared/hooks/useTrans';
 import { FormUpdateMember } from '@/src/shared/components/business/member/FormUpdateMember';
 import { GetStaticPaths, GetStaticProps } from 'next/types';
+import { axiosInstanceNoAuth } from '@/src/https.config';
+import { IBaseResponse } from '@/src/schemas/baseResponse.type';
 
 const formSchema = z.object({
   name: z
@@ -26,8 +28,21 @@ const formSchema = z.object({
   gender: z.number({ required_error: 'Vui lòng chọn giới tính' }),
   email: z.string(),
   handicap_vga: z
-    .string({ required_error: 'Vui lòng nhập Handicap VGA' })
-    .min(1, { message: 'Vui lòng nhập Handicap VGA' }),
+    .string()
+    .nullable()
+    .refine(
+      async handicapVga => {
+        try {
+          const checkEmail = await axiosInstanceNoAuth.post<IBaseResponse<[]>>('/check-handicap-vga-exists', {
+            handicapVga,
+          });
+          return checkEmail && true;
+        } catch (error) {
+          return false;
+        }
+      },
+      { message: 'Mã Handicap VGA đã được đăng ký.' },
+    ),
   date_of_birth: z.date({ required_error: 'Vui lòng nhập ngày sinh của bạn' }),
   nationality: z
     .string({ required_error: 'Vui lòng nhập quốc gia của bạn' })

@@ -2,7 +2,7 @@ import React from 'react';
 import FooterLayoutWebsite from './FooterLayoutWebsite';
 import HeaderLayoutWebsite from './HeaderLayoutWebsite';
 import { useAppSelector } from '@/src/shared/hooks/useRedux';
-import { useGetUserByEmail, useGetUserById } from 'src/queries/user.queries';
+import { useGetUserByEmail, useGetUserById, useGetUserByRegisterMember } from 'src/queries/user.queries';
 interface Props {
   children: React.ReactNode;
 }
@@ -10,6 +10,7 @@ const LayoutWebsite = ({ children }: Props) => {
   const { user } = useAppSelector(state => state.appSlice);
   const isLogin = user?.user !== undefined;
   const isMember = user?.member !== null;
+  useGetUserByRegisterMember()
   useGetUserByEmail()
   useGetUserById()
   return (

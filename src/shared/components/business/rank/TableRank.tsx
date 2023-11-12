@@ -68,7 +68,7 @@ export function TableRank({ members, tableConfig, getFieldValueOnSearchParam }: 
       cell(props) {
         return (
           <React.Fragment>
-            <div className='min-w-[50px] h-[20px] flex-row-start gap-2'>
+            <div className='min-w-[50px] h-[20px] flex-row-center gap-2'>
               {collapseStates[props.cell.row.id] ? <ChevronDown /> : <ChevronUp />}
               <p className='text-center'>
                 {props.cell.row.original.current_rank ? props.cell.row.original.current_rank : trans.table.nothing}
@@ -127,9 +127,9 @@ export function TableRank({ members, tableConfig, getFieldValueOnSearchParam }: 
       cell(props) {
         return (
           <React.Fragment>
-            <div className='min-w-[150px] h-[20px] flex-row-start gap-2'>
+            <div className='min-w-[150px] grid grid-cols-3 justify-center items-center'>
               <CountryFlag countryCode={props.cell.row.original.nationality} />
-              <p className='text-center'>{props.cell.row.original.name}</p>
+              <p className='text-left col-span-2'>{props.cell.row.original.name}</p>
             </div>
             {collapseStates[props.cell.row.id] && (
               <CustomizeCell
@@ -153,7 +153,7 @@ export function TableRank({ members, tableConfig, getFieldValueOnSearchParam }: 
           <React.Fragment>
             <p className='text-center'>
               {calculateAge(props.cell.row.original.date_of_birth) === 0
-                ? ''
+                ? <p>-</p>
                 : calculateAge(props.cell.row.original.date_of_birth)}
             </p>
             {collapseStates[props.cell.row.id] && (
@@ -217,7 +217,9 @@ export function TableRank({ members, tableConfig, getFieldValueOnSearchParam }: 
       id: 'points',
       accessorKey: 'points',
       cell(props) {
-        return <p className='text-center'>{props.cell.row.original.points}</p>;
+        return <React.Fragment>
+          <p className='text-center'>{props.cell.row.original.points}</p>
+        </React.Fragment> 
       },
       header: ({ column }) => (
         <DataTableColumnHeader

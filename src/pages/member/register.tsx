@@ -40,8 +40,8 @@ const formSchema = z.object({
   gender: z.number({ required_error: 'Vui lòng chọn giới tính' }),
   email: z.string(),
   handicap_vga: z
-    .string({ required_error: 'Vui lòng nhập Handicap VGA' })
-    .min(1, { message: 'Vui lòng nhập Handicap VGA' })
+    .string()
+    .nullable()
     .refine(
       async handicapVga => {
         try {

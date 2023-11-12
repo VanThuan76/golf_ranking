@@ -75,7 +75,7 @@ const AuthHeader = ({ className }: Props) => {
               <div className='flex-row-end gap-4'>
                 <div className='flex-col-end gap-2'>
                   <p>{trans.common.member}</p>
-                  <p>{user.member.name}</p>
+                  <p className='uppercase'>{user.member.name}</p>
                 </div>
                 <ChevronDown />
               </div>

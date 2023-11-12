@@ -12,6 +12,21 @@ import { useSession } from "next-auth/react";
 import { useAppSelector } from "../shared/hooks/useRedux";
 const QUERY_KEY = "UserQuery";
 
+export const useGetUserByRegisterMember = () => {
+    const dispatch = useDispatch();
+    const { user } = useAppSelector(state => state.appSlice)
+    return useQuery({
+        queryKey: [QUERY_KEY, 'get-by-register-member'],
+        queryFn: () => axiosInstanceNoAuth.post<IBaseResponse<IAuthResponse>>('first-register-member', { email: user?.user?.email }),
+        onSuccess(data) {
+            if (data.data) {
+                dispatch(login(data.data));
+            }
+        },
+        enabled: !!user?.user?.email
+    });
+};
+
 export const useGetUserById = () => {
     const dispatch = useDispatch();
     const id = getCookie(APP_SAVE_KEY.USER_ID)
@@ -49,7 +64,6 @@ export const useGetUserByEmail = () => {
             },
         }
     );
-
 };
 export const useResetPassword = (onSuccessHandle?: () => void) => {
     const queryClient = useQueryClient()

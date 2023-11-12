@@ -114,9 +114,9 @@ export function TableGroupTournament({
         ];
         return (
           <React.Fragment>
-            <div className='min-w-[150px] h-[20px] flex-row-center gap-2'>
+            <div className='min-w-[150px] grid grid-cols-3 justify-center items-center'>
               <CountryFlag countryCode={props.cell.row.original.country} />
-              <p className='text-center'>{props.cell.row.original.name}</p>
+              <p className='text-left col-span-2'>{props.cell.row.original.name}</p>
             </div>
             {collapseStates[props.cell.row.id] && (
               <CustomizeCell id={props.cell.row.id} collapseStates={collapseStates} data={dataCustomizeCell} />
@@ -142,11 +142,11 @@ export function TableGroupTournament({
         ];
         return (
           <React.Fragment>
-            <div className='relative min-w-[150px] h-[20px] flex-row-start gap-2'>
+            <div className='relative min-w-[150px] grid grid-cols-3 justify-center items-center'>
               {props.cell.row.original.member && (
                 <CountryFlag countryCode={props.cell.row.original.member.nationality} />
               )}
-              <p className='text-center'>{props.cell.row.original.member?.name ?? trans.table.nothing}</p>
+              <p className='text-left col-span-2'>{props.cell.row.original.member?.name ?? trans.table.nothing}</p>
               {props.cell.row.original.member && (
                 <p
                   className='absolute left-1/2 -translate-x-2/3 top-1/2 translate-y-1/2 text-[12px] flex-row-center gap-1 rounded-lg opacity-70 hover:opacity-100 cursor-pointer'

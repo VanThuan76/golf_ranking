@@ -37,7 +37,7 @@ export interface IMemberRegister {
   id?: number;
   name: string;
   vjgr_code?: string;
-  handicap_vga?: string;
+  handicap_vga?: string | null;
   gender: number;
   date_of_birth: Date | string;
   nationality: string;

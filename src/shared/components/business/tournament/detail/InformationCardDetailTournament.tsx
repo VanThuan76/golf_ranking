@@ -18,7 +18,7 @@ const CustomizeInfoCard = ({ title, value, desc }: { title: string; value: strin
       <h2 className='text-xs md:text-sm font-normal'>{title}</h2>
       <div className='flex-row-start'>
         <p className='text-sm font-medium'>{value}</p>
-        <p className='text-xs ml-1 font-medium'>{desc}</p>
+        <p className='text-sm ml-1 font-medium'>{desc}</p>
       </div>
     </div>
   );
@@ -26,7 +26,6 @@ const CustomizeInfoCard = ({ title, value, desc }: { title: string; value: strin
 export function InformationCardDetailTournament({ groups, tournamentInfor }: Props) {
   const { trans } = useTrans();
   const [trigger, setTrigger] = useState(false);
-  console.log(groups)
   return (
     <section
       id='InformationCardDetailTournament'
