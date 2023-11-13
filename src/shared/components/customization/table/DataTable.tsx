@@ -24,6 +24,7 @@ export const COLUMNDATA_TYPE = {
 type CollapseStates = Record<string, boolean>;
 
 export interface DataTableProps<TData, TValue> {
+  business?: string
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   tableName: string;
@@ -37,6 +38,7 @@ export interface DataTableProps<TData, TValue> {
 }
 
 function DataTable<TData, TValue>({
+  business,
   columns,
   data,
   tableName,
@@ -147,6 +149,7 @@ function DataTable<TData, TValue>({
 
       <div className='flex flex-wrap items-center justify-end space-x-2 py-4'>
         <DataTablePagination
+          business={business}
           table={table}
           onChangeFunc={handChangePagination}
           isClientPagination={isClientPagination}

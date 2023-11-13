@@ -26,16 +26,17 @@ const formSchema = z.object({
     .min(1, { message: 'Vui lòng nhập mã VJGR' })
     .refine(
       async vjgrCode => {
+        console.log('Inside refine function');
         try {
           const checkVjgrCode = await axiosInstanceNoAuth.post<IBaseResponse<[]>>('/check-vjgr-code-exists', {
-            vjgrCode,
+            vjgr_code: vjgrCode,
           });
           return checkVjgrCode && true;
-        } catch (error) {
+        } catch (error:any) {
           return false;
         }
       },
-      { message: 'Mã VJGR không tồn tại' },
+      { message: 'Mã VJGR không tồn tại hoặc đã được đăng ký.' },
   ),
   gender: z.number({ required_error: 'Vui lòng chọn giới tính' }),
   email: z.string(),
@@ -45,10 +46,10 @@ const formSchema = z.object({
     .refine(
       async handicapVga => {
         try {
-          const checkEmail = await axiosInstanceNoAuth.post<IBaseResponse<[]>>('/check-handicap-vga-exists', {
+          const checkHandicapVGA = await axiosInstanceNoAuth.post<IBaseResponse<[]>>('/check-handicap-vga-exists', {
             handicapVga,
           });
-          return checkEmail && true;
+          return checkHandicapVGA && true;
         } catch (error) {
           return false;
         }

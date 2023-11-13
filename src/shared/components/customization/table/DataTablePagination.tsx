@@ -6,12 +6,14 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import useTrans from '@/src/shared/hooks/useTrans';
 
 interface DataTablePaginationProps<TData> {
+  business?: string;
   table: Table<TData>;
   onChangeFunc?: (value: number, type: 'Page_change' | 'Size_change') => void;
   isClientPagination: boolean;
 }
 
 export default function DataTablePagination<TData>({
+  business,
   table,
   onChangeFunc,
   isClientPagination,
@@ -49,14 +51,22 @@ export default function DataTablePagination<TData>({
             <SelectContent side='top'>
               {[15, 30, 45].map(pageSize => (
                 <SelectItem key={pageSize} value={`${pageSize}`}>
-                  {pageSize}
+                  {business === 'table-detail-tournament'
+                    ? pageSize === 15
+                      ? 5
+                      : pageSize === 30
+                      ? 10
+                      : pageSize === 45
+                      ? 15
+                      : pageSize
+                    : pageSize}
                 </SelectItem>
               ))}
             </SelectContent>
           </Select>
         </div>
         <div className='hidden md:flex w-[150px] items-center justify-center text-sm font-medium'>
-          {trans.table.page} {table.getState().pagination.pageIndex + 1} {trans.table.of} {table.getPageCount()}{' '}
+          {trans.table.page} {table.getState().pagination.pageIndex} {trans.table.of} {table.getPageCount()}{' '}
           {trans.table.page}
         </div>
         <div className='flex items-center space-x-2'>

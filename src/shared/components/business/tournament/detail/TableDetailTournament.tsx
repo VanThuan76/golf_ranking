@@ -190,6 +190,7 @@ export function TableDetailTournament({ tournamentDetail, tableConfig }: Props) 
   return (
     <section id='TableDetailTournament' className='w-full mt-4 space-y-4'>
       <DataTable
+        business="table-detail-tournament"
         setCollapseStates={setCollapseStates}
         data={filteredData}
         columns={columnNews}

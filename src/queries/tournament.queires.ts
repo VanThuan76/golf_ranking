@@ -10,7 +10,7 @@ export const useGetListTournament = (defaultFilter?: Filter[]) => {
         queryKey: [QUERY_KEY, 'get-all'],
         apiFn: (params) => axiosInstanceNoAuth.post<IBaseResponseWithCount<ITournament[]>>('/tournaments/search', {...params}),
         defaultParams: {
-            page: 0,
+            page: 1,
             size: 15,
             filters: defaultFilter,
             sorts: [{ field: "updated_at", direction: "DESC" }]

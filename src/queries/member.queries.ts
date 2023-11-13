@@ -12,7 +12,7 @@ export const useGetListMemberBySearch = (defaultFilter?: Filter[]) => {
         queryKey: [QUERY_KEY, 'get-search'],
         apiFn: (params) => axiosInstanceNoAuth.post<IBaseResponseWithCount<IMember[]>>('/members/search', { ...params }),
         defaultParams: {
-            page: 0,
+            page: 1,
             size: 15,
             filters: defaultFilter,
             sorts: [{ field: "current_rank", direction: "ASC" }]
