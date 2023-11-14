@@ -148,7 +148,7 @@ export const getStaticProps: GetStaticProps = async ctx => {
   const id = ctx.params?.id;
   if (id) {
     try {
-      const responseMember = await fetch(`${process.env.NEXT_PUBLIC_PRODUCT_API_URL}/members/${id}`);
+      const responseMember = await fetch(`${process.env.NEXT_PUBLIC_PRODUCT_API_URL}/first-get-register-member/${id}`);
       if (!responseMember.ok) {
         throw new Error('Failed to fetch member data');
       }

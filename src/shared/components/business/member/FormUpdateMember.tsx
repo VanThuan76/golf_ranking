@@ -97,7 +97,7 @@ export function FormUpdateMember({ formSchema, onSubmit, isLoading, defaultValue
             ></InputSelect>
           </div>
           <div className='w-full grid grid-cols-1 md:grid-cols-2 justify-between items-center gap-2'>
-            <InputText form={form} fieldName='email' label='Email' placeHolder='Nhập email của bạn' />
+            <InputText disabled={true} form={form} fieldName='email' label='Email' placeHolder='Nhập email của bạn' />
             <InputNumber
               form={form}
               fieldName='phone_number'

@@ -65,13 +65,14 @@ const AuthHeader = ({ className }: Props) => {
     deleteCookie(APP_SAVE_KEY.LOGIN_STATUS);
     deleteCookie(APP_SAVE_KEY.USER_ID);
   };
+  console.log(user)
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild className='cursor-pointer'>
         <div className={`hidden lg:flex flex-row-center gap-8 ${className}`}>
           {user && user.member !== null ? (
             <React.Fragment>
-              {user.member.vjgr_code && <p className='pr-4 border-r-2 border-r-white'>{user.member.vjgr_code}</p>}
+              {user.member.status === "Đã đăng ký" && user.member.vjgr_code && <p className='pr-4 border-r-2 border-r-white'>{user.member.vjgr_code}</p>}
               <div className='flex-row-end gap-4'>
                 <div className='flex-col-end gap-2'>
                   <p>{trans.common.member}</p>
@@ -131,7 +132,7 @@ const AuthHeader = ({ className }: Props) => {
             }
           />
         </div>
-        {user && user.member !== null && (
+        {user && user.member !== null && user.member.status === "Đã đăng ký" && (
           <DropdownMenuItem>
             <RowAuthHeader
               icon={<Trophy size={12} />}
@@ -146,7 +147,7 @@ const AuthHeader = ({ className }: Props) => {
               <div className='w-[200px] flex-row-between-center'>
                 <div className='flex-row-center gap-1'>
                   <LogOut size={12} />
-                  <p>Đăng xuất</p>
+                  <p>{trans.common.logout}</p>
                 </div>
                 <ChevronRight size={12} />
               </div>

@@ -1,5 +1,6 @@
 const VnScript = {
     common: {
+        logout: "Đăng xuất",
         login: "Đăng nhập",
         register: "Đăng ký",
         registerMember: "Đăng ký thành viên",

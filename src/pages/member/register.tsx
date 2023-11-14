@@ -45,13 +45,17 @@ const formSchema = z.object({
     .nullable()
     .refine(
       async handicapVga => {
-        try {
-          const checkHandicapVGA = await axiosInstanceNoAuth.post<IBaseResponse<[]>>('/check-handicap-vga-exists', {
-            handicapVga,
-          });
-          return checkHandicapVGA && true;
-        } catch (error) {
-          return false;
+        if(handicapVga === ""){
+          return true;
+        }else{
+          try {
+            const checkHandicapVGA = await axiosInstanceNoAuth.post<IBaseResponse<[]>>('/check-handicap-vga-exists', {
+              handicapVga,
+            });
+            return checkHandicapVGA && true;
+          } catch (error) {
+            return false;
+          }
         }
       },
       { message: 'Mã Handicap VGA đã được đăng ký.' },

@@ -66,7 +66,7 @@ export default function DataTablePagination<TData>({
           </Select>
         </div>
         <div className='hidden md:flex w-[150px] items-center justify-center text-sm font-medium'>
-          {trans.table.page} {table.getState().pagination.pageIndex} {trans.table.of} {table.getPageCount()}{' '}
+          {trans.table.page} {table.getState().pagination.pageIndex} {trans.table.of} {table.getPageCount() - 1}{' '}
           {trans.table.page}
         </div>
         <div className='flex items-center space-x-2'>

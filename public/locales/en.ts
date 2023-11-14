@@ -1,5 +1,6 @@
 const EnglishScript = {
     common: {
+        logout: "Logout",
         login: "Login",
         register: "Register",
         registerMember: "Register Member",
