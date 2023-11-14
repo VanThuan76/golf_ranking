@@ -31,7 +31,7 @@ const formSchema = z.object({
           const checkVjgrCode = await axiosInstanceNoAuth.post<IBaseResponse<[]>>('/check-vjgr-code-exists', {
             vjgr_code: vjgrCode,
           });
-          return checkVjgrCode && true;
+          return checkVjgrCode.statusCode === 200 ? true : false;
         } catch (error:any) {
           return false;
         }
