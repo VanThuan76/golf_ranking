@@ -17,7 +17,7 @@ export const useGetUserByRegisterMember = () => {
     const { user } = useAppSelector(state => state.appSlice)
     return useQuery({
         queryKey: [QUERY_KEY, 'get-by-register-member'],
-        queryFn: () => axiosInstanceNoAuth.post<IBaseResponse<IAuthResponse>>('first-register-member', { email: user?.user?.email }),
+        queryFn: () => axiosInstanceNoAuth.post<IBaseResponse<IAuthResponse>>('first-get-register-member', { email: user?.user?.email }),
         onSuccess(data) {
             if (data.data) {
                 dispatch(login(data.data));
