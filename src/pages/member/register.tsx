@@ -26,7 +26,6 @@ const formSchema = z.object({
     .min(1, { message: 'Vui lòng nhập mã VJGR' })
     .refine(
       async vjgrCode => {
-        console.log('Inside refine function');
         try {
           const checkVjgrCode = await axiosInstanceNoAuth.post<IBaseResponse<[]>>('/check-vjgr-code-exists', {
             vjgr_code: vjgrCode,

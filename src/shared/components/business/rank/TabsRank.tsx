@@ -1,6 +1,7 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/src/shared/components/ui/tabs';
+import { URL_SYSTEMS } from '@/src/shared/constants';
 import useTrans from '@/src/shared/hooks/useTrans';
-import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 import { useGetListGroup } from 'src/queries/group.queires';
 import { useGetListMemberBySearch } from 'src/queries/member.queries';
 import SearchRank from './SearchRank';
@@ -14,6 +15,7 @@ type Props = {
   };
 };
 const TabsRank = ({ searchDefault }: Props) => {
+  const router = useRouter();
   const { trans } = useTrans();
   const { data: groups } = useGetListGroup();
   const {
@@ -23,13 +25,24 @@ const TabsRank = ({ searchDefault }: Props) => {
     onChangeSearchArrayParams,
     onChangeSearchParams,
   } = useGetListMemberBySearch();
+
   return (
     <section id='TabsRank' className='w-full'>
       <SearchRank searchDefault={searchDefault} onChangeSearchArrayParams={onChangeSearchArrayParams} />
       <Tabs defaultValue='mix' className='w-full'>
         <div className='w-full overflow-hidden overflow-x-scroll'>
           <TabsList>
-            <TabsTrigger value='mix'>{trans.rank.tableSummary}</TabsTrigger>
+            <TabsTrigger
+              onClick={() =>
+                router.push({
+                  pathname: URL_SYSTEMS.RANK,
+                  query: { page: 1 },
+                })
+              }
+              value='mix'
+            >
+              {trans.rank.tableSummary}
+            </TabsTrigger>
             {groups &&
               groups.map(group => (
                 <TabsTrigger

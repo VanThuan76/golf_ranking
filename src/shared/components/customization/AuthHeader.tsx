@@ -65,7 +65,6 @@ const AuthHeader = ({ className }: Props) => {
     deleteCookie(APP_SAVE_KEY.LOGIN_STATUS);
     deleteCookie(APP_SAVE_KEY.USER_ID);
   };
-  console.log(user)
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild className='cursor-pointer'>

@@ -24,7 +24,20 @@ const formSchema = z.object({
     .min(1, { message: 'Vui lòng nhập họ tên của bạn' }),
   vjgr_code: z
     .string({ required_error: 'Vui lòng nhập mã VJGR' })
-    .min(1, { message: 'Vui lòng nhập mã VJGR' }),
+    .min(1, { message: 'Vui lòng nhập mã VJGR' })
+    .refine(
+      async vjgrCode => {
+        try {
+          const checkVjgrCode = await axiosInstanceNoAuth.post<IBaseResponse<[]>>('/check-vjgr-code-exists', {
+            vjgr_code: vjgrCode,
+          });
+          return checkVjgrCode.statusCode === 200 ? true : false;
+        } catch (error: any) {
+          return false;
+        }
+      },
+      { message: 'Mã VJGR không tồn tại hoặc đã được đăng ký.' },
+    ),
   gender: z.number({ required_error: 'Vui lòng chọn giới tính' }),
   email: z.string(),
   handicap_vga: z
@@ -32,13 +45,17 @@ const formSchema = z.object({
     .nullable()
     .refine(
       async handicapVga => {
-        try {
-          const checkEmail = await axiosInstanceNoAuth.post<IBaseResponse<[]>>('/check-handicap-vga-exists', {
-            handicapVga,
-          });
-          return checkEmail && true;
-        } catch (error) {
-          return false;
+        if (handicapVga === null) {
+          return true;
+        } else {
+          try {
+            const checkEmail = await axiosInstanceNoAuth.post<IBaseResponse<[]>>('/check-handicap-vga-exists', {
+              handicapVga,
+            });
+            return checkEmail && true;
+          } catch (error) {
+            return false;
+          }
         }
       },
       { message: 'Mã Handicap VGA đã được đăng ký.' },
@@ -79,7 +96,7 @@ const UpdateMember = ({ member }: Props) => {
     vjgr_code: member?.vjgr_code,
     handicap_vga: member?.handicap_vga,
     gender: member?.gender === 'Nam' ? 2 : 1,
-    date_of_birth: member?.date_of_birth,
+    date_of_birth: String(member?.date_of_birth),
     nationality: member?.nationality,
     email: member?.email,
     phone_number: member?.phone_number,

@@ -25,7 +25,7 @@ const DetailTournament = () => {
       value: query.id,
     },
   ];
-  const { data: tournamentDetail, tableConfig } = useGetListTournamentDetail(filterDetailTournament);
+  const { data: tournamentDetail, tableConfig, onChangeSearchParams } = useGetListTournamentDetail(filterDetailTournament);
   const { data: groups } = useGetListGroupByTournament(query.id as React.Key);
   if (!tournamentDetail) return <React.Fragment></React.Fragment>;
   return (
@@ -45,6 +45,7 @@ const DetailTournament = () => {
       <HintConditionDetailTournament status={tournamentDetail.content[0].tournament.status as StatusTournamentString} />
       <ScrollRevealWrapper>
         <TabsDetailTournament
+          onChangeSearchParams={onChangeSearchParams}
           groups={groups || []}
           tournamentDetail={tournamentDetail?.content || []}
           tableConfig={tableConfig}

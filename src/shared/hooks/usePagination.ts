@@ -113,7 +113,7 @@ export default function usePagination<T>({ queryKey, apiFn, defaultParams }: Pro
             newFilterArr = [value];
         }
         const newFilterArrJson = stringifyArrayObj(newFilterArr.filter(item => item.value !== undefined));
-        const newQuery = { ...oldQuery, page: 0, search: newFilterArrJson };
+        const newQuery = { ...oldQuery, page: 1, search: newFilterArrJson };
         router.push({
             pathname: router.pathname,
             query: newQuery,

@@ -1,4 +1,5 @@
 import useTrans from '@/src/shared/hooks/useTrans';
+import { convertStringDay } from '@/src/shared/utils/business/convertStringDate';
 import UseRouter from '@/src/shared/utils/function/UseRouter';
 import { IMember } from 'src/schemas/member.table.type';
 import { Button } from '../../ui/button';
@@ -33,7 +34,7 @@ const ProfileMember = ({ member }: Props) => {
         <CardProfile label='Handicap VGA' title={member.handicap_vga} />
         <CardProfile label='Quốc tịch' title={member.nationality} />
         <CardProfile label='Giới tính' title={member.gender} />
-        <CardProfile label='Ngày sinh' title={member.date_of_birth} />
+        <CardProfile label='Ngày sinh' title={convertStringDay(member.date_of_birth)} />
         <CardProfile label='Trạng thái' title={member.status} />
         {member.status === 'Từ chối' && <CardProfile label='Lý do từ chối' title={member.reason} />}
       </div>

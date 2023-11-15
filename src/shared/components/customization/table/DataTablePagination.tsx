@@ -66,7 +66,7 @@ export default function DataTablePagination<TData>({
           </Select>
         </div>
         <div className='hidden md:flex w-[150px] items-center justify-center text-sm font-medium'>
-          {trans.table.page} {table.getState().pagination.pageIndex} {trans.table.of} {table.getPageCount() - 1}{' '}
+          {trans.table.page} {table.getState().pagination.pageIndex} {trans.table.of} {table.getPageCount()}{' '}
           {trans.table.page}
         </div>
         <div className='flex items-center space-x-2'>
@@ -75,11 +75,11 @@ export default function DataTablePagination<TData>({
             className='hidden h-8 w-8 p-0 lg:flex'
             onClick={() => {
               if (onChangeFunc) {
-                onChangeFunc(0, 'Page_change');
+                onChangeFunc(1, 'Page_change');
               }
               // table.setPageIndex(0)
             }}
-            disabled={!table.getCanPreviousPage()}
+            disabled={table.getState().pagination.pageIndex === 1}
           >
             <span className='sr-only'>Go to first page</span>
             <ChevronsLeftIcon className='h-4 w-4' />
@@ -93,7 +93,7 @@ export default function DataTablePagination<TData>({
               }
               // table.previousPage()
             }}
-            disabled={!table.getCanPreviousPage()}
+            disabled={table.getState().pagination.pageIndex === 1}
           >
             <span className='sr-only'>Go to previous page</span>
             <ChevronLeftIcon className='h-4 w-4' />
@@ -107,7 +107,7 @@ export default function DataTablePagination<TData>({
               }
               // table.nextPage()
             }}
-            disabled={!table.getCanNextPage()}
+            disabled={table.getPageCount() <= table.getState().pagination.pageIndex}
           >
             <span className='sr-only'>Go to next page</span>
             <ChevronRightIcon className='h-4 w-4' />
