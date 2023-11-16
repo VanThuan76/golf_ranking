@@ -62,7 +62,7 @@ const TabsRank = ({ searchDefault }: Props) => {
         </div>
         <TabsContent value='mix'>
           <TableRank
-            members={members?.content || []}
+            members={members?.content.filter(member => member.group_id !== 6) || []}
             tableConfig={tableConfig}
             getFieldValueOnSearchParam={getFieldValueOnSearchParam}
           />
