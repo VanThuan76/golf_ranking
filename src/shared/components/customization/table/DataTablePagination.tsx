@@ -4,6 +4,7 @@ import { Table } from '@tanstack/react-table';
 import { Button } from '@/src/shared/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/src/shared/components/ui/select';
 import useTrans from '@/src/shared/hooks/useTrans';
+import { useRouter } from 'next/router';
 
 interface DataTablePaginationProps<TData> {
   business?: string;
@@ -19,6 +20,8 @@ export default function DataTablePagination<TData>({
   isClientPagination,
 }: DataTablePaginationProps<TData>) {
   const { trans } = useTrans();
+  const router = useRouter()
+  const { page } = router.query;
   if (isClientPagination) {
     return (
       <div className='flex items-center justify-end space-x-2 py-4'>
@@ -66,7 +69,7 @@ export default function DataTablePagination<TData>({
           </Select>
         </div>
         <div className='hidden md:flex w-[150px] items-center justify-center text-sm font-medium'>
-          {trans.table.page} {table.getState().pagination.pageIndex} {trans.table.of} {table.getPageCount()}{' '}
+          {trans.table.page} {Number(page)} {trans.table.of} {table.getPageCount()}{' '}
           {trans.table.page}
         </div>
         <div className='flex items-center space-x-2'>
@@ -79,7 +82,7 @@ export default function DataTablePagination<TData>({
               }
               // table.setPageIndex(0)
             }}
-            disabled={table.getState().pagination.pageIndex === 1}
+            disabled={Number(page) === 1}
           >
             <span className='sr-only'>Go to first page</span>
             <ChevronsLeftIcon className='h-4 w-4' />
@@ -89,11 +92,11 @@ export default function DataTablePagination<TData>({
             className='h-8 w-8 p-0'
             onClick={() => {
               if (onChangeFunc) {
-                onChangeFunc(table.getState().pagination.pageIndex - 1, 'Page_change');
+                onChangeFunc(Number(page) - 1, 'Page_change');
               }
               // table.previousPage()
             }}
-            disabled={table.getState().pagination.pageIndex === 1}
+            disabled={Number(page) === 1}
           >
             <span className='sr-only'>Go to previous page</span>
             <ChevronLeftIcon className='h-4 w-4' />
@@ -103,11 +106,11 @@ export default function DataTablePagination<TData>({
             className='h-8 w-8 p-0'
             onClick={() => {
               if (onChangeFunc) {
-                onChangeFunc(table.getState().pagination.pageIndex + 1, 'Page_change');
+                onChangeFunc(Number(page) + 1, 'Page_change');
               }
               // table.nextPage()
             }}
-            disabled={table.getPageCount() <= table.getState().pagination.pageIndex}
+            disabled={table.getPageCount() <= Number(page)}
           >
             <span className='sr-only'>Go to next page</span>
             <ChevronRightIcon className='h-4 w-4' />
