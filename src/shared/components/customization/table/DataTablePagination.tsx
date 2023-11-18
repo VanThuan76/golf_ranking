@@ -5,6 +5,7 @@ import { Button } from '@/src/shared/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/src/shared/components/ui/select';
 import useTrans from '@/src/shared/hooks/useTrans';
 import { useRouter } from 'next/router';
+import { useEffect } from 'react';
 
 interface DataTablePaginationProps<TData> {
   business?: string;
@@ -20,8 +21,13 @@ export default function DataTablePagination<TData>({
   isClientPagination,
 }: DataTablePaginationProps<TData>) {
   const { trans } = useTrans();
-  const router = useRouter()
+  const router = useRouter();
   const { page } = router.query;
+  useEffect(() => {
+    if (page === undefined) {
+      router.push({ pathname: router.pathname, query: { ...router.query, page: 1 } });
+    }
+  }, [page, router]);
   if (isClientPagination) {
     return (
       <div className='flex items-center justify-end space-x-2 py-4'>
@@ -69,8 +75,7 @@ export default function DataTablePagination<TData>({
           </Select>
         </div>
         <div className='hidden md:flex w-[150px] items-center justify-center text-sm font-medium'>
-          {trans.table.page} {Number(page)} {trans.table.of} {table.getPageCount()}{' '}
-          {trans.table.page}
+          {trans.table.page} {Number(page)} {trans.table.of} {table.getPageCount()} {trans.table.page}
         </div>
         <div className='flex items-center space-x-2'>
           <Button
