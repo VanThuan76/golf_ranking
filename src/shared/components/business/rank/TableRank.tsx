@@ -71,7 +71,7 @@ export function TableRank({ members, tableConfig, getFieldValueOnSearchParam }: 
             <div className='min-w-[50px] h-[20px] flex-row-center gap-2'>
               {collapseStates[props.cell.row.id] ? <ChevronDown /> : <ChevronUp />}
               <p className='text-center'>
-                {props.cell.row.original.current_rank ? props.cell.row.original.current_rank : trans.table.nothing}
+                {props.cell.row.id}
               </p>
             </div>
 
